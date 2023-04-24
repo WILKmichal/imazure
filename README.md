@@ -8,7 +8,7 @@ Trello est un outil de gestion de projet en ligne qui permet de créer des table
 
 ## Maquettage
 
-la maquette de l'application à été fait grace à l'outil penpot lien du projet (privée)
+la maquette de l'application à été fait grace à l'outil penpot (lien du projet privée)
 
 > https://design.penpot.app/#/workspace/0656f724-90d3-81c2-8002-6815c0b04693/0656f724-90d3-81c2-8002-6815fd53bc20?page-id=0656f724-90d3-81c2-8002-6815fd53bc21
 
