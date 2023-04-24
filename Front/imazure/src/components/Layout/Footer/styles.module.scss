@@ -1,0 +1,24 @@
+.ForgotPassword{
+    cursor:pointer;
+    color: #6c757d;
+}
+.ForgotPassword:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #0d6efd;
+
+}
+
+.btnprimary {
+    color: #fff;
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important; /*set the color you want here*/
+}
+.btnprimary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important; /*set the color you want here*/
+}
+
+.InputGroup_text{
+    cursor: pointer;
+}
+
