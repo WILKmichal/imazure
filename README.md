@@ -43,6 +43,7 @@ la maquette de l'application à été fait grace à l'outil penpot (lien du proj
 - Chaque ticket doit avoir une étiquette signalant le type de développement : front-end, back-end, etc.
 - Chaque ticket doit être associé à une branche (pas nécessairement une branche par ticket, il est préférable de regrouper les tickets associés sur une même branche).
 
+### autre lien utile
 
-
+- dossier contenant touts les photos : https://imieparis.sharepoint.com/sites/IMIE2023-EEDSIALL/Documents%20partages/Forms/AllItems.aspx?id=%2Fsites%2FIMIE2023%2DEEDSIALL%2FDocuments%20partages%2FGeneral%2FImages%2DProjet%2DAzure&p=true&ga=1
     
