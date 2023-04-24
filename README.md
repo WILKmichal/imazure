@@ -19,5 +19,5 @@ Trello est un outil de gestion de projet en ligne qui permet de créer des table
 - Pour les correctifs, le préfixe utilisé est FIX_ 
 
 ### conventions des commits
-- Chaque commit doit être précédé du numéro d'identification du ticket entre crochets, par exemple : [<id du ticket>], comme [DNP-45].
+- Chaque commit doit être précédé du numéro d'identification du ticket entre crochets, par exemple : ['<id du ticket>'], comme [DNP-45].
     
