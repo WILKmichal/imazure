@@ -24,6 +24,7 @@ Trello est un outil de gestion de projet en ligne qui permet de créer des table
 - Pour les correctifs, le préfixe utilisé est FIX_ 
 - **la branche API-ENDPOINT-INFO serra la documentation des endpoints de l'api flask ou autre endpoints necessaire**
 - **la branche BDD-INFO serra contient la doc technique de la base de données**
+- **la branche FRONT-END-DOC contient le manuel utilisateur de l'application**
 
 ### conventions des commits
 - Chaque commit doit être précédé du numéro d'identification du ticket entre crochets, par exemple : [\<id du ticket\>], comme [DNP-45].
