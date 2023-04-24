@@ -8,15 +8,16 @@ Trello est un outil de gestion de projet en ligne qui permet de créer des table
 ##  convention et dénomination de développment
 
 ### conventions d'utilisation du git
- . La branche 'main' est la branche de déploiement.
- . La branche 'develop' est utilisée pour merger les développements validés.
+- La branche 'main' est la branche de déploiement.
+- La branche 'develop' est utilisée pour merger les développements validés.
 
 ### conventions des noms de branche
-. Les noms des branches sont toujours en majuscules.
-. Les mots des noms branches sont séparés par un underscore.
-. Lorsqu'une nouvelle branche est créée pour un ticket concernant une nouvelle fonctionnalité, le nom de la branche commence par FCT_
-. Pour les correctifs, le préfixe utilisé est FIX_ 
+
+- Les noms des branches sont toujours en majuscules.
+- Les mots des noms branches sont séparés par un underscore.
+- Lorsqu'une nouvelle branche est créée pour un ticket concernant une nouvelle fonctionnalité, le nom de la branche commence par FCT_
+- Pour les correctifs, le préfixe utilisé est FIX_ 
 
 ### conventions des commits
-. Chaque commit doit être précédé du numéro d'identification du ticket entre crochets, par exemple : [<id du ticket>], comme [DNP-45].
+- Chaque commit doit être précédé du numéro d'identification du ticket entre crochets, par exemple : [<id du ticket>], comme [DNP-45].
     
