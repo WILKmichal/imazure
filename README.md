@@ -22,6 +22,7 @@ Trello est un outil de gestion de projet en ligne qui permet de créer des table
 - Les mots des noms branches sont séparés par un underscore.
 - Lorsqu'une nouvelle branche est créée pour un ticket concernant une nouvelle fonctionnalité, le nom de la branche commence par FCT_
 - Pour les correctifs, le préfixe utilisé est FIX_ 
+- **les branches API-ENDPOINT-INFO serra la documentation des endpoints de l'api flask**
 
 ### conventions des commits
 - Chaque commit doit être précédé du numéro d'identification du ticket entre crochets, par exemple : [\<id du ticket\>], comme [DNP-45].
