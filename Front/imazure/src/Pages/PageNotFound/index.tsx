@@ -2,12 +2,15 @@ import * as React from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 
 import { useLocation } from "react-router-dom";
+import MenuRetractable from "../../components/MenuRetractable";
+import Svf from "../../assets/img/wave-haikei.svg";
 
 const PageNotFound = () => {
   const { pathname } = useLocation();
 
   return (
     <Container>
+      <MenuRetractable />
       <Row>
         <Col>
           <div className="d-flex flex-fill align-items-center container">
@@ -23,10 +26,7 @@ const PageNotFound = () => {
                   className="card shadow-sm rounded p-4 border-0"
                 >
                   <div className="card-body text-center d-flex flex-column justify-content-center">
-                    <span
-                      style={{ color: "black" }}
-                      className="empty-details"
-                    >
+                    <span style={{ color: "black" }} className="empty-details">
                       Erreur 404
                     </span>
                     <span
@@ -35,22 +35,15 @@ const PageNotFound = () => {
                     >
                       Page non trouvée
                     </span>
-                    <span
-                      style={{ color: "black" }}
-                      className="empty-details"
-                    >
+                    <span style={{ color: "black" }} className="empty-details">
                       {/* <p>  La Page <font color="#AD0000">{pathname} </font>est introuvable</p> */}
                       La Page{" "}
                       <span style={{ color: "#0d6efd" }}>{pathname}</span> est
                       introuvable
                     </span>
-   
+
                     <span className="h4 empty-heading mt-3">
-                      <Button
-                        href="/"
-                      >
-                        Revenir a l'accueil
-                      </Button>
+                      <Button href="/">Revenir a l'accueil</Button>
                     </span>
                   </div>
                 </div>
