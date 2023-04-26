@@ -1,0 +1,27 @@
+hr {
+    border: none;
+    border-top: 3px double #000000;
+    color: #000000;
+    overflow: visible;
+    text-align: center;
+    height: 5px;
+}
+
+hr:after {
+    background: #EDEDED;
+    color: #000000;
+    content: 'Filter';
+    padding: 0 4px;
+    position: relative;
+    top: -13px;
+}
+
+p,
+label {
+    color: #000000;
+    /* font: 1rem 'Fira Sans', sans-serif; */
+}
+
+input {
+    margin: 0.4rem;
+}
