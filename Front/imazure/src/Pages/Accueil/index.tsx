@@ -1,6 +1,4 @@
 import * as React from "react";
-// import Archer from '../../images/accueil/archer.svg'
-import Archer from "../../images/accueil/archer.svg";
 import "./styles.scss";
 
 const Accueil = () => {
@@ -22,17 +20,10 @@ const Accueil = () => {
         </div>
       </div>
       <div className="grid-item-right">
-        {/* <div className="svg-animation"> */}
         <div className="container">
           <div className="svg-animation">
-            <img src={Archer} />
           </div>
         </div>
-        {/* </div> */}
-        {/* <Archer /> */}
-        {/* <div className="parent">
-          <div className="moving-div">test right side div</div>
-        </div> */}
       </div>
     </div>
   );
