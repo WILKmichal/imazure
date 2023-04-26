@@ -2,14 +2,43 @@
 
 {% block header %}
 <h1>{% block title %}Images{% endblock %}</h1>
-<a class="action" href="{{ url_for('image.upload')  }}">New</a>
+<a class="action" href="{{ url_for('image.upload_form')  }}">New</a>
 {% endblock %}
 
 {% block content %}
+<br />
+<div>
+  <button id="delete" disabled="disabled">Delete selected</button>
+</div>
+<hr>
   {% for image in images %}
     <img src='{{image['url']}}' width='auto' height='200'/>
+    <input type="checkbox" data-name="{{image['name']}}" />
     {% if not loop.last %}
       <hr>
     {% endif %}
   {% endfor %}
+{% endblock %}
+
+{% block script %}
+<script>
+  const names = [];
+  const deleteBtn = document.getElementById('delete');
+  deleteBtn.addEventListener('click', deleteImages, false);
+  
+  document.querySelectorAll('input[data-name][type=checkbox]')
+            .forEach((c) => c.addEventListener('click', checked))
+  
+  function deleteImages() { 
+    const url = `{{url_for('image.delete_files')}}?name=${names.join('&name=')}`
+    return fetch(url, { method: 'DELETE'}).then(() => location.reload())
+  }
+
+  function checked(e) {
+    if(e.target.checked) names.push(encodeURIComponent(e.target.dataset.name));
+    else names.splice(names.indexOf(e.target.dataset.name), 1);
+    
+    deleteBtn.disabled = names.length ? null : 'disabled';
+  }
+</script>
 {% endblock %}
