@@ -13,8 +13,6 @@ from werkzeug.exceptions import abort
 import os   
 from azure.storage.blob import BlobServiceClient
 
-# from flaskr.auth import login_required
-# from flaskr.db import get_db
 
 bp = Blueprint('image', __name__)
 
@@ -50,7 +48,7 @@ def index():
     return render_template('image/index.html', images=images)
 
 @bp.get('/all')
-def index():
+def images_as_json():
     # list all the blobs in the container
     blob_items = container_client.list_blobs()
     images = []
