@@ -9,6 +9,7 @@ from flask import (
     jsonify
 
 )
+import uuid
 from werkzeug.exceptions import abort
 import os   
 from azure.storage.blob import BlobServiceClient
@@ -43,7 +44,7 @@ def index():
     images = []
     for blob in blob_items:
         blob_client = container_client.get_blob_client(blob=blob.name)
-        images.append(Object(url = blob_client.url))
+        images.append(Object(url = blob_client.url, name = blob_client.blob_name))
 
     return render_template('image/index.html', images=images)
 
@@ -54,7 +55,7 @@ def images_as_json():
     images = []
     for blob in blob_items:
         blob_client = container_client.get_blob_client(blob=blob.name)
-        images.append({ "url": blob_client.url })
+        images.append({ "url": blob_client.url, "name": blob_client.blob_name })
     return jsonify(images)
 
 
@@ -64,15 +65,22 @@ def upload_form():
 
 @bp.post('/upload')
 def upload():
-    filenames = ""
     for file in request.files.getlist("images"):
         try:
             # upload the file to the container using the filename as the blob name
-            container_client.upload_blob(file.filename, file)
-            filenames += file.filename + "<br /> "
+            container_client.upload_blob(str(uuid.uuid4()), file)
         except Exception as e:
             # ignore duplicate filenames
             print("Ignoring duplicate filenames")
             print(e)
         
-    return redirect('/')  
+    return redirect('/')
+
+@bp.delete('/')
+def delete_files():
+    try:
+        container_client.delete_blobs(*request.args.getlist('name'))
+    except Exception as e:
+        print('Exception')
+        print(e)
+    return jsonify(None)
