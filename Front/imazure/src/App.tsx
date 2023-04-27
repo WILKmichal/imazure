@@ -4,7 +4,6 @@ import Layout from "./components/Layout";
 import routes from "./routes";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import PageNotFound from "./Pages/PageNotFound";
-import Accueil from "./Pages/Accueil";
 
 function App() {
   return (
@@ -18,7 +17,7 @@ function App() {
               element={<route.component />}
             />
           ))}
-          <Route path="accueil" element={<Accueil />} />
+          {/* <Route path="accueil" element={<Accueil />} /> */}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Layout>

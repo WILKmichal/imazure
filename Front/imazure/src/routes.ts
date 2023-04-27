@@ -1,5 +1,6 @@
 import { ComponentType } from 'react';
 import withPageTitle from './components/PageTitles';
+import Accueil from './Pages/Accueil';
 // import CategoriePage from './Page/Categorie';
 // import FoodsPage from './Page/Foods';
 // import LoginPage from './Page/Login';
@@ -13,36 +14,33 @@ import withPageTitle from './components/PageTitles';
 export interface RouteType {
     path: string;
     title: string;
-    authenticatedRoute?: boolean;
     component: ComponentType;
-    connect: boolean
 }
 
 
 
 export const routeNames = {
-
+    Accueil :'/accueil'
 };
 // 
 const routes: Array<RouteType> = [
+    {
+        path: routeNames.Accueil,
+        title: 'Accueil',
+        component: Accueil
+      },
 
 ];
 
 
 const mappedRoutes = routes.map((route) => {
-    const title = route.title
-        ? `${route.title} • Euh`
-        : `Euh`;
-
-    // const requiresAuth = Boolean(route.authenticatedRoute);
+    const title = route.title ? `${route.title}` : ` ${route.title}`;
+  
     const wrappedComponent = withPageTitle(title, route.component);
-
+  
     return {
-        path: route.path,
-        component: wrappedComponent,
-        connect: route.connect,
-        title: route.title,
-
+      path: route.path,
+      component: wrappedComponent
     };
 });
 

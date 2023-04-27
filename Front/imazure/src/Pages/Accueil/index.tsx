@@ -1,7 +1,23 @@
 import * as React from "react";
 import "./styles.scss";
+import { getAllImage } from "../../core";
 
 const Accueil = () => {
+  React.useEffect(() => {
+    try {
+      recupImage();
+    } catch (e) {
+      // We might want to provide this error information to an error reporting service
+      console.warn(e);
+    }
+  }, []);
+
+  const recupImage = async () => {
+    const image = await getAllImage();
+
+    console.log(image);
+  };
+
   return (
     <div className="grid-container">
       <div className="grid-item-left">
@@ -21,8 +37,7 @@ const Accueil = () => {
       </div>
       <div className="grid-item-right">
         <div className="container">
-          <div className="svg-animation">
-          </div>
+          <div className="svg-animation"></div>
         </div>
       </div>
     </div>
