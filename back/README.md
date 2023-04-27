@@ -1,4 +1,7 @@
 # To run app locally:
-
-* set `AZURE_STORAGE_CONNECTION_STRING` environment variable to Azure storage account endpoint
-* run `flask --app imazure run --debug`
+* While in `/back/` folder
+* Create virtual environment: `python -3 -m venv venv`
+* Activate virtual environmnent: `.\venv\Scripts\activate` for Windows, `venv/bin/activate` for MAC/Linux
+* Install requirements `pip install -r .\requirements`
+* Set `AZURE_STORAGE_CONNECTION_STRING` environment variable to Azure storage account endpoint
+* Run `flask --app imazure run --debug`

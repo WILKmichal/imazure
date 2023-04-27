@@ -67,7 +67,7 @@ def upload_form():
 def upload():
     for file in request.files.getlist("images"):
         try:
-            # upload the file to the container using the filename as the blob name
+            # upload the file to the container using uuid as the blob name
             container_client.upload_blob(str(uuid.uuid4()), file)
         except Exception as e:
             # ignore duplicate filenames
