@@ -1,6 +1,7 @@
 import { ComponentType } from 'react';
 import withPageTitle from './components/PageTitles';
 import Accueil from './Pages/Accueil';
+import Images from './Pages/Images';
 // import CategoriePage from './Page/Categorie';
 // import FoodsPage from './Page/Foods';
 // import LoginPage from './Page/Login';
@@ -20,7 +21,8 @@ export interface RouteType {
 
 
 export const routeNames = {
-    Accueil :'/accueil'
+    Accueil :'/accueil',
+    Images :'/images'
 };
 // 
 const routes: Array<RouteType> = [
@@ -28,6 +30,11 @@ const routes: Array<RouteType> = [
         path: routeNames.Accueil,
         title: 'Accueil',
         component: Accueil
+      },
+      {
+        path: routeNames.Images,
+        title: 'Images',
+        component: Images
       },
 
 ];

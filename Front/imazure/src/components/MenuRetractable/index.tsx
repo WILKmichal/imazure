@@ -3,7 +3,13 @@ import { FiMenu, FiX } from "react-icons/fi";
 import "./CustomHR.css";
 import { GetCategorys } from "../../helper";
 import Checkbox from "../CheckBox";
-const MenuRetractable: React.FC = () => {
+
+interface Props {
+  setNumColumns: React.Dispatch<React.SetStateAction<number>>;
+  numColumns: number;
+}
+
+const MenuRetractable: React.FC<Props> = (props) => {
   const categoriesChoice: string[] = [];
   const categories = GetCategorys();
   const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +35,10 @@ const MenuRetractable: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleColumnChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    props.setNumColumns(parseInt(event.target.value));
+  };
+
   return (
     <div
       style={{
@@ -41,6 +51,7 @@ const MenuRetractable: React.FC = () => {
         bottom: 10,
         width: isOpen ? "200px" : "50px",
         backgroundColor: isOpen ? "#EDEDED" : "transparent",
+        border: isOpen ? "1px solid #c4c6c3" : "none",
         transition: "width 0.3s ease, background-color 0.3s ease",
         zIndex: 1,
       }}
@@ -168,6 +179,41 @@ const MenuRetractable: React.FC = () => {
             </div>
           )}
         </li>
+
+        {isOpen && (
+          <>
+            <label htmlFor="column-select">Number of columns:</label>
+            <select
+              id="column-select"
+              value={props.numColumns}
+              onChange={handleColumnChange}
+            >
+              {window.innerWidth <= 450 && (
+                <>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </>
+              ) }
+                 {window.innerWidth > 450 && window.innerWidth  <= 690 && (
+                <>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </>
+              ) }
+                       {window.innerWidth > 690 && (
+                <>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+
+                </>
+              ) }
+            </select>
+          </>
+        )}
         <li>{isOpen && <hr />}</li>
 
         {isOpen && (
@@ -181,7 +227,7 @@ const MenuRetractable: React.FC = () => {
               <div
                 style={{
                   paddingLeft: "10px",
-                  textAlign: "center",
+                  // textAlign: "center",
                 }}
                 key={index}
               >

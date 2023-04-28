@@ -10,7 +10,7 @@ const PageNotFound = () => {
 
   return (
     <Container>
-      <MenuRetractable />
+      {/* <MenuRetractable /> */}
       <Row>
         <Col>
           <div className="d-flex flex-fill align-items-center container">
