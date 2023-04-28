@@ -3,6 +3,7 @@ import { FiMenu, FiX } from "react-icons/fi";
 import "./CustomHR.css";
 import { GetCategorys } from "../../helper";
 import Checkbox from "../CheckBox";
+import SpeackInput from "./SpeackInput";
 
 interface Props {
   setNumColumns: React.Dispatch<React.SetStateAction<number>>;
@@ -181,6 +182,11 @@ const MenuRetractable: React.FC<Props> = (props) => {
         </li>
 
         {isOpen && (
+          <li>
+            <SpeackInput setSearch={setSearch} />
+          </li>
+        )}
+        {isOpen && (
           <>
             <label htmlFor="column-select">Number of columns:</label>
             <select
@@ -193,24 +199,23 @@ const MenuRetractable: React.FC<Props> = (props) => {
                   <option value="1">1</option>
                   <option value="2">2</option>
                 </>
-              ) }
-                 {window.innerWidth > 450 && window.innerWidth  <= 690 && (
+              )}
+              {window.innerWidth > 450 && window.innerWidth <= 690 && (
                 <>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
                 </>
-              ) }
-                       {window.innerWidth > 690 && (
+              )}
+              {window.innerWidth > 690 && (
                 <>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
                   <option value="4">4</option>
                   <option value="5">5</option>
-
                 </>
-              ) }
+              )}
             </select>
           </>
         )}

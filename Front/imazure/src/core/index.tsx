@@ -21,4 +21,32 @@ const getAllImage = async () => {
   }
 };
 
-export { getAllImage };
+const handleUploadImage = async (selectedImages: any) => {
+  const SIGNUP_ENDPOINT = `${SERVER_URL}/upload`;
+
+  const formData = new FormData();
+  selectedImages.forEach((image: any) => {
+    formData.append("images", image);
+  });
+
+  try {
+    const response = await fetch(SIGNUP_ENDPOINT, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (response.ok) {
+      console.log("Images uploaded successfully", await response.text());
+    } else {
+      console.error(
+        "Error uploading images",
+        response.status,
+        response.statusText
+      );
+    }
+  } catch (error) {
+    console.error("Error uploading images", error);
+  }
+};
+
+export { getAllImage, handleUploadImage };
