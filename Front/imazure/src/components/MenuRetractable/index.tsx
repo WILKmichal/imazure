@@ -140,11 +140,12 @@ const MenuRetractable: React.FC<Props> = (props) => {
             <div
               style={{
                 display: "flex",
-                justifyContent: "center",
+                justifyContent: "flex-start",
+                alignItems: "center",
                 height: "104px",
-                background: "transaprent",
+                background: "transparent",
                 zIndex: 1,
-                transition: "display 1s ease ",
+                transition: "display 1s ease",
               }}
             >
               <div
@@ -154,38 +155,37 @@ const MenuRetractable: React.FC<Props> = (props) => {
                   height: "104px",
                   background: "#fff",
                   borderRadius: "25px",
-                  width: "80%",
+                  width: "100%",
                   zIndex: 1,
-                  transition: "display 1s ease ",
+                  transition: "display 1s ease",
                   alignItems: "center",
+                  position: "relative",
                 }}
               >
-                <textarea
-                  style={{
-                    border: "none",
-                    resize: "none",
-                    background: "transparent",
-                    fontSize: "12px",
-                    height: "100px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    outline: "none",
-                  }}
-                  placeholder={"tarte a la pomme vu de haut"}
-                  value={Search}
-                  onChange={handleChangeSearch}
-                />
+                <div style={{ width: "90" }}>
+                  <SpeackInput setSearch={setSearch} />
+                  <textarea
+                    style={{
+                      border: "none",
+                      resize: "none",
+                      background: "transparent",
+                      fontSize: "12px",
+                      height: "100px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      outline: "none",
+                    }}
+                    placeholder={"tarte a la pomme vu de haut"}
+                    value={Search}
+                    onChange={handleChangeSearch}
+                  />
+                </div>
               </div>
             </div>
           )}
         </li>
 
-        {isOpen && (
-          <li>
-            <SpeackInput setSearch={setSearch} />
-          </li>
-        )}
         {isOpen && (
           <>
             <label htmlFor="column-select">Number of columns:</label>
