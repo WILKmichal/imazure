@@ -1,58 +1,27 @@
 import * as React from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import "./NotFound.scss";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { useLocation } from "react-router-dom";
-import MenuRetractable from "../../components/MenuRetractable";
-import Svf from "../../assets/img/wave-haikei.svg";
-
-const PageNotFound = () => {
+const PageNotFound: React.FC = () => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  const GoPageDefaukt = () => {
+    navigate("/images");
+  };
 
   return (
-    <Container>
-      {/* <MenuRetractable /> */}
-      <Row>
-        <Col>
-          <div className="d-flex flex-fill align-items-center container">
-            <div className="row w-100">
-              <div
-                className="col-12 col-md-8 col-lg-5 mx-auto"
-                style={{ marginTop: "10%" }}
-              >
-                <div
-                  style={{
-                    backgroundColor: "#fff",
-                  }}
-                  className="card shadow-sm rounded p-4 border-0"
-                >
-                  <div className="card-body text-center d-flex flex-column justify-content-center">
-                    <span style={{ color: "black" }} className="empty-details">
-                      Erreur 404
-                    </span>
-                    <span
-                      style={{ color: "#0d6efd" }}
-                      className="h4 empty-heading mt-3"
-                    >
-                      Page non trouvée
-                    </span>
-                    <span style={{ color: "black" }} className="empty-details">
-                      {/* <p>  La Page <font color="#AD0000">{pathname} </font>est introuvable</p> */}
-                      La Page{" "}
-                      <span style={{ color: "#0d6efd" }}>{pathname}</span> est
-                      introuvable
-                    </span>
-
-                    <span className="h4 empty-heading mt-3">
-                      <Button href="/">Revenir a l'accueil</Button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+    <div className="not-found-container">
+      <div className="card not-found-card">
+        <div className="error mx-auto" data-text="404">
+          404
+        </div>
+        <span className="empty-details">
+          La Page <span className="error-path">{pathname}</span> est introuvable
+        </span>
+        <button onClick={GoPageDefaukt} className="animated-button">Retour sur les images</button>
+      </div>
+    </div>
   );
 };
 
