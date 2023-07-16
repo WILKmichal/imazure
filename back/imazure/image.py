@@ -1,7 +1,5 @@
 from flask import (
     Blueprint,
-    flash,
-    g,
     redirect,
     render_template,
     request,
@@ -13,8 +11,8 @@ import uuid
 from werkzeug.exceptions import abort
 import os   
 from azure.storage.blob import BlobServiceClient
-
-
+from dotenv import load_dotenv
+load_dotenv()
 bp = Blueprint('image', __name__)
 
 
