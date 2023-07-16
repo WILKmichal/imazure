@@ -5,14 +5,22 @@ import { getAllImage } from "../../core";
 import MenuRetractable from "../MenuRetractable";
 
 interface IImage {
-  name: string;
-  url: string;
+  images: [
+    {
+      name: string;
+      url: string;
+    }
+  ];
+  API: boolean;
 }
 
 const Gallery: React.FC = () => {
   const elementRef = useRef<HTMLDivElement>(null);
   const [imageSizes, setImageSizes] = useState<any[]>([]);
-  const [images, setImages] = useState<IImage[]>([{ name: "", url: "" }]);
+  const [images, setImages] = useState<IImage>({
+    images: [{ name: "", url: "" }],
+    API: true,
+  });
   const [numColumns, setNumColumns] = useState<number>(5);
 
   useEffect(() => {
@@ -44,10 +52,12 @@ const Gallery: React.FC = () => {
 
   const recupImage = async () => {
     const images = await getAllImage();
-    setImages(images);
+    setImages({ images: images.images, API: images.API });
 
     const sizes = await Promise.all(
-      images.map((image: { url: string | undefined }) => ImageTaille(image.url))
+      images.images.map((image: { url: string | undefined }) =>
+        ImageTaille(image.url)
+      )
     );
     setImageSizes(sizes);
   };
@@ -72,22 +82,24 @@ const Gallery: React.FC = () => {
   function calculateAspectRatio(width: number, height: number): string {
     // Calculate the aspect ratio
     const aspectRatio = width / height;
-  
+
     // Check if the aspect ratio is a standard one
     const standardRatios = [
-      { name: '1:1', ratio: 1 },
-      { name: '4:3', ratio: 4 / 3 },
-      { name: '3:2', ratio: 3 / 2 },
-      { name: '5:3', ratio: 5 / 3 },
-      { name: '16:10', ratio: 16 / 10 },
-      { name: '16:9', ratio: 16 / 9 },
-      { name: '2.39:1', ratio: 2.39 },
-      { name: '2.35:1', ratio: 2.35 },
-      { name: '2.20:1', ratio: 2.2 }
+      { name: "1:1", ratio: 1 },
+      { name: "4:3", ratio: 4 / 3 },
+      { name: "3:2", ratio: 3 / 2 },
+      { name: "5:3", ratio: 5 / 3 },
+      { name: "16:10", ratio: 16 / 10 },
+      { name: "16:9", ratio: 16 / 9 },
+      { name: "2.39:1", ratio: 2.39 },
+      { name: "2.35:1", ratio: 2.35 },
+      { name: "2.20:1", ratio: 2.2 },
     ];
-  
-    const standardRatio = standardRatios.find(r => Math.abs(r.ratio - aspectRatio) < 0.05);
-  
+
+    const standardRatio = standardRatios.find(
+      (r) => Math.abs(r.ratio - aspectRatio) < 0.05
+    );
+
     if (standardRatio) {
       // Return the name of the standard ratio if the aspect ratio is close enough
       return standardRatio.name;
@@ -101,24 +113,61 @@ const Gallery: React.FC = () => {
       return `~${closestRatio.name}`;
     }
   }
+
+  console.log(images);
+
   return (
-    <div className="gallery" style={{ columnCount: numColumns }}>
+    <div
+      className="gallery"
+      style={{ columnCount: images.API === true ? numColumns : 1 }}
+    >
       <MenuRetractable numColumns={numColumns} setNumColumns={setNumColumns} />
-      {images.map((image, index) => (
-        <div key={image.url} className="image_container">
-          <img src={image.url} alt={image.name} loading="lazy" />
-          {imageSizes[index] && (
-            <div className="image_taille">
-              {imageSizes[index].width + "x" + imageSizes[index].height}{" "}
-              {calculateAspectRatio(
-                imageSizes[index].width,
-                imageSizes[index].height
-              )}
-            </div>
-          )}
-          <div className="image_name">{image.name}</div>
+
+      {images.API === false ? (
+        <div className="APIError">
+          <div className="card APIErrorContent">
+            <div className="Oops">Ooops !</div>
+            <span className="ErreurType">
+              Erreur 503 : Service non disponible
+            </span>
+            <span className="ErreurMessage">
+              Une erreur s'est produite lors de la communication avec l'API.
+            </span>
+          </div>
         </div>
-      ))}
+      ) : (
+        // <div className="APIError">
+        //   <div className="APIErrorContent">
+        //     <div>
+        //       <span>Ooops, une erreur est survenue.</span>
+        //     </div>
+        //     <div>
+        //     <span>Erreur 503 : Service non disponible.</span>
+        //     </div>
+
+        //     <span>
+        //       Une erreur s'est produite lors de la communication avec l'API.
+        //     </span>
+        //   </div>
+        // </div>
+        <div>
+          {images.images.map((image, index) => (
+            <div key={image.url} className="image_container">
+              <img src={image.url} alt={image.name} loading="lazy" />
+              {imageSizes[index] && (
+                <div className="image_taille">
+                  {imageSizes[index].width + "x" + imageSizes[index].height}{" "}
+                  {calculateAspectRatio(
+                    imageSizes[index].width,
+                    imageSizes[index].height
+                  )}
+                </div>
+              )}
+              <div className="image_name">{image.name}</div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

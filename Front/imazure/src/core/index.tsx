@@ -15,9 +15,10 @@ const getAllImage = async () => {
 
     const data_JSON = await getData(SIGNUP_ENDPOINT, "GET");
 
-    return data_JSON;
+    return { images: data_JSON, API: true };
   } catch (error) {
     console.log(error);
+    return { images: [], API: false };
   }
 };
 
@@ -26,8 +27,6 @@ const handleUploadImage = async (selectedImages: any) => {
 
   const formData = new FormData();
   selectedImages.forEach((image: any) => {
-    console.log(image);
-
     formData.append("images", image);
   });
 
@@ -37,10 +36,10 @@ const handleUploadImage = async (selectedImages: any) => {
       body: formData,
     });
 
-    console.log(response);
-
     if (response.ok) {
       window.location.href = "/images";
+
+      return { message: response.ok, API: true };
       // console.log("Images uploaded successfully", await response.text());
     } else {
       console.error(
@@ -48,9 +47,11 @@ const handleUploadImage = async (selectedImages: any) => {
         response.status,
         response.statusText
       );
+      return { message: "Une erreur est survenue", API: false };
     }
   } catch (error) {
-    console.error("Error uploading images", error);
+    // console.error("Error uploading images API", error);
+    return { message: "impossible de joindre l'api", API: false };
   }
 };
 

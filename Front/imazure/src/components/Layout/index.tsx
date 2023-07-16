@@ -19,13 +19,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       }}
       // className="d-flex flex-column flex-fill wrapper"
     >
-      <div
+      {/* <div
         style={{
           minHeight: "2vh",
         }}
-      >
-        {/* <Header /> */}
-      </div>
+      > */}
+      {/* <Header /> */}
+      {/* </div> */}
       <main
         style={{
           minHeight: "80vh",
@@ -40,7 +40,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           minHeight: "5vh",
         }}
       >
-
         {/* <Footer /> */}
       </div>
     </div>
