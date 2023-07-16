@@ -26,6 +26,8 @@ const handleUploadImage = async (selectedImages: any) => {
 
   const formData = new FormData();
   selectedImages.forEach((image: any) => {
+    console.log(image);
+
     formData.append("images", image);
   });
 
@@ -35,8 +37,11 @@ const handleUploadImage = async (selectedImages: any) => {
       body: formData,
     });
 
+    console.log(response);
+
     if (response.ok) {
-      console.log("Images uploaded successfully", await response.text());
+      window.location.href = "/images";
+      // console.log("Images uploaded successfully", await response.text());
     } else {
       console.error(
         "Error uploading images",

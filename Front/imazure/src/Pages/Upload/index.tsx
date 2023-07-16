@@ -45,6 +45,8 @@ const Upload: React.FC = () => {
   };
 
   const upload = () => {
+    console.log('ici');
+    
     handleUploadImage(droppedImages);
   };
   return (
@@ -55,9 +57,9 @@ const Upload: React.FC = () => {
             setDroppedImages={setDroppedImages}
             onUpload={handleUpload}
           />
-          <hr />
+          <hr className="hrdrag" />
           <DragAndDrop setDroppedImages={setDroppedImages} />
-          <hr />
+          <hr className="hrUpload" />
 
           <button
             disabled={droppedImages.length === 0 ? true : false}

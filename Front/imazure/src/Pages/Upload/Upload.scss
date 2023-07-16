@@ -3,7 +3,6 @@
   justify-content: center;
   align-items: center;
   min-height: 100%;
-
 }
 
 .card {
@@ -19,4 +18,40 @@
   .card {
     width: 80%;
   }
+}
+
+.hrUpload {
+  border: none;
+  border-top: 3px double #000000;
+  color: #000000;
+  overflow: visible;
+  text-align: center;
+  height: 5px;
+}
+
+.hrUpload:after {
+  background: #ededed;
+  color: #000000;
+  content: "upload";
+  padding: 0 4px;
+  position: relative;
+  top: -13px;
+}
+
+.hrdrag {
+  border: none;
+  border-top: 3px double #000000;
+  color: #000000;
+  overflow: visible;
+  text-align: center;
+  height: 5px;
+}
+
+.hrdrag:after {
+  background: #ededed;
+  color: #000000;
+  content: "drag and drop";
+  padding: 0 4px;
+  position: relative;
+  top: -13px;
 }

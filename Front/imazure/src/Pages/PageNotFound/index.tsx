@@ -19,7 +19,9 @@ const PageNotFound: React.FC = () => {
         <span className="empty-details">
           La Page <span className="error-path">{pathname}</span> est introuvable
         </span>
-        <button onClick={GoPageDefaukt} className="animated-button">Retour sur les images</button>
+        <button onClick={GoPageDefaukt} className="animated-button">
+          Retour sur les images
+        </button>
       </div>
     </div>
   );

@@ -40,6 +40,9 @@ const MenuRetractable: React.FC<Props> = (props) => {
     props.setNumColumns(parseInt(event.target.value));
   };
 
+  const handleSearch = () => {
+    console.log(categoriesChoice);
+  };
   return (
     <div
       style={{
@@ -259,6 +262,7 @@ const MenuRetractable: React.FC<Props> = (props) => {
               }}
             >
               <button
+                onClick={handleSearch}
                 style={{
                   border: "none",
                   background: "#000000",

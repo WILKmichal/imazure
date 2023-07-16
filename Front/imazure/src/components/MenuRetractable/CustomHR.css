@@ -10,7 +10,7 @@ hr {
 hr:after {
     background: #EDEDED;
     color: #000000;
-    content: 'Filter';
+    content: 'Filter';  
     padding: 0 4px;
     position: relative;
     top: -13px;
