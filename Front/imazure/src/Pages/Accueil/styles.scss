@@ -1,12 +1,18 @@
 .grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
+  height: 95vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 100px;
 
-  .grid-item-left {
+  .grid-item-left,
+  .grid-item-right {
+    width: 49%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     .center-verticaly {
-      padding-top: 150px;
-      padding-left: 200px;
       grid-column-start: 1;
       justify-self: start;
       font-family: "Inter";
@@ -71,65 +77,51 @@
       }
     }
   }
-
-  .grid-item-right {
-    grid-column-start: 2;
-    justify-self: start;
-    // height: 100vh;
-    // overflow: hidden;
-
-    // @keyframes move {
-    //   0% {
-    //     transform: translateY(-100%);
-    //   }
-    //   100% {
-    //     transform: translateY(100%);
-    //   }
-    // }
-
-    // .parent {
-    //     height: 100vh;
-    //     animation: move 3s linear infinite;
-    //   .moving-div {
-    //     width: 100px;
-    //     height: 100px;
-    //     background-color: #ff0000;
-    //     position: absolute;
-    //     top: 0;
-    //     left: 50%;
-    //     transform: translateX(-50%);
-    //     overflow: hidden;
-    //   }
-    // }
-  }
 }
 
 .container {
-  padding-right: 200px;
-  padding-top: 200px;
-  width: 100px;
-  height: 200px;
-  //   overflow: hidden;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
 }
 
-.svg-animation {
-  transform-origin: right;
-  animation-name: compress;
-  animation-duration: 2s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+.svg {
+  width: 100%;
 }
 
-@keyframes compress {
-  0% {
-    transform: scaleX(1); /* Set the initial scale of the SVG to 1 */
+@media only screen and (max-width: 1280px) {
+  .grid-container {
+    gap: 10px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center; // ajoutez cette ligne
+
+    .grid-item-left,
+    .grid-item-right {
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
   }
-  20% {
-    transform: scaleX(
-      0.5
-    ); /* Set the scale of the SVG to 0.5 and translate it horizontally by 50% at the midpoint of the animation */
-  }
-  100% {
-    transform: scaleX(1);
+}
+
+@media only screen and (max-width: 780px) {
+  .grid-container {
+    gap: 10px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center; // ajoutez cette ligne
+
+    .grid-item-left,
+    .grid-item-right {
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .grid-item-right {
+      display: none;
+    }
   }
 }
