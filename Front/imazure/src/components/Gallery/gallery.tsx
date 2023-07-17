@@ -4,7 +4,7 @@ import "./gallery.scss";
 import { getAllImage } from "../../core";
 import MenuRetractable from "../MenuRetractable";
 
-interface IImage {
+export interface IImage {
   images: [
     {
       name: string;
@@ -152,7 +152,10 @@ const Gallery: React.FC = () => {
         // </div>
         <div>
           {images.images.map((image, index) => (
-            <div key={image.url} className="image_container">
+            <div key={image.url} className="image_container"
+            onClick={()=>{
+              window.location.href = '/images/details/gg'
+            }}>
               <img src={image.url} alt={image.name} loading="lazy" />
               {imageSizes[index] && (
                 <div className="image_taille">

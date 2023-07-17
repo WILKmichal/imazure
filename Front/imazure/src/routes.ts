@@ -3,6 +3,7 @@ import withPageTitle from './components/PageTitles';
 import Accueil from './Pages/Accueil';
 import Images from './Pages/Images';
 import Upload from './Pages/Upload';
+import ImagesDetails from './Pages/ImagesDetails';
 // import CategoriePage from './Page/Categorie';
 // import FoodsPage from './Page/Foods';
 // import LoginPage from './Page/Login';
@@ -24,7 +25,8 @@ export interface RouteType {
 export const routeNames = {
   Accueil: '/',
   Images: '/images',
-  Upload: '/upload'
+  Upload: '/upload',
+  ImagesDetails: '/images/Details/:imageId'
 };
 // 
 const routes: Array<RouteType> = [
@@ -43,6 +45,11 @@ const routes: Array<RouteType> = [
     title: 'Upload',
     component: Upload
   },
+  {
+    path:routeNames.ImagesDetails,
+    title: 'Details',
+    component:ImagesDetails
+  }
 
 ];
 
