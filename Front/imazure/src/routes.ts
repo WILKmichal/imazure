@@ -22,7 +22,7 @@ export interface RouteType {
 
 
 export const routeNames = {
-  Accueil: '/accueil',
+  Accueil: '/',
   Images: '/images',
   Upload: '/upload'
 };
