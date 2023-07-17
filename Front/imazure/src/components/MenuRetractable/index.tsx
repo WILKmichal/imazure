@@ -15,6 +15,7 @@ const MenuRetractable: React.FC<Props> = (props) => {
   const categories = GetCategorys();
   const [isOpen, setIsOpen] = useState(false);
   const [Search, setSearch] = useState("");
+  const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
 
   const handleCheckedChange = (categories: string) => {
     if (categoriesChoice.includes(categories)) {
@@ -166,7 +167,8 @@ const MenuRetractable: React.FC<Props> = (props) => {
                 }}
               >
                 <div style={{ width: "90" }}>
-                  <SpeackInput setSearch={setSearch} />
+                  {!isFirefox && <SpeackInput setSearch={setSearch} />}
+
                   <textarea
                     style={{
                       border: "none",

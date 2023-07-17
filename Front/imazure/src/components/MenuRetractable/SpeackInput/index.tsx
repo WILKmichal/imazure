@@ -4,12 +4,17 @@ import { MdMic, MdMicOff } from "react-icons/md";
 interface Speak {
   setSearch: any;
 }
+
 const SpeackInput: React.FC<Speak> = (Props) => {
-  // const [transcription, setTranscription] = useState<string>("");
   const [recognition, setRecognition] = useState<any | null>(null);
   const [listening, setListening] = useState<boolean>(false);
+  const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
 
   useEffect(() => {
+    if (isFirefox) {
+      return; // exit the effect if the browser is Firefox
+    }
+
     const SpeechRecognition =
       (window as any).SpeechRecognition ||
       (window as any).webkitSpeechRecognition;
@@ -22,7 +27,6 @@ const SpeackInput: React.FC<Speak> = (Props) => {
     recognitionInstance.onresult = (event: any) => {
       const last = event.results.length - 1;
       const transcript = event.results[last][0].transcript;
-      // setTranscription(transcript);
       Props.setSearch(transcript);
     };
 
@@ -32,9 +36,13 @@ const SpeackInput: React.FC<Speak> = (Props) => {
     };
 
     setRecognition(recognitionInstance);
-  }, []);
+  }, [Props, isFirefox]); // adding dependencies here
 
   const startListening = () => {
+    if (isFirefox) {
+      return; // prevent listening if the browser is Firefox
+    }
+
     if (recognition) {
       setListening(true);
       recognition.start();
