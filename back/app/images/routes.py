@@ -140,7 +140,29 @@ def image_info(id):
 @bp.delete('/<id>')
 def delete_image(id):
     try:
+        img = Image.query.get(id)
+        Image_tag.query.filter_by(image_id=id).delete()
         Image.query.filter_by(id=id).delete()
+
+        blob_client = container_client.get_blob_client(blob=img.name)
+        blob_client.delete_blob(delete_snapshots="include")
+        db.session.commit()
+        return ('', 204)
+    except Exception as e:
+        return (str(e), 500)
+
+@bp.delete('/multiple')
+def delete_images():
+    try:
+        id_list = request.get_json(force=False, silent=False, cache=True)
+        for image_id in id_list:
+            Image_tag.query.filter_by(image_id=image_id).delete()
+            img = Image.query.get(image_id)
+            blob_client = container_client.get_blob_client(blob=img.name)
+            blob_client.delete_blob(delete_snapshots="include")
+
+        Image.query.filter(Image.id.in_(id_list)).delete()
+
         db.session.commit()
         return ('', 204)
     except Exception as e:
