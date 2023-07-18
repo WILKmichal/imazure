@@ -88,30 +88,22 @@ def upload():
                 all_tag_names.append(tag.name)
                 all_tags.append((tagEntity, tag.confidence))
 
-            old_tags = Tag.query.filter(Tag.name.in_(all_tag_names))
+            old_tags = Tag.query.filter(Tag.name.in_(all_tag_names)).all()
             old_tag_names = [tag.name for tag in old_tags]
             
             # Try each tag separately to avoid duplicates, associate
             for tag in all_tags:
                 try:
-                    print("start")
-                    print(old_tag_names)
-                    for name in old_tag_names:
-                        print(name)
                     if (not (tag[0].name in old_tag_names)):
-                        print("if")
-                        print(tag[0].name)
                         image_tags.append(
                             Image_tag(image=image,
                             tag=tag[0],
                             confidence=tag[1])
                             )
                     else:
-                        print("else")
-                        print(tag[0].name)
                         image_tags.append(
                             Image_tag(image=image,
-                            tag=next(t for t in old_tags if t == tag[0].name),
+                            tag=next(iter([t for t in old_tags if t.name == tag[0].name])),
                             confidence=tag[1])
                             )
                 except Exception as e:
@@ -128,7 +120,6 @@ def upload():
             # upload the file to the container using uuid as the blob name
         except Exception as e:
             # ignore duplicate filenames
-            print("Ignoring duplicate filenames")
             print(e)
 
     return redirect('/')
