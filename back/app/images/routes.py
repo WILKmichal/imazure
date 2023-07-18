@@ -18,6 +18,7 @@ from flask import (
 import uuid
 from werkzeug.exceptions import abort
 import os
+import sys
 from azure.storage.blob import BlobServiceClient
 from datetime import datetime
 from flask import current_app
@@ -25,8 +26,17 @@ Object = lambda **kwargs: type("Object", (), kwargs)
 from dotenv import load_dotenv
 load_dotenv()
 
+from azure.cognitiveservices.vision.computervision import ComputerVisionClient
+from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
+from azure.cognitiveservices.vision.computervision.models import VisualFeatureTypes
+from msrest.authentication import CognitiveServicesCredentials
+
+
 # retrieve the connection string from the environment variable
 connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
+subscription_key = os.getenv('VISION_KEY')
+endpoint = os.getenv('VISION_ENDPOINT')
+computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 # container name in which images will be store in the storage account
 container_name = "images"
 # create a blob service client to interact with the storage account
@@ -65,18 +75,55 @@ def upload():
                 url = uploaded.url,
                 name = name
             )
+            remote_image_url = uploaded.url
+            # Call API with remote image
+            tags_result_remote = computervision_client.tag_image(remote_image_url)
+            all_tags = []
+            all_tag_names = []
+            image_tags = []
+            old_tags = []
 
-            # TODO get tags from API
-            # TODO make sure tags are unique
-            tag = Tag(name = 'tag given by API')
-            tag2 = Tag(name = '2nd tag')
-            image_tag = Image_tag(image=image, tag=tag, confidence=0)
-            image_tag2 = Image_tag(image=image, tag=tag2, confidence=10)
+            for tag in tags_result_remote.tags:
+                tagEntity = Tag(name = tag.name)
+                all_tag_names.append(tag.name)
+                all_tags.append((tagEntity, tag.confidence))
+
+            old_tags = Tag.query.filter(Tag.name.in_(all_tag_names))
+            old_tag_names = [tag.name for tag in old_tags]
+            
+            # Try each tag separately to avoid duplicates, associate
+            for tag in all_tags:
+                try:
+                    print("start")
+                    print(old_tag_names)
+                    for name in old_tag_names:
+                        print(name)
+                    if (not (tag[0].name in old_tag_names)):
+                        print("if")
+                        print(tag[0].name)
+                        image_tags.append(
+                            Image_tag(image=image,
+                            tag=tag[0],
+                            confidence=tag[1])
+                            )
+                    else:
+                        print("else")
+                        print(tag[0].name)
+                        image_tags.append(
+                            Image_tag(image=image,
+                            tag=next(t for t in old_tags if t == tag[0].name),
+                            confidence=tag[1])
+                            )
+                except Exception as e:
+                    print(e)
+                    print("Unexpected error:", sys.exc_info()[0])
+
             db.session.add(image)
-            db.session.add(tag)
-            db.session.add(tag2)
-            db.session.add(image_tag)
-            db.session.add(image_tag2)
+            db.session.commit()
+
+            # Add all tag-image relations at once
+            for image_tag in image_tags:
+                db.session.add(image_tag)
             db.session.commit()
 
             # upload the file to the container using uuid as the blob name
@@ -90,13 +137,7 @@ def upload():
 
 @bp.get('/all')
 def images_as_json():
-    # list all the blobs in the container
-    blob_items = container_client.list_blobs()
-    images = []
-    for blob in blob_items:
-        blob_client = container_client.get_blob_client(blob=blob.name)
-        images.append({
-            "url": blob_client.url,
-            "name": blob_client.blob_name
-        })
+
+    images =  [i.to_dict() for i in Image.query.all()]
+
     return jsonify(images)
