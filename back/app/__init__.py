@@ -17,4 +17,7 @@ def create_app(config_class=Config):
     from app.images import bp as images_bp
     app.register_blueprint(images_bp, url_prefix='/images')
 
+    from app.tags import bp as tags_bp
+    app.register_blueprint(tags_bp, url_prefix='/tags')
+
     return app

@@ -9,11 +9,50 @@ const getData = async (url: any, method?: any) => {
   return json;
 };
 
+const getTags = async () => {
+  try {
+    const TAGS_ENDPOINT = `${SERVER_URL}/tags/all`;
+
+    const data_JSON = await getData(TAGS_ENDPOINT, "GET");
+
+    return { tags: data_JSON, API: true };
+  } catch (error) {
+    console.log(error);
+    return { tags: [], API: false };
+  }
+}
+
+const getTagsImgCount = async () => {
+  try {
+    const TAGS_ENDPOINT = `${SERVER_URL}/tags/count`;
+
+    const data_JSON = await getData(TAGS_ENDPOINT, "GET");
+
+    return { tags: data_JSON, API: true };
+  } catch (error) {
+    console.log(error);
+    return { tags: [], API: false };
+  }
+}
+
+const getImgCountById = async (tagId: number) => {
+  try {
+    const TAGS_ENDPOINT = `${SERVER_URL}/tags/count/${tagId}`;
+
+    const data_JSON = await getData(TAGS_ENDPOINT, "GET");
+
+    return { tags: data_JSON, API: true };
+  } catch (error) {
+    console.log(error);
+    return { tags: [], API: false };
+  }
+}
+
 const getImageInfoById = async (id: any) => {
   try {
-    const SIGNUP_ENDPOINT = `${SERVER_URL}/details/${id}`;
+    const DETAILS_ENDPOINT = `${SERVER_URL}/details/${id}`;
 
-    const data_JSON = await getData(SIGNUP_ENDPOINT, "GET");
+    const data_JSON = await getData(DETAILS_ENDPOINT, "GET");
 
     return { imageInfo: data_JSON, API: true };
   } catch (error) {
@@ -68,4 +107,4 @@ const handleUploadImage = async (selectedImages: any) => {
   }
 };
 
-export { getAllImage, handleUploadImage,getImageInfoById };
+export { getAllImage, handleUploadImage,getImageInfoById,getTags,getTagsImgCount,getImgCountById};
