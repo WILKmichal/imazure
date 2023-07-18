@@ -116,7 +116,6 @@ def upload():
                             )
                 except Exception as e:
                     print(e)
-                    print("Unexpected error:", sys.exc_info()[0])
 
             db.session.add(image)
             db.session.commit()
@@ -146,3 +145,12 @@ def images_as_json():
 def image_info(id):
     image = Image.query.get(id)
     return jsonify(image.to_dict())
+
+@bp.delete('/<id>')
+def delete_image(id):
+    try:
+        Image.query.filter_by(id=id).delete()
+        db.session.commit()
+        return ('', 204)
+    except Exception as e:
+        return (str(e), 500)
