@@ -141,3 +141,8 @@ def images_as_json():
     images =  [i.to_dict() for i in Image.query.all()]
 
     return jsonify(images)
+
+@bp.get('/details/<id>')
+def image_info(id):
+    image = Image.query.get(id)
+    return jsonify(image.to_dict())
