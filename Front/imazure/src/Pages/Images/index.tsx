@@ -2,14 +2,15 @@ import * as React from "react";
 import "./styles.scss";
 import Gallery from "../../components/Gallery/gallery";
 import AdvancedSearch from "../../components/AdvancedSearch";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineReload } from "react-icons/ai";
 import { getAllImage } from "../../core";
 import ImagesLoading from "../../assets/img/LoadImages.gif";
-import AuthContext from "../../context";
+// import AuthContext from "../../context";
 import { MdAutoAwesomeMosaic } from "react-icons/md";
 import { FaCheck, FaThList } from "react-icons/fa";
 import { TfiLayoutGrid3Alt } from "react-icons/tfi";
+import Grid from "../../components/grids";
 
 export interface IImage {
   images: [
@@ -29,8 +30,8 @@ const Images: React.FC = () => {
   const [LoadImages, setLoadImages] = useState(true);
   const [imageSizes, setImageSizes] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [viewType, setviewType] = useState("mosaic");
-  const [Icon, setIcon] = useState(<MdAutoAwesomeMosaic />);
+  const [viewType, setviewType] = useState("cards");
+  const [Icon, setIcon] = useState(<TfiLayoutGrid3Alt />);
   const [images, setImages] = useState<IImage>({
     images: [{ name: "", url: "" }],
     API: true,
@@ -143,7 +144,9 @@ const Images: React.FC = () => {
             {viewType === "mosaic" && (
               <Gallery imageSizes={imageSizes} images={images} />
             )}
-            {viewType === "cards" && <FaCheck />}
+            {viewType === "cards" && (
+              <Grid imageSizes={imageSizes} images={images} />
+            )}
             {viewType === "list" && <FaCheck />}
           </>
         ) : (
