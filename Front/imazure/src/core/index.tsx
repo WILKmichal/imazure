@@ -9,6 +9,19 @@ const getData = async (url: any, method?: any) => {
   return json;
 };
 
+const getImageInfoById = async (id: any) => {
+  try {
+    const SIGNUP_ENDPOINT = `${SERVER_URL}/details/${id}`;
+
+    const data_JSON = await getData(SIGNUP_ENDPOINT, "GET");
+
+    return { imageInfo: data_JSON, API: true };
+  } catch (error) {
+    console.log(error);
+    return { image: {}, API: false };
+  }
+}
+
 const getAllImage = async () => {
   try {
     const SIGNUP_ENDPOINT = `${SERVER_URL}/all`;
@@ -55,4 +68,4 @@ const handleUploadImage = async (selectedImages: any) => {
   }
 };
 
-export { getAllImage, handleUploadImage };
+export { getAllImage, handleUploadImage,getImageInfoById };
