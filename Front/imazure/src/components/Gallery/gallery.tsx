@@ -107,7 +107,7 @@ const Gallery: React.FC<Props> = (props) => {
               key={image.url}
               className="image_container"
               onClick={() => {
-                window.location.href = "/images/details/gg";
+                window.location.href = `/images/details/${image.id}`;
               }}
             >
               <img src={image.url} alt={image.name} loading="lazy" />
