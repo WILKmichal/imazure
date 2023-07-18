@@ -14,6 +14,7 @@
 
 
 
+
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -31,6 +32,13 @@
 
     }
  }
+
+     /* Media Query for smaller screens */
+     @media (max-width: 600px) {
+      .grid-container {
+        grid-template-columns: 1fr; /* Stack items one above the other */
+      }
+    }
 
  button {
     padding: 17px 40px;
