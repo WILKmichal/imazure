@@ -7,6 +7,7 @@ import MenuRetractable from "../MenuRetractable";
 export interface IImage {
   images: [
     {
+      id:number,
       name: string;
       url: string;
     }
@@ -18,7 +19,7 @@ const Gallery: React.FC = () => {
   const elementRef = useRef<HTMLDivElement>(null);
   const [imageSizes, setImageSizes] = useState<any[]>([]);
   const [images, setImages] = useState<IImage>({
-    images: [{ name: "", url: "" }],
+    images: [{id:0, name: "", url: "" }],
     API: true,
   });
   const [numColumns, setNumColumns] = useState<number>(5);
@@ -154,7 +155,7 @@ const Gallery: React.FC = () => {
           {images.images.map((image, index) => (
             <div key={image.url} className="image_container"
             onClick={()=>{
-              window.location.href = '/images/details/gg'
+              window.location.href = `/images/details/${image.id}`
             }}>
               <img src={image.url} alt={image.name} loading="lazy" />
               {imageSizes[index] && (
