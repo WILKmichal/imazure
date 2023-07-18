@@ -1,96 +1,83 @@
-.tag{
-    display: inline-flex;
-    background-color: #fff;
-    border:1px solid #dadce0;
-    padding: 0 14px;
-    border-radius: 20px;
-    min-width: 48px;
-    height: 40px;
-    text-align: center;
-    align-items: center;
-    font-size: 14px;
-    margin: 3px;
+.tag {
+  cursor: pointer;
+  display: inline-flex;
+  background-color: #fff;
+  border: 1px solid #dadce0;
+  padding: 0 14px;
+  border-radius: 20px;
+  min-width: 48px;
+  height: 40px;
+  text-align: center;
+  align-items: center;
+  font-size: 14px;
 }
 
-
-
-
 .grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 
-    .image{
-        //width: 100%;
-        //max-width: 100%;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-        padding-right: 50px;
-        padding-left: 50px;
-        padding-top: 50px;
-        overflow: hidden;
-
-    }
- }
-
-     /* Media Query for smaller screens */
-     @media (max-width: 600px) {
-      .grid-container {
-        grid-template-columns: 1fr; /* Stack items one above the other */
-      }
-    }
-
- button {
-    padding: 17px 40px;
-    border-radius: 10px;
-    border: 0;
-    background-color: rgb(255, 56, 86);
-    letter-spacing: 1.5px;
-    font-size: 15px;
-    transition: all .3s ease;
-    box-shadow: rgb(201, 46, 70) 0px -10px 0px 0px;
-    color: hsl(0, 0%, 100%);
-  }
-  
-  button:hover {
-    box-shadow: rgb(201, 46, 70) 0px 7px 0px 0px;
-  }
-  
-  button:active {
-    background-color: rgb(255, 56, 86);
-    box-shadow: rgb(201, 46, 70) 0px 0px 0px 0px;
-    transform: translateY(5px);
-    transition: 200ms;
-  }
-
-
-  .title{
-    padding-top:50px;
-    padding-bottom: 50px;
-  }
-
-  .description{
-    padding-bottom: 20px;
-  }
-
-  .tags{
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-
-  .download{
-    padding-top: 200px;
-    text-align: center;
-  }
-
-  .information{
-    padding-left:30px;
-    padding-right:100px;
-  }
-
-
-.image img{
-    box-shadow: 0 1px 5px #00000099;
-    width: 100%;
+  .image {
+    //width: 100%;
+    //max-width: 100%;
+    width: auto;
     height: auto;
+    object-fit: contain;
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-top: 50px;
+    overflow: hidden;
+  }
+}
+
+button {
+  padding: 17px 40px;
+  border-radius: 10px;
+  border: 0;
+  background-color: rgb(255, 56, 86);
+  letter-spacing: 1.5px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-shadow: rgb(201, 46, 70) 0px -10px 0px 0px;
+  color: hsl(0, 0%, 100%);
+}
+
+button:hover {
+  box-shadow: rgb(201, 46, 70) 0px 7px 0px 0px;
+}
+
+button:active {
+  background-color: rgb(255, 56, 86);
+  box-shadow: rgb(201, 46, 70) 0px 0px 0px 0px;
+  transform: translateY(5px);
+  transition: 200ms;
+}
+
+.title {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.description {
+  padding-bottom: 20px;
+}
+
+.tags {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.download {
+  padding-top: 200px;
+  text-align: center;
+}
+
+.information {
+  padding-left: 30px;
+  padding-right: 100px;
+}
+
+.image img {
+  box-shadow: 0 1px 5px #00000099;
+  width: 100%;
+  height: auto;
 }

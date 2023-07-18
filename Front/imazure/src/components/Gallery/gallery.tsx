@@ -15,19 +15,14 @@ export interface IImage {
   API: boolean;
 }
 
-const Gallery: React.FC = () => {
+interface Props {
+  images: any;
+  imageSizes: any;
+}
+
+const Gallery: React.FC<Props> = (props) => {
   const elementRef = useRef<HTMLDivElement>(null);
-  const [imageSizes, setImageSizes] = useState<any[]>([]);
-  const [images, setImages] = useState<IImage>({
-    images: [{id:0, name: "", url: "" }],
-    API: true,
-  });
   const [numColumns, setNumColumns] = useState<number>(5);
-
-  useEffect(() => {
-    recupImage();
-  }, []);
-
   useEffect(() => {
     function handleResize() {
       if (elementRef.current) {
@@ -51,35 +46,6 @@ const Gallery: React.FC = () => {
     };
   }, [elementRef]);
 
-  const recupImage = async () => {
-    const images = await getAllImage();
-    setImages({ images: images.images, API: images.API });
-
-    const sizes = await Promise.all(
-      images.images.map((image: { url: string | undefined }) =>
-        ImageTaille(image.url)
-      )
-    );
-    setImageSizes(sizes);
-  };
-
-  const ImageTaille = (image?: string) => {
-    return new Promise<any>((resolve) => {
-      if (!image) {
-        resolve("Pas de taille");
-      } else {
-        let imageTailles = new Image();
-        imageTailles.src = image;
-        imageTailles.onload = () => {
-          const { width, height } = imageTailles;
-          resolve({ width, height });
-        };
-        imageTailles.onerror = () => {
-          resolve("Erreur lors du chargement de l'image");
-        };
-      }
-    });
-  };
   function calculateAspectRatio(width: number, height: number): string {
     // Calculate the aspect ratio
     const aspectRatio = width / height;
@@ -115,16 +81,14 @@ const Gallery: React.FC = () => {
     }
   }
 
-  console.log(images);
-
   return (
     <div
       className="gallery"
-      style={{ columnCount: images.API === true ? numColumns : 1 }}
+      style={{ columnCount: props.images.API === true ? numColumns : 1 }}
     >
-      <MenuRetractable numColumns={numColumns} setNumColumns={setNumColumns} />
+      {/* <MenuRetractable numColumns={numColumns} setNumColumns={setNumColumns} /> */}
 
-      {images.API === false ? (
+      {props.images.API === false ? (
         <div className="APIError">
           <div className="card APIErrorContent">
             <div className="Oops">Ooops !</div>
@@ -137,33 +101,24 @@ const Gallery: React.FC = () => {
           </div>
         </div>
       ) : (
-        // <div className="APIError">
-        //   <div className="APIErrorContent">
-        //     <div>
-        //       <span>Ooops, une erreur est survenue.</span>
-        //     </div>
-        //     <div>
-        //     <span>Erreur 503 : Service non disponible.</span>
-        //     </div>
-
-        //     <span>
-        //       Une erreur s'est produite lors de la communication avec l'API.
-        //     </span>
-        //   </div>
-        // </div>
         <div>
-          {images.images.map((image, index) => (
-            <div key={image.url} className="image_container"
-            onClick={()=>{
-              window.location.href = `/images/details/${image.id}`
-            }}>
+          {props.images.images.map((image: any, index: number) => (
+            <div
+              key={image.url}
+              className="image_container"
+              onClick={() => {
+                window.location.href = "/images/details/gg";
+              }}
+            >
               <img src={image.url} alt={image.name} loading="lazy" />
-              {imageSizes[index] && (
+              {props.imageSizes[index] && (
                 <div className="image_taille">
-                  {imageSizes[index].width + "x" + imageSizes[index].height}{" "}
+                  {props.imageSizes[index].width +
+                    "x" +
+                    props.imageSizes[index].height}{" "}
                   {calculateAspectRatio(
-                    imageSizes[index].width,
-                    imageSizes[index].height
+                    props.imageSizes[index].width,
+                    props.imageSizes[index].height
                   )}
                 </div>
               )}
