@@ -1,12 +1,12 @@
 .cards_container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
   .cards {
     /* Autres propriétés ... */
 
     font-size: 15px;
-    padding: 0px 20px 5px 20px;
+    padding: 0px 20px;
     width: auto !important;
     height: 100%;
     background-color: white !important;
@@ -15,31 +15,11 @@
     justify-content: center;
     flex-direction: column;
     box-shadow: 4px 4px 4px -2px rgba(0, 0, 0, 0.2);
-    margin-bottom: 10px;
-
-    @media (max-width: 480px) { /* adjust breakpoint as needed */
-      width: calc(100% - 10px); /* 2 cards per row on small screens */
-    }
-
-    @media (min-width: 480px) { /* adjust breakpoint as needed */
-      width: calc(50% - 10px); /* 2 cards per row on small screens */
-    }
-
-    @media (min-width: 768px) { /* adjust breakpoint as needed */
-      width: calc(33.33% - 10px); /* 3 cards per row on medium screens */
-    }
-
-    @media (min-width: 1024px) { /* adjust breakpoint as needed */
-      width: calc(25% - 10px); /* 4 cards per row on large screens */
-    }
-
-    @media (min-width: 1200px) { /* adjust breakpoint as needed */
-      width: calc(20% - 10px); /* 5 cards per row on extra large screens */
-    }
 
     .card_imge_container {
       position: relative;
       padding: 0;
+      //   overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -70,21 +50,19 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        /* Stylez votre bouton ici */
       }
     }
-
     .card_label {
       width: 100%;
       text-align: center;
     }
-
     .card_info {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       width: 100%;
     }
-
     &:hover {
       img {
         transform: translateY(-10%);
@@ -97,34 +75,31 @@
   }
 }
 
-// @media only screen and (max-width: 1250px) {
-//   .cards_container {
-//     .cards {
-//       width: calc(33.33% - 10px);
-//     }
-//   }
-// }
+@media only screen and (max-width: 1250px) {
+  .cards_container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media only screen and (max-width: 850px) {
+  .cards_container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 
-// @media only screen and (max-width: 850px) {
-//   .cards_container {
-//     .cards {
-//       width: calc(50% - 10px);
-//     }
-//   }
-// }
+@media only screen and (max-width: 600px) {
+  .cards_container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 
-// @media only screen and (max-width: 600px) {
-//   .cards_container {
-//     .cards {
-//       width: calc(50% - 10px);
-//     }
-//   }
-// }
+@media only screen and (max-width: 550px) {
+    .cards_container {
+      grid-template-columns: 1fr;
+    }
+  }
 
-// @media only screen and (max-width: 550px) {
-//   .cards_container {
-//     .cards {
-//       width: 100%;
-//     }
-//   }
-// }
+
+
+
+
+
