@@ -69,7 +69,7 @@ const AdvancedSearch: React.FC<Props> = (props) => {
           <div key={index}>
             <ButtonBox
               labelColor={"#000000"}
-              label={category.nom}
+              label={category.tag.name}
               isChecked={category.choix}
               onCheckedChange={handleCheckedChange}
             />

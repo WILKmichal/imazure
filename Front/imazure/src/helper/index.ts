@@ -8,7 +8,7 @@ const GetCategorys = () => {
         try {
             const tags: any = await getTags(); // Assuming getTags() is an async function.
             console.log(tags);
-            const categoriesFormat = tags.tags.map((tag: any) => ({ nom: tag.name, choix: false }));
+            const categoriesFormat = tags.tags.map((tag: any) => ({ tag: tag, choix: false }));
             setCategorie(categoriesFormat);
         } catch (err) {
             console.error('Unable to call GetCategorys', err);
