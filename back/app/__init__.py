@@ -2,9 +2,11 @@ from flask import Flask
 
 from config import Config
 from app.extensions import db
+from flask_cors import CORS
 
 def create_app(config_class=Config):
     app = Flask(__name__)
+    CORS(app, origins=["http://localhost:3000", "https://localhost:3000"])
     app.config.from_object(config_class)
 
     # Initialize Flask extensions here
