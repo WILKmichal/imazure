@@ -1,4 +1,4 @@
-const SERVER_URL = "http://127.0.0.1:5000/images";
+const SERVER_URL = "http://127.0.0.1:5000/";
 
 const getData = async (url: any, method?: any) => {
   const rep = await fetch(url, {
@@ -63,7 +63,7 @@ const getImageInfoById = async (id: any) => {
 
 const getAllImage = async () => {
   try {
-    const SIGNUP_ENDPOINT = `${SERVER_URL}/all`;
+    const SIGNUP_ENDPOINT = `${SERVER_URL}/images/all`;
 
     const data_JSON = await getData(SIGNUP_ENDPOINT, "GET");
 
@@ -75,7 +75,7 @@ const getAllImage = async () => {
 };
 
 const handleUploadImage = async (selectedImages: any) => {
-  const SIGNUP_ENDPOINT = `${SERVER_URL}/upload`;
+  const SIGNUP_ENDPOINT = `${SERVER_URL}/images/upload`;
 
   const formData = new FormData();
   selectedImages.forEach((image: any) => {
