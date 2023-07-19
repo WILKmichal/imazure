@@ -1,4 +1,4 @@
-const SERVER_URL = "http://127.0.0.1:5000/";
+const SERVER_URL = "http://127.0.0.1:5000";
 
 const getData = async (url: any, method?: any) => {
   const rep = await fetch(url, {
@@ -50,7 +50,7 @@ const getImgCountById = async (tagId: number) => {
 
 const getImageInfoById = async (id: any) => {
   try {
-    const DETAILS_ENDPOINT = `${SERVER_URL}/details/${id}`;
+    const DETAILS_ENDPOINT = `${SERVER_URL}/images/details/${id}`;
 
     const data_JSON = await getData(DETAILS_ENDPOINT, "GET");
 
