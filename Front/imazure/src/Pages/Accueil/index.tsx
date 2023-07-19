@@ -19,7 +19,7 @@ const Accueil = () => {
   };
 
   return (
-    <div className="grid-container">
+    <div className="grid-container-accueil">
       <div className="grid-item-left">
         <div className="center-verticaly">
           <div className="application-name">Imazure</div>
@@ -42,7 +42,7 @@ const Accueil = () => {
       </div>
       <div className="grid-item-right">
         <div className="container">
-          <svg height="200" width="100%">
+          <svg height="200" width="600px">
             {/* // La cible */}
             <circle
               cx="500"
