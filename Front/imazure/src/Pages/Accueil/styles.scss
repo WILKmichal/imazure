@@ -1,4 +1,4 @@
-.grid-container {
+.grid-container-accueil {
   height: 95vh;
   display: flex;
   flex-direction: row;
@@ -91,7 +91,7 @@
 }
 
 @media only screen and (max-width: 1280px) {
-  .grid-container {
+  .grid-container-accueil {
     gap: 10px;
     align-items: center;
     flex-direction: column;
@@ -107,7 +107,7 @@
 }
 
 @media only screen and (max-width: 780px) {
-  .grid-container {
+  .grid-container-accueil {
     gap: 10px;
     align-items: center;
     flex-direction: column;
