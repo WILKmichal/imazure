@@ -16,6 +16,7 @@ idna==3.4
 isodate==0.6.1
 itsdangerous==2.1.2
 Jinja2==3.1.2
+jsonpickle==3.0.1
 MarkupSafe==2.1.2
 msrest==0.7.1
 oauthlib==3.2.2

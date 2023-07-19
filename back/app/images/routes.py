@@ -4,6 +4,7 @@ from app.extensions import db
 from app.models.image import Image
 from app.models.tag import Tag
 from app.models.image_tag import Image_tag
+from app.models.image_request import Image_request
 
 from flask import (
     Blueprint,
@@ -15,6 +16,7 @@ from flask import (
 
 )
 
+import jsonpickle
 import uuid
 from werkzeug.exceptions import abort
 import os
@@ -132,11 +134,78 @@ def images_as_json():
 
     return jsonify(images)
 
+# get image details + associated tags
 @bp.get('/details/<id>')
 def image_info(id):
     image = Image.query.get(id)
+
     return jsonify(image.to_dict())
 
+# add tags to an image
+# expects
+# {
+#     "title": "Cars",
+#     "tags": ["pixel", "illustration"]
+# }
+@bp.put('/<id>')
+def add_image_tags(id):
+    img_from_json = jsonpickle.decode(request.data)
+    print(img_from_json)
+    image = Image.query.get(id)
+    tag_list = img_from_json['tags']
+    all_tags = []
+    all_tag_names = []
+    image_tags = []
+    existing_tags = []
+
+    for tag in tag_list:
+        tagEntity = Tag(name = tag)
+        all_tag_names.append(tag)
+        all_tags.append((tagEntity, 1.0))
+
+    existing_tags = Tag.query.filter(Tag.name.in_(all_tag_names)).all()
+    existing_tag_names = [tag.name for tag in existing_tags]
+
+    for tag in all_tags:
+        try:
+            if (not (tag[0].name in existing_tag_names)):
+                
+                image_tags.append(
+                    Image_tag(image=image,
+                    tag=tag[0],
+                    confidence=tag[1])
+                    )
+            else:
+                image_tags.append(
+                    Image_tag(image=image,
+                    tag=next(iter([t for t in existing_tags if t.name == tag[0].name])),
+                    confidence=tag[1])
+                    )
+        except Exception as e:
+            print(e)
+
+    # only associate tags if not already associated
+    associated_tags = [t for t in image.tags]
+    associated_tags_ids = [t.id for t in image.tags]
+    to_be_associated = [i_t for i_t in image_tags if ((not (i_t.tag.id in associated_tags_ids)) and (i_t.tag.name in tag_list)) ]
+
+    to_be_deleted_ids = [t.id for t in associated_tags if not (t.name in tag_list)]
+    Image_tag.query.filter(Image_tag.tag_id.in_(to_be_deleted_ids)).delete()
+    print("aaaaaaaaAAAAAAAA")
+    print(image_tags)
+    print(to_be_associated)
+    print(to_be_deleted_ids)
+
+    for image_tag in to_be_associated:
+        db.session.add(image_tag)
+    db.session.commit()
+
+    image.title = img_from_json['title']
+    db.session.commit()
+
+    return jsonify(image.to_dict())
+
+# delete a single image
 @bp.delete('/<id>')
 def delete_image(id):
     try:
