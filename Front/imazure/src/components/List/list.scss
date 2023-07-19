@@ -1,3 +1,16 @@
-.fixed_column {
-  border-right: #c2cdd8 solid 1px;
+.list_container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  .ColumnFixe {
+    border-right: #c2cdd8 solid 1px;
+    border-bottom: #c2cdd8 solid 1px;
+  }
+
+  .ColumnNoFixe {
+    border-bottom: #c2cdd8 solid 1px;
+  }
+
+  // border-right: #c2cdd8 solid 1px;
 }

@@ -7,31 +7,19 @@ import SpeackInput from "./SpeackInput";
 import ButtonBox from "./ButtonBox";
 
 interface Props {
-  categoriesChoice: string[];
   setSearch: Function;
   Search: string;
+  toggleCategoryChoice: Function;
+  categorie: any;
 }
 
 const AdvancedSearch: React.FC<Props> = (props) => {
   const [isFocused, setIsFocused] = useState(false);
   const [numToShow, setNumToShow] = useState(4); // Nouvel état pour suivre le nombre d'éléments à afficher
-  const categories = GetCategorys();
   const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
 
   const handleChangeSearch = (event: any) => {
     props.setSearch(event.target.value);
-  };
-
-  const handleCheckedChange = (categories: string) => {
-    if (props.categoriesChoice.includes(categories)) {
-      for (let i = props.categoriesChoice.length - 1; i >= 0; i--) {
-        if (props.categoriesChoice[i] === categories) {
-          props.categoriesChoice.splice(i, 1);
-        }
-      }
-    } else {
-      props.categoriesChoice.push(categories);
-    }
   };
 
   return (
@@ -65,20 +53,21 @@ const AdvancedSearch: React.FC<Props> = (props) => {
             )}
           </div>
         </div>
-        {categories.slice(0, numToShow).map((category: any, index: number) => (
-          <div key={index}>
-            <ButtonBox
-              labelColor={"#000000"}
-              label={category.tag.name}
-              isChecked={category.choix}
-              onCheckedChange={handleCheckedChange}
-            />
-          </div>
-        ))}
-        {numToShow < categories.length ? ( // Si il y a plus d'éléments à afficher, montrer le bouton "Show More"
+        {props.categorie
+          .slice(0, numToShow)
+          .map((category: any, index: number) => (
+            <div key={index}>
+              <ButtonBox
+                labelColor={"#000000"}
+                category={category}
+                toggleCategoryChoice={props.toggleCategoryChoice}
+              />
+            </div>
+          ))}
+        {numToShow < props.categorie.length ? ( // Si il y a plus d'éléments à afficher, montrer le bouton "Show More"
           <div
             className="tag"
-            onClick={() => setNumToShow(categories.length)}
+            onClick={() => setNumToShow(props.categorie.length)}
             style={{
               color: "rgb(52, 72, 197)",
             }}

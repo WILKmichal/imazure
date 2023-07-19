@@ -12,7 +12,7 @@ interface Props {
 
 const MenuRetractable: React.FC<Props> = (props) => {
   const categoriesChoice: string[] = [];
-  const categories = GetCategorys();
+  // const { categorie } = GetCategorys();
   const [isOpen, setIsOpen] = useState(false);
   const [Search, setSearch] = useState("");
   const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
@@ -233,7 +233,7 @@ const MenuRetractable: React.FC<Props> = (props) => {
               maxHeight: "60vh",
             }}
           >
-            {categories.map((category: any, index: number) => (
+            {/* {categorie.map((category: any, index: number) => (
               <div
                 style={{
                   paddingLeft: "10px",
@@ -248,7 +248,7 @@ const MenuRetractable: React.FC<Props> = (props) => {
                   onCheckedChange={handleCheckedChange}
                 />
               </div>
-            ))}
+            ))} */}
           </li>
         )}
         <li>
