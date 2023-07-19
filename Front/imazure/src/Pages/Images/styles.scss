@@ -15,11 +15,8 @@ body {
   padding: 10px;
 }
 .gallary_container {
-  margin-top: 10px;
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
-  grid-auto-rows: 10.5em;
 }
 
 .reload_choic_gallery {
@@ -33,6 +30,7 @@ body {
   }
 }
 .view_choic_gallery_container {
+  border-bottom: #c2cdd8 solid 1px; 
   height: 53px;
   background-color: #f3f4f7;
   padding: 5px 12px;

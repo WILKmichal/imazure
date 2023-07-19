@@ -34,9 +34,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </main>
 
       <div
-        style={{
-          minHeight: "5vh",
-        }}
+        // style={{
+        //   minHeight: "5vh",
+        // }}
       >
         {/* <Footer /> */}
       </div>
