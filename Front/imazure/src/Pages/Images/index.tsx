@@ -12,6 +12,7 @@ import { FaCheck, FaThList } from "react-icons/fa";
 import { TfiLayoutGrid3Alt } from "react-icons/tfi";
 import Grid from "../../components/grids";
 import List from "../../components/List";
+import { GetCategorys } from "../../helper";
 
 export interface IImage {
   images: [
@@ -40,6 +41,12 @@ const Images: React.FC = () => {
   useEffect(() => {
     recupImage();
   }, []);
+
+  const { categorie, toggleCategoryChoice } = GetCategorys();
+
+  useEffect(() => {
+    ImagesWithTags(); // Call ImagesWithTags when category changes
+  }, [categorie]); 
 
   const recupImage = async () => {
     setLoadImages(true);
@@ -84,18 +91,28 @@ const Images: React.FC = () => {
     setIsModalOpen(false);
   };
 
+  const ImagesWithTags = () => {
+    // Filter the categories whose 'choix' is true, then map to get only the tags
+    const selectedTags = categorie
+      .filter((categorie) => categorie.choix)
+      .map((categorie) => categorie.tag);
+
+    console.log(selectedTags);
+  };
+
   return (
     <div
       style={{
         backgroundColor: "#f3f4f7",
-        minHeight : '100vh'
+        minHeight: "100vh",
       }}
     >
       <div className="Search_container">
         <AdvancedSearch
+          categorie={categorie}
           Search={Search}
           setSearch={setSearch}
-          categoriesChoice={categoriesChoice}
+          toggleCategoryChoice={toggleCategoryChoice}
         />
         <div className="view_choic_gallery_container">
           <div className="reload_choic_gallery" onClick={recupImage}>

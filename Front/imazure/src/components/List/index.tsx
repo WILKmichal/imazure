@@ -96,31 +96,44 @@ const List: React.FC<Props> = (props) => {
         </div>
       ) : (
         <div className="list_container">
-          <div className="fixed_column">
+          <div className="ColumnFixe">
             <div className="list_row_top_name">image/name</div>
             {props.images.images.map((image: any, index: number) => (
-              <div key={image.url} className="list_row_name">
-                image/name
+              <div key={image.name} className="list_row_name">
+                {image.name}
               </div>
             ))}
           </div>
-
-          <div className="scrollable_column">
+          <div className="ColumnNoFixe">
+            <div className="list_row_top_name">image/name</div>
+            {props.images.images.map((image: any, index: number) => (
+              <div key={image.name} className="list_row_name">
+                {/* {image.name} */}test
+              </div>
+            ))}
+          </div>
+          {/* <div className="list_row_top">
+            <div className="list_row_top_name">image/name</div>
             <div className="list_row_top_info">
               <div>test 1</div>
               <div>test 1</div>
               <div>test 1</div>
               <div>test 1</div>
             </div>
-            {props.images.images.map((image: any, index: number) => (
-              <div key={image.url} className="list_row_info">
-                <div>test 1</div>
-                <div>test 1</div>
-                <div>test 1</div>
-                <div>test 1</div>
-              </div>
-            ))}
           </div>
+          {props.images.images.map((image: any, index: number) => (
+            <div key={image.url} className="list_row">
+              <div className="list_row_name">image/name</div>
+              <div>
+                <div className="list_row_info">
+                  <div>test 1</div>
+                  <div>test 1</div>
+                  <div>test 1</div>
+                  <div>test 1</div>
+                </div>
+              </div>
+            </div>
+          ))} */}
         </div>
       )}
     </div>
