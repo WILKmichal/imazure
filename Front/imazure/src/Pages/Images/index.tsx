@@ -11,6 +11,7 @@ import { MdAutoAwesomeMosaic } from "react-icons/md";
 import { FaCheck, FaThList } from "react-icons/fa";
 import { TfiLayoutGrid3Alt } from "react-icons/tfi";
 import Grid from "../../components/grids";
+import List from "../../components/List";
 
 export interface IImage {
   images: [
@@ -30,7 +31,7 @@ const Images: React.FC = () => {
   const [LoadImages, setLoadImages] = useState(true);
   const [imageSizes, setImageSizes] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [viewType, setviewType] = useState("cards");
+  const [viewType, setviewType] = useState("list");
   const [Icon, setIcon] = useState(<TfiLayoutGrid3Alt />);
   const [images, setImages] = useState<IImage>({
     images: [{ name: "", url: "" }],
@@ -84,7 +85,12 @@ const Images: React.FC = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: "#f3f4f7",
+        minHeight : '100vh'
+      }}
+    >
       <div className="Search_container">
         <AdvancedSearch
           Search={Search}
@@ -137,18 +143,19 @@ const Images: React.FC = () => {
             </div>
           )}
         </div>
-      </div>
-      <div className="gallary_container">
+
         {!LoadImages ? (
-          <>
+          <div className="gallary_container">
             {viewType === "mosaic" && (
               <Gallery imageSizes={imageSizes} images={images} />
             )}
             {viewType === "cards" && (
               <Grid imageSizes={imageSizes} images={images} />
             )}
-            {viewType === "list" && <FaCheck />}
-          </>
+            {viewType === "list" && (
+              <List imageSizes={imageSizes} images={images} />
+            )}
+          </div>
         ) : (
           // <Gallery imageSizes={imageSizes} images={images} />
           <div className="LoadImages">
