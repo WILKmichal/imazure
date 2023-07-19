@@ -13,6 +13,7 @@ def allImageCount():
     tags_data = [{"id": tag.id,"num_images": len(tag.images)} for tag in tags]
     return jsonify(tags_data)
 
+
 @bp.get('count/<id>')
 def imageCount(id):
     tag = Tag.query.get(id)
