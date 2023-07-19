@@ -100,14 +100,16 @@ const Grid: React.FC<Props> = (props) => {
         <div className="cards_container">
           {props.images.images.map((image: any, index: number) => (
             <div key={image.url} className="cards">
-              <div
-                className="card_imge_container"
-                onClick={() => {
-                  window.location.href = `/images/details/${image.id}`;
-                }}
-              >
+              <div className="card_imge_container">
                 <img src={image.url} alt={image.name} loading="lazy" />
-                <div className="viewButton">Voir plus</div>
+                <div
+                  onClick={() => {
+                    window.location.href = `/images/details/${image.id}`;
+                  }}
+                  className="viewButton"
+                >
+                  Voir plus
+                </div>
               </div>
               <div className="card_label">{image.name}</div>
               <div className="card_info">
