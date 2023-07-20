@@ -4,7 +4,7 @@ import Gallery from "../../components/Gallery/gallery";
 import AdvancedSearch from "../../components/AdvancedSearch";
 import { useEffect, useState } from "react";
 import { AiOutlineReload } from "react-icons/ai";
-import { getAllImage } from "../../core";
+import { getAllImage, getImagesByTag } from "../../core";
 import ImagesLoading from "../../assets/img/LoadImages.gif";
 // import AuthContext from "../../context";
 import { MdAutoAwesomeMosaic } from "react-icons/md";
@@ -46,7 +46,7 @@ const Images: React.FC = () => {
 
   useEffect(() => {
     ImagesWithTags(); // Call ImagesWithTags when category changes
-  }, [categorie]); 
+  }, [categorie]);
 
   const recupImage = async () => {
     setLoadImages(true);
@@ -91,13 +91,26 @@ const Images: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const ImagesWithTags = () => {
+  const ImagesWithTags = async () => {
     // Filter the categories whose 'choix' is true, then map to get only the tags
     const selectedTags = categorie
       .filter((categorie) => categorie.choix)
-      .map((categorie) => categorie.tag);
+      .map((categorie) => categorie.tag.id);
 
-    console.log(selectedTags);
+    // setLoadImages(true);
+
+    const images: any = await getImagesByTag(selectedTags);
+    // setImages({ images: images.images, API: images.API });
+
+    // const sizes = await Promise.all(
+    //   images.images.map((image: { url: string | undefined }) =>
+    //     ImageTaille(image.url)
+    //   )
+    // );
+    // setImageSizes(images);
+    // setLoadImages(false);
+
+    console.log(images);
   };
 
   return (
