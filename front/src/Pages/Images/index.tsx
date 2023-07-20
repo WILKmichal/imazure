@@ -20,7 +20,7 @@ const Images: React.FC = () => {
   const [Search, setSearch] = useState("");
   const [imageSizes, setImageSizes] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [viewType, setviewType] = useState("mosaic");
+  const [viewType, setviewType] = useState("list");
   const [Icon, setIcon] = useState(<TfiLayoutGrid3Alt />);
   const [images, setImages] = useState<image[]|null|undefined>(undefined);
 
