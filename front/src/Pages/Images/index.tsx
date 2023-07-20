@@ -1,18 +1,17 @@
 import * as React from "react";
-import "./styles.scss";
-import Gallery from "../../components/Gallery/gallery";
-import AdvancedSearch from "../../components/AdvancedSearch";
 import { useEffect, useState } from "react";
 import { AiOutlineReload } from "react-icons/ai";
-import { getAllImage, getImagesByTag } from "../../core";
-import ImagesLoading from "../../assets/img/LoadImages.gif";
-// import AuthContext from "../../context";
-import { MdAutoAwesomeMosaic } from "react-icons/md";
 import { FaCheck, FaThList } from "react-icons/fa";
+import { MdAutoAwesomeMosaic } from "react-icons/md";
 import { TfiLayoutGrid3Alt } from "react-icons/tfi";
-import Grid from "../../components/grids";
+import ImagesLoading from "../../assets/img/LoadImages.gif";
+import AdvancedSearch from "../../components/AdvancedSearch";
+import Gallery from "../../components/Gallery/gallery";
 import List from "../../components/List";
+import Grid from "../../components/grids";
+import { getImagesByTag } from "../../core";
 import { GetCategorys } from "../../helper";
+import "./styles.scss";
 
 export interface IImage {
   images: [
@@ -25,9 +24,7 @@ export interface IImage {
 }
 
 const Images: React.FC = () => {
-  // const { visibleContext, setVisibleContext } = useContext(AuthContext);
 
-  const categoriesChoice: string[] = [];
   const [Search, setSearch] = useState("");
   const [LoadImages, setLoadImages] = useState(true);
   const [imageSizes, setImageSizes] = useState<any[]>([]);
@@ -38,30 +35,12 @@ const Images: React.FC = () => {
     images: [{ name: "", url: "" }],
     API: true,
   });
-  // useEffect(() => {
-  //   recupImage();
-  // }, []);
 
   const { categorie, toggleCategoryChoice } = GetCategorys();
 
   useEffect(() => {
     ImagesWithTags(); // Call ImagesWithTags when category changes
   }, [categorie]);
-
-  // const recupImage = async () => {
-  //   setLoadImages(true);
-
-  //   const images = await getAllImage();
-  //   setImages({ images: images.images, API: images.API });
-
-  //   const sizes = await Promise.all(
-  //     images.images.map((image: { url: string | undefined }) =>
-  //       ImageTaille(image.url)
-  //     )
-  //   );
-  //   setImageSizes(sizes);
-  //   setLoadImages(false);
-  // };
 
   const ImageTaille = (image?: string) => {
     return new Promise<any>((resolve) => {
@@ -97,19 +76,6 @@ const Images: React.FC = () => {
       .filter((categorie) => categorie.choix)
       .map((categorie) => categorie.tag.id);
 
-    // setLoadImages(true);
-
-    // const images: any = await getImagesByTag(selectedTags);
-    // setImages({ images: images.images, API: images.API });
-
-    // const sizes = await Promise.all(
-    //   images.images.map((image: { url: string | undefined }) =>
-    //     ImageTaille(image.url)
-    //   )
-    // );
-    // setImageSizes(images);
-    // setLoadImages(false);
-
     setLoadImages(true);
 
     const images = await getImagesByTag(selectedTags);
@@ -122,8 +88,6 @@ const Images: React.FC = () => {
     );
     setImageSizes(sizes);
     setLoadImages(false);
-
-    // console.log(images);
   };
 
   return (
@@ -200,7 +164,6 @@ const Images: React.FC = () => {
             )}
           </div>
         ) : (
-          // <Gallery imageSizes={imageSizes} images={images} />
           <div className="LoadImages">
             <img src={ImagesLoading} alt="" />
             <p className="LoadingImages">

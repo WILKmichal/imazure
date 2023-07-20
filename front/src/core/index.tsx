@@ -63,18 +63,18 @@ const getImageInfoById = async (id: any) => {
   }
 }
 
-const getAllImage = async () => {
-  try {
-    const SIGNUP_ENDPOINT = `${SERVER_URL}/images/all`;
+interface image{
+  id: number,
+  name: string,
+  tags: tag[],
+  url: string,
+  title:string
+}
 
-    const data_JSON = await getData(SIGNUP_ENDPOINT, "GET");
-
-    return { images: data_JSON, API: true };
-  } catch (error) {
-    console.log(error);
-    return { images: [], API: false };
-  }
-};
+interface tag{
+  id: number,
+  name: string,
+}
 
 const getImagesByTag = async (tagIds: Number[]) => {
   try {
@@ -129,4 +129,5 @@ const handleUploadImage = async (selectedImages: any) => {
   }
 };
 
-export { getAllImage, handleUploadImage,getImageInfoById,getTags,getTagsImgCount,getImgCountById, getImagesByTag};
+export {getImageInfoById, getImagesByTag, getImgCountById, getTags, getTagsImgCount, handleUploadImage };
+

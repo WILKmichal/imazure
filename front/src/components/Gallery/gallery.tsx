@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./gallery.scss";
 
-import { getAllImage } from "../../core";
-import MenuRetractable from "../MenuRetractable";
 
 export interface IImage {
   images: [

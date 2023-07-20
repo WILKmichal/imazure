@@ -1,22 +1,6 @@
-import * as React from "react";
 import "./styles.scss";
-import { getAllImage } from "../../core";
 
 const Accueil = () => {
-  React.useEffect(() => {
-    try {
-      recupImage();
-    } catch (e) {
-      // We might want to provide this error information to an error reporting service
-      console.warn(e);
-    }
-  }, []);
-
-  const recupImage = async () => {
-    const image = await getAllImage();
-
-    console.log(image);
-  };
 
   return (
     <div className="grid-container-accueil">
