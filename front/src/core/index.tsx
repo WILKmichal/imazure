@@ -1,16 +1,15 @@
+import { ErrorType } from "./error";
 import { image } from "./model.db";
 
 const SERVER_URL = "http://127.0.0.1:5000";
 
 type requestMethode = "GET"|"POST"|"DELETE"|"PUT"|"PATCH"
 
-const getData = async (url: string, method?: requestMethode) => {
+const getData = async (url: string, method?: requestMethode):Promise<any> => {
   const rep:Response = await fetch(url, {
     method: method,
   });
-  const json = await rep.json();
-
-  return json;
+  return await rep.json();
 };
 
 const getTags = async () => {
@@ -26,31 +25,6 @@ const getTags = async () => {
   }
 }
 
-const getTagsImgCount = async () => {
-  try {
-    const TAGS_ENDPOINT = `${SERVER_URL}/tags/count`;
-
-    const data_JSON = await getData(TAGS_ENDPOINT, "GET");
-
-    return { tags: data_JSON, API: true };
-  } catch (error) {
-    console.log(error);
-    return { tags: [], API: false };
-  }
-}
-
-const getImgCountById = async (tagId: number) => {
-  try {
-    const TAGS_ENDPOINT = `${SERVER_URL}/tags/count/${tagId}`;
-
-    const data_JSON = await getData(TAGS_ENDPOINT, "GET");
-
-    return { tags: data_JSON, API: true };
-  } catch (error) {
-    console.log(error);
-    return { tags: [], API: false };
-  }
-}
 
 const getImageInfoById = async (id: any) => {
   try {
@@ -87,7 +61,7 @@ const getImagesByTag = async (tagIds: number[]): Promise<image[] | null | undefi
 
      images = await getData(SIGNUP_ENDPOINT, "GET");
   } catch (error) {
-    console.error("Error fetching images:", error);  
+    console.error(ErrorType.fetchingImageError, error);  
     images  = null;
   }
   return images;
@@ -111,7 +85,6 @@ const handleUploadImage = async (selectedImages: any) => {
       window.location.href = "/images";
 
       return { message: response.ok, API: true };
-      // console.log("Images uploaded successfully", await response.text());
     } else {
       console.error(
         "Error uploading images",
@@ -121,7 +94,6 @@ const handleUploadImage = async (selectedImages: any) => {
       return { message: "Une erreur est survenue", API: false };
     }
   } catch (error) {
-    // console.error("Error uploading images API", error);
     return { message: "impossible de joindre l'api", API: false };
   }
 };
@@ -129,9 +101,7 @@ const handleUploadImage = async (selectedImages: any) => {
 export {
   getImageInfoById,
   getImagesByTag,
-  getImgCountById,
   getTags,
-  getTagsImgCount,
   handleUploadImage,
   deleteImageWithId
 };
