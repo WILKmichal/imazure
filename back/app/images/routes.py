@@ -193,10 +193,7 @@ def add_image_tags(id):
 
     to_be_deleted_ids = [t.id for t in associated_tags if not (t.name in tag_list)]
     Image_tag.query.filter(Image_tag.tag_id.in_(to_be_deleted_ids)).delete()
-    print("aaaaaaaaAAAAAAAA")
-    print(image_tags)
-    print(to_be_associated)
-    print(to_be_deleted_ids)
+
 
     for image_tag in to_be_associated:
         db.session.add(image_tag)
@@ -212,6 +209,8 @@ def add_image_tags(id):
 def delete_image(id):
     try:
         img = Image.query.get(id)
+        if (img == None): return ('', 204)
+
         Image_tag.query.filter_by(image_id=id).delete()
         Image.query.filter_by(id=id).delete()
 
@@ -229,6 +228,7 @@ def delete_images():
         for image_id in id_list:
             Image_tag.query.filter_by(image_id=image_id).delete()
             img = Image.query.get(image_id)
+            if (img == None): continue
             blob_client = container_client.get_blob_client(blob=img.name)
             blob_client.delete_blob(delete_snapshots="include")
 
