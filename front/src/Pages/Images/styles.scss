@@ -30,7 +30,7 @@ body {
   }
 }
 .view_choic_gallery_container {
-  border-bottom: #c2cdd8 solid 1px; 
+  border-bottom: #c2cdd8 solid 1px;
   height: 53px;
   background-color: #f3f4f7;
   padding: 5px 12px;
@@ -81,6 +81,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 @keyframes bounce {

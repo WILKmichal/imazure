@@ -4,7 +4,7 @@ import Gallery from "../../components/Gallery/gallery";
 import AdvancedSearch from "../../components/AdvancedSearch";
 import { useEffect, useState } from "react";
 import { AiOutlineReload } from "react-icons/ai";
-import { getAllImage } from "../../core";
+import { getAllImage, getImagesByTag } from "../../core";
 import ImagesLoading from "../../assets/img/LoadImages.gif";
 // import AuthContext from "../../context";
 import { MdAutoAwesomeMosaic } from "react-icons/md";
@@ -38,30 +38,30 @@ const Images: React.FC = () => {
     images: [{ name: "", url: "" }],
     API: true,
   });
-  useEffect(() => {
-    recupImage();
-  }, []);
+  // useEffect(() => {
+  //   recupImage();
+  // }, []);
 
   const { categorie, toggleCategoryChoice } = GetCategorys();
 
   useEffect(() => {
     ImagesWithTags(); // Call ImagesWithTags when category changes
-  }, [categorie]); 
+  }, [categorie]);
 
-  const recupImage = async () => {
-    setLoadImages(true);
+  // const recupImage = async () => {
+  //   setLoadImages(true);
 
-    const images = await getAllImage();
-    setImages({ images: images.images, API: images.API });
+  //   const images = await getAllImage();
+  //   setImages({ images: images.images, API: images.API });
 
-    const sizes = await Promise.all(
-      images.images.map((image: { url: string | undefined }) =>
-        ImageTaille(image.url)
-      )
-    );
-    setImageSizes(sizes);
-    setLoadImages(false);
-  };
+  //   const sizes = await Promise.all(
+  //     images.images.map((image: { url: string | undefined }) =>
+  //       ImageTaille(image.url)
+  //     )
+  //   );
+  //   setImageSizes(sizes);
+  //   setLoadImages(false);
+  // };
 
   const ImageTaille = (image?: string) => {
     return new Promise<any>((resolve) => {
@@ -91,13 +91,39 @@ const Images: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const ImagesWithTags = () => {
+  const ImagesWithTags = async () => {
     // Filter the categories whose 'choix' is true, then map to get only the tags
     const selectedTags = categorie
       .filter((categorie) => categorie.choix)
-      .map((categorie) => categorie.tag);
+      .map((categorie) => categorie.tag.id);
 
-    console.log(selectedTags);
+    // setLoadImages(true);
+
+    // const images: any = await getImagesByTag(selectedTags);
+    // setImages({ images: images.images, API: images.API });
+
+    // const sizes = await Promise.all(
+    //   images.images.map((image: { url: string | undefined }) =>
+    //     ImageTaille(image.url)
+    //   )
+    // );
+    // setImageSizes(images);
+    // setLoadImages(false);
+
+    setLoadImages(true);
+
+    const images = await getImagesByTag(selectedTags);
+    setImages({ images: images.images, API: images.API });
+
+    const sizes = await Promise.all(
+      images.images.map((image: { url: string | undefined }) =>
+        ImageTaille(image.url)
+      )
+    );
+    setImageSizes(sizes);
+    setLoadImages(false);
+
+    // console.log(images);
   };
 
   return (
@@ -115,7 +141,7 @@ const Images: React.FC = () => {
           toggleCategoryChoice={toggleCategoryChoice}
         />
         <div className="view_choic_gallery_container">
-          <div className="reload_choic_gallery" onClick={recupImage}>
+          <div className="reload_choic_gallery" onClick={ImagesWithTags}>
             <AiOutlineReload />
           </div>
           <div onClick={ViewTypeViewImages} className="view_choic_gallery">
@@ -176,13 +202,11 @@ const Images: React.FC = () => {
         ) : (
           // <Gallery imageSizes={imageSizes} images={images} />
           <div className="LoadImages">
-            <p>
-              <img src={ImagesLoading} alt="" />
-              <p className="LoadingImages">
-                Loading <span></span>
-                <span></span>
-                <span></span>
-              </p>
+            <img src={ImagesLoading} alt="" />
+            <p className="LoadingImages">
+              Loading <span></span>
+              <span></span>
+              <span></span>
             </p>
           </div>
         )}

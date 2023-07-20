@@ -76,6 +76,26 @@ const getAllImage = async () => {
   }
 };
 
+const getImagesByTag = async (tagIds: Number[]) => {
+  try {
+    let params = tagIds.reduce((str, id) => {
+      return `${str}&tag=${id}`
+    }, "")
+
+    params = "?" + params.slice(1, params.length)
+
+    const SIGNUP_ENDPOINT = `${SERVER_URL}/images/by-tags${params}`;
+
+
+    const data_JSON = await getData(SIGNUP_ENDPOINT, "GET");
+
+    return { images: data_JSON, API: true };
+  } catch (error) {
+    console.log(error);
+    return { images: [], API: false };
+  }
+};
+
 const handleUploadImage = async (selectedImages: any) => {
   const SIGNUP_ENDPOINT = `${SERVER_URL}/images/upload`;
 
@@ -109,4 +129,4 @@ const handleUploadImage = async (selectedImages: any) => {
   }
 };
 
-export { getAllImage, handleUploadImage,getImageInfoById,getTags,getTagsImgCount,getImgCountById};
+export { getAllImage, handleUploadImage,getImageInfoById,getTags,getTagsImgCount,getImgCountById, getImagesByTag};
