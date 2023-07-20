@@ -20,15 +20,13 @@ enum ViewType {
   list = "list",
 }
 
-
 const Images: React.FC = () => {
-
   const [Search, setSearch] = useState("");
   const [imageSizes, setImageSizes] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [viewType, setviewType] = useState<ViewType>(ViewType.list);
+  const [viewType, setviewType] = useState<ViewType>(ViewType.mosaic);
   const [Icon, setIcon] = useState(<MdAutoAwesomeMosaic />);
-  const [images, setImages] = useState<image[]|null|undefined>(undefined);
+  const [images, setImages] = useState<image[] | null | undefined>(undefined);
 
   const { categorie, toggleCategoryChoice } = GetCategorys();
 
@@ -66,6 +64,8 @@ const Images: React.FC = () => {
 
   const ImagesWithTags = async () => {
     // Filter the categories whose 'choix' is true, then map to get only the tags
+
+    setImages(undefined);
     const selectedTags = categorie
       .filter((categorie) => categorie.choix)
       .map((categorie) => categorie.tag.id);
@@ -75,13 +75,13 @@ const Images: React.FC = () => {
     const images = await getImagesByTag(selectedTags);
     setImages(images);
 
-    if(images !== null && images !== undefined){
-    const sizes = await Promise.all(
-      images.map((image: { url: string | undefined}) =>
-        ImageTaille(image.url)
-      )
-    );
-    setImageSizes(sizes);
+    if (images !== null && images !== undefined) {
+      const sizes = await Promise.all(
+        images.map((image: { url: string | undefined }) =>
+          ImageTaille(image.url)
+        )
+      );
+      setImageSizes(sizes);
     }
     //setLoadImages(false);
   };
@@ -125,7 +125,9 @@ const Images: React.FC = () => {
                 </div>
                 <div className="choice">
                   <span
-                    onClick={() => ChoiceView(ViewType.cards, <TfiLayoutGrid3Alt />)}
+                    onClick={() =>
+                      ChoiceView(ViewType.cards, <TfiLayoutGrid3Alt />)
+                    }
                   >
                     <div>
                       <TfiLayoutGrid3Alt /> Card
@@ -147,48 +149,44 @@ const Images: React.FC = () => {
           )}
         </div>
 
-
         {images && (
-                    <div className="gallary_container">
-                    {viewType === "mosaic" && (
-                      <Gallery imageSizes={imageSizes} images={images} />
-                    )}
-                    {viewType === "cards" && (
-                      <Grid imageSizes={imageSizes} images={images} />
-                    )}
-                    {viewType === "list" && (
-                      <List imageSizes={imageSizes} images={images} />
-                    )}
-                  </div>
-        )
-        }
-        
+          <div className="gallary_container">
+            {viewType === "mosaic" && (
+              <Gallery imageSizes={imageSizes} images={images} />
+            )}
+            {viewType === "cards" && (
+              <Grid imageSizes={imageSizes} images={images} />
+            )}
+            {viewType === "list" && (
+              <List imageSizes={imageSizes} images={images} />
+            )}
+          </div>
+        )}
+
         {images === undefined && (
-                    <div className="LoadImages">
-                    <img src={ImagesLoading} alt="" />
-                    <p className="LoadingImages">
-                      Loading <span></span>
-                      <span></span>
-                      <span></span>
-                    </p>
-                  </div>
-        )
-        }
+          <div className="LoadImages">
+            <img src={ImagesLoading} alt="" />
+            <p className="LoadingImages">
+              Loading <span></span>
+              <span></span>
+              <span></span>
+            </p>
+          </div>
+        )}
 
         {images === null && (
-                  <div className="APIError">
-                  <div className="card APIErrorContent">
-                    <div className="Oops">Ooops !</div>
-                    <span className="ErreurType">
-                      Erreur 503 : Service non disponible
-                    </span>
-                    <span className="ErreurMessage">
-                      Une erreur s'est produite lors de la communication avec l'API.
-                    </span>
-                  </div>
-                </div>
-        )
-        }
+          <div className="APIError">
+            <div className="card APIErrorContent">
+              <div className="Oops">Ooops !</div>
+              <span className="ErreurType">
+                Erreur 503 : Service non disponible
+              </span>
+              <span className="ErreurMessage">
+                Une erreur s'est produite lors de la communication avec l'API.
+              </span>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

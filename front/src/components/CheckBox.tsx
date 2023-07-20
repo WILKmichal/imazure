@@ -1,24 +1,24 @@
 import { useState } from "react";
 
 type CheckboxProps = {
-  label: string;
+  // label: string;
   isChecked: boolean;
-  labelColor: string;
-  onCheckedChange: (label: string) => void;
+  // labelColor: string;
+  // onCheckedChange: (label: string) => void;
 };
 
 const Checkbox = ({
-  label,
+  // label,
   isChecked,
-  onCheckedChange,
-  labelColor,
+  // onCheckedChange,
+  // labelColor,
 }: CheckboxProps) => {
   const [checked, setChecked] = useState(isChecked);
 
   const handleCheckedChange = () => {
     const newChecked:boolean = !checked;
     setChecked(newChecked);
-    onCheckedChange(label);
+    // onCheckedChange(label);
   };
 
   return (
@@ -44,7 +44,7 @@ const Checkbox = ({
           }}
         ></div>
       </div>
-      <span style={{ marginLeft: "5px", color: labelColor }}>{label}</span>
+      {/* <span style={{ marginLeft: "5px", color: labelColor }}>{label}</span> */}
     </div>
   );
 };

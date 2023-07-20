@@ -24,6 +24,7 @@
       align-items: center;
       flex-direction: row;
       font-size: 15px;
+      gap: 10px;
 
       .list_row_name_container_img {
         width: 100px;
@@ -33,6 +34,14 @@
         img {
           max-width: 100px;
           max-height: 40px;
+        }
+      }
+
+      .list_row_name_title {
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
         }
       }
     }
@@ -46,9 +55,13 @@
     .list_row_top_name,
     .list_row_name {
       & .test {
+        padding: 0px 0px 0px 2px;
         min-width: 400px;
         max-width: 400px;
-        margin-right: 30px;
+        // margin-right: 30px;
+        display: flex;
+        align-items: center;
+        height: 100%;
       }
       .cellulesTags {
         display: flex;
@@ -60,18 +73,21 @@
         }
       }
     }
-
+    .list_row_name {
+      & .test {
+        border-bottom: #c2cdd8 solid 1px;
+      }
+    }
     .list_row_top_name {
       display: flex;
       align-items: center;
       flex-direction: row;
-      padding: 2px 5px;
+      // padding: 2px 5px;
       height: 60px;
     }
     .list_row_name {
-      padding: 2px 5px;
+      // padding: 2px 5px;
 
-      border-bottom: #c2cdd8 solid 1px;
       height: 60px;
       display: flex;
       align-items: center;

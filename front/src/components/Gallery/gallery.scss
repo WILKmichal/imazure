@@ -104,3 +104,22 @@
   text-align: center;
   font-size: 15px;
 }
+
+@media only screen and (max-width: 800px) {
+  .gallery {
+    column-count: 4;
+    column-width: 25%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .gallery {
+    column-count: 3;
+    column-width: 33%;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .gallery {
+    column-count: 2;
+    column-width: 50%;
+  }
+}

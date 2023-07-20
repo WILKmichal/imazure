@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./list.scss";
 import { StandardRatios, standardRatios } from "../../helper/staticValues";
+import Checkbox from "../CheckBox";
 
 export interface IImage {
   images: [
@@ -77,13 +78,23 @@ const List: React.FC<Props> = (props: Props) => {
 
       <div className="list_container">
         <div className="ColumnFixe">
-          <div className="list_row_top_name">image/name</div>
+          <div className="list_row_top_name">Display name</div>
           {props.images.map((image: any, index: number) => (
             <div key={image.name} className="list_row_name">
+              <div>
+                <Checkbox isChecked={false} />
+              </div>
               <div className="list_row_name_container_img">
                 <img src={image.url} alt="" />
               </div>
-              <div>{image.title}</div>
+              <div
+                onClick={() => {
+                  window.location.href = `/images/details/${image.id}`;
+                }}
+                className="list_row_name_title"
+              >
+                {image.title}
+              </div>
             </div>
           ))}
         </div>
