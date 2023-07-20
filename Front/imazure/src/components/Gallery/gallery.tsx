@@ -15,13 +15,18 @@ export interface IImage {
   API: boolean;
 }
 
+interface StandardRatios {
+  name: string;
+  ratio: number;
+}
+
 interface Props {
   images: any;
   imageSizes: any;
 }
 
-const Gallery: React.FC<Props> = (props) => {
-  const elementRef = useRef<HTMLDivElement>(null);
+const Gallery: React.FC<Props> = (props:Props) => {
+  const elementRef:React.RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
   const [numColumns, setNumColumns] = useState<number>(5);
   useEffect(() => {
     function handleResize() {
@@ -48,10 +53,10 @@ const Gallery: React.FC<Props> = (props) => {
 
   function calculateAspectRatio(width: number, height: number): string {
     // Calculate the aspect ratio
-    const aspectRatio = width / height;
+    const aspectRatio:number = width / height;
 
     // Check if the aspect ratio is a standard one
-    const standardRatios = [
+    const standardRatios:StandardRatios[] = [
       { name: "1:1", ratio: 1 },
       { name: "4:3", ratio: 4 / 3 },
       { name: "3:2", ratio: 3 / 2 },
@@ -63,7 +68,7 @@ const Gallery: React.FC<Props> = (props) => {
       { name: "2.20:1", ratio: 2.2 },
     ];
 
-    const standardRatio = standardRatios.find(
+    const standardRatio:StandardRatios | undefined = standardRatios.find(
       (r) => Math.abs(r.ratio - aspectRatio) < 0.05
     );
 
@@ -72,9 +77,9 @@ const Gallery: React.FC<Props> = (props) => {
       return standardRatio.name;
     } else {
       // Otherwise, return the closest standard ratio with a tilde (~) prefix
-      const closestRatio = standardRatios.reduce((a, b) => {
-        const aDiff = Math.abs(a.ratio - aspectRatio);
-        const bDiff = Math.abs(b.ratio - aspectRatio);
+      const closestRatio:StandardRatios = standardRatios.reduce((a, b) => {
+        const aDiff:number = Math.abs(a.ratio - aspectRatio);
+        const bDiff:number = Math.abs(b.ratio - aspectRatio);
         return aDiff < bDiff ? a : b;
       });
       return `~${closestRatio.name}`;

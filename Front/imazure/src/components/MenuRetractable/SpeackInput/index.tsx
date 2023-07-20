@@ -8,7 +8,7 @@ interface Speak {
 const SpeackInput: React.FC<Speak> = (Props) => {
   const [recognition, setRecognition] = useState<any | null>(null);
   const [listening, setListening] = useState<boolean>(false);
-  const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+  const isFirefox:boolean = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
 
   useEffect(() => {
     if (isFirefox) {
@@ -25,8 +25,8 @@ const SpeackInput: React.FC<Speak> = (Props) => {
     recognitionInstance.maxAlternatives = 1;
 
     recognitionInstance.onresult = (event: any) => {
-      const last = event.results.length - 1;
-      const transcript = event.results[last][0].transcript;
+      const last:number = event.results.length - 1;
+      const transcript:string = event.results[last][0].transcript;
       Props.setSearch(transcript);
     };
 

@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { GetCategorys } from "../../../helper";
 
 type ButtonBoxProps = {
   category: any;
@@ -8,7 +6,7 @@ type ButtonBoxProps = {
   toggleCategoryChoice: Function;
 };
 
-const ButtonBox = ({
+const ButtonBox:React.FC<ButtonBoxProps> = ({
   category,
   toggleCategoryChoice,
   index = 0,
@@ -16,8 +14,7 @@ const ButtonBox = ({
 }: ButtonBoxProps) => {
   return (
     <div
-      // onClick={handleCheckedChange}
-      onClick={() => toggleCategoryChoice(category.tag.id)} // Pass toggleCategoryChoice method
+      onClick={() => toggleCategoryChoice(category.tag.id)}
       className="tag tag-hover"
       key={index}
       style={{

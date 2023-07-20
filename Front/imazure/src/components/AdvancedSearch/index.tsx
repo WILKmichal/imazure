@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import "./styles.scss";
-import { GetCategorys } from "../../helper";
-import Checkbox from "../CheckBox";
-import SpeackInput from "./SpeackInput";
 import ButtonBox from "./ButtonBox";
+import SpeackInput from "./SpeackInput";
+import "./styles.scss";
 
 interface Props {
   setSearch: Function;
@@ -13,10 +11,10 @@ interface Props {
   categorie: any;
 }
 
-const AdvancedSearch: React.FC<Props> = (props) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [numToShow, setNumToShow] = useState(4); // Nouvel état pour suivre le nombre d'éléments à afficher
-  const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+const AdvancedSearch: React.FC<Props> = (props:Props) => {
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [numToShow, setNumToShow] = useState<number>(4); // Nouvel état pour suivre le nombre d'éléments à afficher
+  const isFirefox:boolean = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
 
   const handleChangeSearch = (event: any) => {
     props.setSearch(event.target.value);

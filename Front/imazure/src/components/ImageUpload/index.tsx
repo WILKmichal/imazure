@@ -6,19 +6,19 @@ interface ImageUploadProps {
   setDroppedImages: Function;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = (Props) => {
+const ImageUpload: React.FC<ImageUploadProps> = (Props:ImageUploadProps) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      let NewArray: any[] = [];
+      let NewArray: File[] = [];
       if (e.target.files.length > 0) {
-        Array.from(e.target.files).map((file: any) => NewArray.push(file));
+        Array.from(e.target.files).map((file: File) => NewArray.push(file));
 
-        Props.setDroppedImages((test: any[]) => test.concat(NewArray));
+        Props.setDroppedImages((test: any[])  => test.concat(NewArray));
         Props.onUpload(e.target.files);
       }
     }
   };
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef: React.RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
 
   const openFileDialog = () => {
     if (fileInputRef.current) {
