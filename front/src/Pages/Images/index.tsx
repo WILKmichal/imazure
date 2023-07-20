@@ -14,13 +14,19 @@ import { GetCategorys } from "../../helper";
 import "./styles.scss";
 import { image } from "../../core/model.db";
 
+enum ViewType {
+  mosaic = "mosaic",
+  cards = "cards",
+  list = "list",
+}
+
 
 const Images: React.FC = () => {
 
   const [Search, setSearch] = useState("");
   const [imageSizes, setImageSizes] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [viewType, setviewType] = useState("mosaic");
+  const [viewType, setviewType] = useState<ViewType>(ViewType.mosaic);
   const [Icon, setIcon] = useState(<TfiLayoutGrid3Alt />);
   const [images, setImages] = useState<image[]|null|undefined>(undefined);
 
@@ -52,8 +58,8 @@ const Images: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const ChoiceView = (choice: string, icon: any) => {
-    setviewType(choice);
+  const ChoiceView = (choice: ViewType, icon: any) => {
+    setviewType(ViewType[choice]);
     setIcon(icon);
     setIsModalOpen(false);
   };
@@ -108,7 +114,7 @@ const Images: React.FC = () => {
                 <div className="choice">
                   <span
                     onClick={() =>
-                      ChoiceView("mosaic", <MdAutoAwesomeMosaic />)
+                      ChoiceView(ViewType.mosaic, <MdAutoAwesomeMosaic />)
                     }
                   >
                     <div>
@@ -119,7 +125,7 @@ const Images: React.FC = () => {
                 </div>
                 <div className="choice">
                   <span
-                    onClick={() => ChoiceView("cards", <TfiLayoutGrid3Alt />)}
+                    onClick={() => ChoiceView(ViewType.cards, <TfiLayoutGrid3Alt />)}
                   >
                     <div>
                       <TfiLayoutGrid3Alt /> Card
@@ -128,7 +134,7 @@ const Images: React.FC = () => {
                   </span>
                 </div>
                 <div className="choice">
-                  <span onClick={() => ChoiceView("list", <FaThList />)}>
+                  <span onClick={() => ChoiceView(ViewType.list, <FaThList />)}>
                     <div>
                       <FaThList /> List
                     </div>
