@@ -9,6 +9,13 @@
     flex-shrink: 0; /* This property prevents the size of this column from shrinking. */
     width: 30vw;
 
+    .list_row_top_name {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      padding: 2px 5px;
+      height: 60px;
+    }
     .list_row_name {
       padding: 2px 5px;
       border-bottom: #c2cdd8 solid 1px;
