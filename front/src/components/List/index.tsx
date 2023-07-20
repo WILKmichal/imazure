@@ -49,7 +49,7 @@ const List: React.FC<Props> = (props: Props) => {
     // Calculate the aspect ratio
     const aspectRatio = width / height;
 
-    const standardRatio:StandardRatios | undefined = standardRatios.find(
+    const standardRatio: StandardRatios | undefined = standardRatios.find(
       (r) => Math.abs(r.ratio - aspectRatio) < 0.05
     );
 
@@ -66,6 +66,10 @@ const List: React.FC<Props> = (props: Props) => {
       return `~${closestRatio.name}`;
     }
   }
+  const getExtension = (filename: string) => {
+    const split = filename.split(".");
+    return split.length > 1 ? split.pop() : "";
+  };
 
   return (
     <div>
@@ -85,27 +89,27 @@ const List: React.FC<Props> = (props: Props) => {
         </div>
         <div className="ColumnNoFixe">
           <div className="list_row_top_name">
-            <div>name</div>
-            <div>url</div>
-            {/* <div>image.name</div>
-            <div>image.name</div>
-            <div>image.name</div>
-            <div>image.name</div>
-            <div>image.name</div> */}
+            <div className="test">name</div>
+            <div className="test">url</div>
+            <div className="test">tag</div>
+            <div className="test">exetention</div>
           </div>
           {props.images.map((image: any, index: number) => (
-            <div key={image.name} className="list_row_name">
+            <div key={index} className="list_row_name">
               {/* {image.name}test */}
-              <div>{image.name}</div>
-              <div>{image.url}</div>
-
-              {/* <div>{image.name}</div>
-              <div>{image.name}</div>
-              <div>{image.name}</div>
-              <div>{image.name}</div>
-              <div>{image.name}</div>
-              <div>{image.name}</div>
-              <div>{image.name}</div> */}
+              <div className="test">{image.name}</div>
+              <div className="test">
+                <a target="blank" href={image.url}>
+                  Image de l'url
+                </a>
+              </div>
+              {/* <div className="test">{image.url}</div> */}
+              <div className="cellulesTags test">
+                {image.tags.slice(0, 5).map((tag: any, index: number) => (
+                  <div>{tag.name}</div>
+                ))}
+              </div>
+              <div className="test">{getExtension(image.name)}</div>
             </div>
           ))}
         </div>

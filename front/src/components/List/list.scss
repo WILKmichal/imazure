@@ -41,12 +41,23 @@
   .ColumnNoFixe {
     // flex-grow: 1; /* This property ensures that this column takes up all the remaining space. */
     overflow-x: auto; /* This property displays a horizontal scrollbar if the content overflows. */
-    width: 69vw;
+    width: calc(69vw - 16px);
 
     .list_row_top_name,
     .list_row_name {
-      & div {
-        width: 400px; // Changement ici
+      & .test {
+        min-width: 400px;
+        max-width: 400px;
+        margin-right: 30px;
+      }
+      .cellulesTags {
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 10px;
+        & div {
+          display: inline-block;
+        }
       }
     }
 
@@ -74,7 +85,7 @@
       width: 40vw;
     }
     .ColumnNoFixe {
-      width: 40vw;
+      width: calc(60vw - 16px);
     }
   }
   @media only screen and (max-width: 600px) {
@@ -82,7 +93,7 @@
       width: 60vw;
     }
     .ColumnNoFixe {
-      width: 40vw;
+      width: calc(40vw - 16px);
     }
   }
   @media only screen and (max-width: 450px) {
