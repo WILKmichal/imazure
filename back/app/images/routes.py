@@ -240,7 +240,7 @@ def delete_images():
 def imagesByTag():
     tags = request.args.getlist("tag")
 
-    query = Image_tag.query
+    query = Image_tag.query.distinct(Image_tag.image_id)
 
     for tag in tags:
         print(tag)
