@@ -2,7 +2,7 @@ import { image } from "./model.db";
 
 const SERVER_URL = "http://127.0.0.1:5000";
 
-type requestMethode = "GET"|"POST"
+type requestMethode = "GET"|"POST"|"DELETE"|"PUT"|"PATCH"
 
 const getData = async (url: string, method?: requestMethode) => {
   const rep:Response = await fetch(url, {
@@ -65,6 +65,18 @@ const getImageInfoById = async (id: any) => {
   }
 }
 
+const deleteImageWithId = async (id: any) => {
+  try {
+    const DETAILS_ENDPOINT = `${SERVER_URL}/images/${id}`;
+
+    const data_JSON = await getData(DETAILS_ENDPOINT, "DELETE");
+
+    return { API: true };
+  } catch (error) {
+    console.log(error);
+    return { API: false };
+  }
+}
 
 const getImagesByTag = async (tagIds: number[]): Promise<image[] | null | undefined> => {
 
@@ -114,5 +126,13 @@ const handleUploadImage = async (selectedImages: any) => {
   }
 };
 
-export {getImageInfoById, getImagesByTag, getImgCountById, getTags, getTagsImgCount, handleUploadImage };
+export {
+  getImageInfoById,
+  getImagesByTag,
+  getImgCountById,
+  getTags,
+  getTagsImgCount,
+  handleUploadImage,
+  deleteImageWithId
+};
 

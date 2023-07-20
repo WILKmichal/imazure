@@ -29,27 +29,37 @@
   }
 }
 
-button {
+.big-button {
+  --bg-color: rgb(109, 56, 255);
+  --bg-color-active: rgb(113, 27, 211);
+  --shadow-color: rgb(49, 46, 201);
   padding: 17px 40px;
   border-radius: 10px;
   border: 0;
-  background-color: rgb(255, 56, 86);
+  background-color: var(--bg-color);
   letter-spacing: 1.5px;
   font-size: 15px;
   transition: all 0.3s ease;
-  box-shadow: rgb(201, 46, 70) 0px -10px 0px 0px;
+  box-shadow: var(--shadow-color) 0px -10px 0px 0px;
   color: hsl(0, 0%, 100%);
 }
 
-button:hover {
-  box-shadow: rgb(201, 46, 70) 0px 7px 0px 0px;
+.big-button:hover,
+.big-button:focus {
+  box-shadow: var(--shadow-color) 0px 7px 0px 0px;
 }
 
-button:active {
-  background-color: rgb(255, 56, 86);
-  box-shadow: rgb(201, 46, 70) 0px 0px 0px 0px;
+.big-button:active {
+  background-color: var(--bg-color-active);
+  box-shadow: var(--shadow-color) 0px 0px 0px 0px;
   transform: translateY(5px);
   transition: 200ms;
+}
+
+.big-button.delete{
+  --bg-color: rgb(252, 70, 97);
+  --bg-color-active: rgb(211, 27, 54);
+  --shadow-color: rgb(194, 63, 83);
 }
 
 .title {
@@ -69,6 +79,9 @@ button:active {
 .download {
   padding-top: 200px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .information {
