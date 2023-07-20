@@ -67,9 +67,11 @@ def upload_form():
 
 @bp.post('/upload')
 def upload():
+    images = []
     for file in request.files.getlist("images"):
         try:
-            name = str(uuid.uuid4())
+            extension = os.path.splitext(file.filename)[1]
+            name = str(uuid.uuid4()) + extension 
             uploaded = container_client.upload_blob(name, file)
             image = Image(
                 title = file.filename,
@@ -112,6 +114,7 @@ def upload():
 
             db.session.add(image)
             db.session.commit()
+            images.append(image)
 
             # Add all tag-image relations at once
             for image_tag in image_tags:
@@ -123,7 +126,7 @@ def upload():
             # ignore duplicate filenames
             print(e)
 
-    return redirect('/')
+    return [i.to_dict() for i in images]
 
 
 @bp.get('/all')
