@@ -11,10 +11,11 @@ interface Props {
   categorie: any;
 }
 
-const AdvancedSearch: React.FC<Props> = (props:Props) => {
+const AdvancedSearch: React.FC<Props> = (props: Props) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [numToShow, setNumToShow] = useState<number>(4); // Nouvel état pour suivre le nombre d'éléments à afficher
-  const isFirefox:boolean = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+  const isFirefox: boolean =
+    navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
 
   const handleChangeSearch = (event: any) => {
     props.setSearch(event.target.value);
@@ -32,7 +33,7 @@ const AdvancedSearch: React.FC<Props> = (props:Props) => {
           <div className="icon_AdvancedSearch_input_container">
             <AiOutlineSearch />
           </div>
-          <div>
+          <div className="AdvancedSearch_input_container_input">
             <input
               type="text"
               className="AdvancedSearch_input"
