@@ -38,9 +38,9 @@ const Images: React.FC = () => {
     images: [{ name: "", url: "" }],
     API: true,
   });
-  useEffect(() => {
-    recupImage();
-  }, []);
+  // useEffect(() => {
+  //   recupImage();
+  // }, []);
 
   const { categorie, toggleCategoryChoice } = GetCategorys();
 
@@ -48,20 +48,20 @@ const Images: React.FC = () => {
     ImagesWithTags(); // Call ImagesWithTags when category changes
   }, [categorie]);
 
-  const recupImage = async () => {
-    setLoadImages(true);
+  // const recupImage = async () => {
+  //   setLoadImages(true);
 
-    const images = await getAllImage();
-    setImages({ images: images.images, API: images.API });
+  //   const images = await getAllImage();
+  //   setImages({ images: images.images, API: images.API });
 
-    const sizes = await Promise.all(
-      images.images.map((image: { url: string | undefined }) =>
-        ImageTaille(image.url)
-      )
-    );
-    setImageSizes(sizes);
-    setLoadImages(false);
-  };
+  //   const sizes = await Promise.all(
+  //     images.images.map((image: { url: string | undefined }) =>
+  //       ImageTaille(image.url)
+  //     )
+  //   );
+  //   setImageSizes(sizes);
+  //   setLoadImages(false);
+  // };
 
   const ImageTaille = (image?: string) => {
     return new Promise<any>((resolve) => {
@@ -97,9 +97,22 @@ const Images: React.FC = () => {
       .filter((categorie) => categorie.choix)
       .map((categorie) => categorie.tag.id);
 
+    // setLoadImages(true);
+
+    // const images: any = await getImagesByTag(selectedTags);
+    // setImages({ images: images.images, API: images.API });
+
+    // const sizes = await Promise.all(
+    //   images.images.map((image: { url: string | undefined }) =>
+    //     ImageTaille(image.url)
+    //   )
+    // );
+    // setImageSizes(images);
+    // setLoadImages(false);
+
     setLoadImages(true);
 
-    const images: any = await getImagesByTag(selectedTags);
+    const images = await getImagesByTag(selectedTags);
     setImages({ images: images.images, API: images.API });
 
     const sizes = await Promise.all(
@@ -107,7 +120,7 @@ const Images: React.FC = () => {
         ImageTaille(image.url)
       )
     );
-    setImageSizes(images);
+    setImageSizes(sizes);
     setLoadImages(false);
 
     // console.log(images);
@@ -128,7 +141,7 @@ const Images: React.FC = () => {
           toggleCategoryChoice={toggleCategoryChoice}
         />
         <div className="view_choic_gallery_container">
-          <div className="reload_choic_gallery" onClick={recupImage}>
+          <div className="reload_choic_gallery" onClick={ImagesWithTags}>
             <AiOutlineReload />
           </div>
           <div onClick={ViewTypeViewImages} className="view_choic_gallery">
