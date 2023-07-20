@@ -1,40 +1,28 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { AiOutlineReload } from "react-icons/ai";
-import { FaCheck, FaThList } from "react-icons/fa";
-import { MdAutoAwesomeMosaic } from "react-icons/md";
-import { TfiLayoutGrid3Alt } from "react-icons/tfi";
 import ImagesLoading from "../../assets/img/LoadImages.gif";
 import AdvancedSearch from "../../components/AdvancedSearch";
 import Gallery from "../../components/Gallery/gallery";
+import { getImagesByTag, image } from "../../core";
+import "./styles.scss";
+import { FaCheck, FaThList } from "react-icons/fa";
+import { MdAutoAwesomeMosaic } from "react-icons/md";
+import { TfiLayoutGrid3Alt } from "react-icons/tfi";
 import List from "../../components/List";
 import Grid from "../../components/grids";
-import { getImagesByTag } from "../../core";
 import { GetCategorys } from "../../helper";
-import "./styles.scss";
 
-export interface IImage {
-  images: [
-    {
-      name: string;
-      url: string;
-    }
-  ];
-  API: boolean;
-}
 
 const Images: React.FC = () => {
 
   const [Search, setSearch] = useState("");
-  const [LoadImages, setLoadImages] = useState(true);
+  //const [LoadImages, setLoadImages] = useState(true);
   const [imageSizes, setImageSizes] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [viewType, setviewType] = useState("list");
   const [Icon, setIcon] = useState(<TfiLayoutGrid3Alt />);
-  const [images, setImages] = useState<IImage>({
-    images: [{ name: "", url: "" }],
-    API: true,
-  });
+  const [images, setImages] = useState<image[]|null|undefined>(undefined);
 
   const { categorie, toggleCategoryChoice } = GetCategorys();
 
@@ -76,18 +64,20 @@ const Images: React.FC = () => {
       .filter((categorie) => categorie.choix)
       .map((categorie) => categorie.tag.id);
 
-    setLoadImages(true);
+    //setLoadImages(true);
 
     const images = await getImagesByTag(selectedTags);
-    setImages({ images: images.images, API: images.API });
+    setImages(images);
 
+    if(images !== null && images !== undefined){
     const sizes = await Promise.all(
-      images.images.map((image: { url: string | undefined }) =>
+      images.map((image: { url: string | undefined}) =>
         ImageTaille(image.url)
       )
     );
     setImageSizes(sizes);
-    setLoadImages(false);
+    }
+    //setLoadImages(false);
   };
 
   return (
@@ -151,28 +141,48 @@ const Images: React.FC = () => {
           )}
         </div>
 
-        {!LoadImages ? (
-          <div className="gallary_container">
-            {viewType === "mosaic" && (
-              <Gallery imageSizes={imageSizes} images={images} />
-            )}
-            {viewType === "cards" && (
-              <Grid imageSizes={imageSizes} images={images} />
-            )}
-            {viewType === "list" && (
-              <List imageSizes={imageSizes} images={images} />
-            )}
-          </div>
-        ) : (
-          <div className="LoadImages">
-            <img src={ImagesLoading} alt="" />
-            <p className="LoadingImages">
-              Loading <span></span>
-              <span></span>
-              <span></span>
-            </p>
-          </div>
-        )}
+
+        {images && (
+                    <div className="gallary_container">
+                    {viewType === "mosaic" && (
+                      <Gallery imageSizes={imageSizes} images={images} />
+                    )}
+                    {viewType === "cards" && (
+                      <Grid imageSizes={imageSizes} images={images} />
+                    )}
+                    {viewType === "list" && (
+                      <List imageSizes={imageSizes} images={images} />
+                    )}
+                  </div>
+        )
+        }
+        
+        {images === undefined && (
+                    <div className="LoadImages">
+                    <img src={ImagesLoading} alt="" />
+                    <p className="LoadingImages">
+                      Loading <span></span>
+                      <span></span>
+                      <span></span>
+                    </p>
+                  </div>
+        )
+        }
+
+        {images === null && (
+                  <div className="APIError">
+                  <div className="card APIErrorContent">
+                    <div className="Oops">Ooops !</div>
+                    <span className="ErreurType">
+                      Erreur 503 : Service non disponible
+                    </span>
+                    <span className="ErreurMessage">
+                      Une erreur s'est produite lors de la communication avec l'API.
+                    </span>
+                  </div>
+                </div>
+        )
+        }
       </div>
     </div>
   );
