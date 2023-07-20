@@ -97,20 +97,20 @@ const Images: React.FC = () => {
       .filter((categorie) => categorie.choix)
       .map((categorie) => categorie.tag.id);
 
-    // setLoadImages(true);
+    setLoadImages(true);
 
     const images: any = await getImagesByTag(selectedTags);
-    // setImages({ images: images.images, API: images.API });
+    setImages({ images: images.images, API: images.API });
 
-    // const sizes = await Promise.all(
-    //   images.images.map((image: { url: string | undefined }) =>
-    //     ImageTaille(image.url)
-    //   )
-    // );
-    // setImageSizes(images);
-    // setLoadImages(false);
+    const sizes = await Promise.all(
+      images.images.map((image: { url: string | undefined }) =>
+        ImageTaille(image.url)
+      )
+    );
+    setImageSizes(images);
+    setLoadImages(false);
 
-    console.log(images);
+    // console.log(images);
   };
 
   return (
@@ -189,13 +189,11 @@ const Images: React.FC = () => {
         ) : (
           // <Gallery imageSizes={imageSizes} images={images} />
           <div className="LoadImages">
-            <p>
-              <img src={ImagesLoading} alt="" />
-              <p className="LoadingImages">
-                Loading <span></span>
-                <span></span>
-                <span></span>
-              </p>
+            <img src={ImagesLoading} alt="" />
+            <p className="LoadingImages">
+              Loading <span></span>
+              <span></span>
+              <span></span>
             </p>
           </div>
         )}
