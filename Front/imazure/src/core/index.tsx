@@ -1,7 +1,7 @@
 const SERVER_URL = "http://127.0.0.1:5000";
 
 const getData = async (url: any, method?: any) => {
-  const rep = await fetch(url, {
+  const rep:Response = await fetch(url, {
     method: method,
   });
   const json = await rep.json();
@@ -11,9 +11,9 @@ const getData = async (url: any, method?: any) => {
 
 const getTags = async () => {
   try {
-    const TAGS_ENDPOINT = `${SERVER_URL}/tags/all`;
+    const TAGS_ENDPOINT:string = `${SERVER_URL}/tags/all`;
 
-    const data_JSON = await getData(TAGS_ENDPOINT, "GET");
+    const data_JSON:Object = await getData(TAGS_ENDPOINT, "GET");
 
     return { tags: data_JSON, API: true };
   } catch (error) {

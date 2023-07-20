@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { MdMic, MdMicOff } from "react-icons/md";
 
 interface Speak {
@@ -6,10 +6,10 @@ interface Speak {
   setIsFocused: Function;
 }
 
-const SpeackInput: React.FC<Speak> = (Props) => {
+const SpeackInput: React.FC<Speak> = (Props:Speak) => {
   const [recognition, setRecognition] = useState<any | null>(null);
   const [listening, setListening] = useState<boolean>(false);
-  const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+  const isFirefox:boolean = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
 
   useEffect(() => {
     if (isFirefox) {
@@ -26,7 +26,7 @@ const SpeackInput: React.FC<Speak> = (Props) => {
     recognitionInstance.maxAlternatives = 1;
 
     recognitionInstance.onresult = (event: any) => {
-      const last = event.results.length - 1;
+      const last:number = event.results.length - 1;
       const transcript = event.results[last][0].transcript;
       Props.setSearch(transcript);
     };

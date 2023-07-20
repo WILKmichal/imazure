@@ -1,8 +1,7 @@
-import React from "react";
 import styles from "./styles.module.scss";
 
 const Footer = () => {
-  function goRepo() {
+  function goRepo():void {
     window.location.href = "https://github.com/WILKmichal/imazure";
   }
 

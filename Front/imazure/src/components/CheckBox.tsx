@@ -16,7 +16,7 @@ const Checkbox = ({
   const [checked, setChecked] = useState(isChecked);
 
   const handleCheckedChange = () => {
-    const newChecked = !checked;
+    const newChecked:boolean = !checked;
     setChecked(newChecked);
     onCheckedChange(label);
   };

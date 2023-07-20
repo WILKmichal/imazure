@@ -5,9 +5,8 @@ interface ImageUploadProps {
   setDroppedImages: Function;
 }
 
-const DragAndDrop: React.FC<ImageUploadProps> = (Props) => {
-  // const [droppedImages, setDroppedImages] = useState<File[]>([]);
-  const [filesSelected, setFilesSelected] = React.useState(false);
+const DragAndDrop: React.FC<ImageUploadProps> = (Props:ImageUploadProps) => {
+  const [filesSelected, setFilesSelected] = React.useState<boolean>(false);
 
   const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -15,7 +14,6 @@ const DragAndDrop: React.FC<ImageUploadProps> = (Props) => {
     setFilesSelected(true);
   }, []);
 
-  console.log(filesSelected);
 
   const handleDragLeave = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -29,8 +27,6 @@ const DragAndDrop: React.FC<ImageUploadProps> = (Props) => {
     const files = Array.from(e.dataTransfer.files).filter((file) =>
       file.type.startsWith("image/")
     );
-
-    console.log(files);
 
     Props.setDroppedImages((test: any[]) => test.concat(files));
     setFilesSelected(false);

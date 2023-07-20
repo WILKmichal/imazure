@@ -19,8 +19,8 @@ interface Props {
   imageSizes: any;
 }
 
-const Grid: React.FC<Props> = (props) => {
-  const elementRef = useRef<HTMLDivElement>(null);
+const Grid: React.FC<Props> = (props:Props) => {
+  const elementRef:React.RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
   const [numColumns, setNumColumns] = useState<number>(5);
   useEffect(() => {
     function handleResize() {

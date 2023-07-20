@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import "./CustomHR.css";
-import { GetCategorys } from "../../helper";
-import Checkbox from "../CheckBox";
 import SpeackInput from "./SpeackInput";
 
 interface Props {
@@ -10,12 +8,11 @@ interface Props {
   numColumns: number;
 }
 
-const MenuRetractable: React.FC<Props> = (props) => {
+const MenuRetractable: React.FC<Props> = (props:Props) => {
   const categoriesChoice: string[] = [];
-  // const { categorie } = GetCategorys();
-  const [isOpen, setIsOpen] = useState(false);
-  const [Search, setSearch] = useState("");
-  const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [Search, setSearch] = useState<string>("");
+  const isFirefox:boolean = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
 
   const handleCheckedChange = (categories: string) => {
     if (categoriesChoice.includes(categories)) {
