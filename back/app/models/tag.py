@@ -9,6 +9,6 @@ class Tag(db.Model, SerializerMixin):
     name = db.Column(db.String(250), unique=True)
 
     images = db.relationship("Image",secondary="image_tag", back_populates="tags")
-
+    image_count = 0
     def __repr__(self):
         return f'<Tag "{self.name}">' 
