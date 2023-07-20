@@ -4,7 +4,6 @@ from app.extensions import db
 from app.models.image import Image
 from app.models.tag import Tag
 from app.models.image_tag import Image_tag
-from app.models.image_request import Image_request
 
 from flask import (
     Blueprint,
@@ -236,3 +235,17 @@ def delete_images():
         return ('', 204)
     except Exception as e:
         return (str(e), 500)
+
+@bp.get('by-tags')
+def imagesByTag():
+    tags = request.args.getlist("tag")
+
+    query = Image_tag.query
+
+    for tag in tags:
+        print(tag)
+        query = query.filter(Image_tag.tag_id.in_(tags))
+
+    images = [i.image.to_dict() for i in query.all()]
+
+    return jsonify(images)

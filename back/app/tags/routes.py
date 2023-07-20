@@ -18,3 +18,8 @@ def allImageCount():
 def imageCount(id):
     tag = Tag.query.get(id)
     return jsonify(len(tag.images))
+
+@bp.get('<id>/images')
+def imagesByTag(id):
+    images = Tag.query.get(id).images
+    return jsonify([i.to_dict(rules=('-tags',)) for i in images])
