@@ -1,6 +1,8 @@
 const SERVER_URL = "http://127.0.0.1:5000";
 
-const getData = async (url: any, method?: any) => {
+type requestMethode = "GET"|"POST"
+
+const getData = async (url: string, method?: requestMethode) => {
   const rep:Response = await fetch(url, {
     method: method,
   });
