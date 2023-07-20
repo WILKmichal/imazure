@@ -85,10 +85,7 @@ const Gallery: React.FC<Props> = (props:Props) => {
   }
 
   return (
-    <div
-      className="gallery"
-      style={{ columnCount: props.images.API === true ? numColumns : 1 }}
-    >
+    <div className="gallery">
       {/* <MenuRetractable numColumns={numColumns} setNumColumns={setNumColumns} /> */}
 
 

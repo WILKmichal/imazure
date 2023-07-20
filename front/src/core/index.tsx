@@ -1,3 +1,5 @@
+import { image } from "./model.db";
+
 const SERVER_URL = "http://127.0.0.1:5000";
 
 type requestMethode = "GET"|"POST"
@@ -63,18 +65,6 @@ const getImageInfoById = async (id: any) => {
   }
 }
 
-export interface image{
-  id: number,
-  name: string,
-  tags: tag[],
-  url: string,
-  title:string
-}
-
-interface tag{
-  id: number,
-  name: string,
-}
 
 const getImagesByTag = async (tagIds: number[]): Promise<image[] | null | undefined> => {
 

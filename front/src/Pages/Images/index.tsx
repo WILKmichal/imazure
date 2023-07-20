@@ -1,23 +1,23 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { AiOutlineReload } from "react-icons/ai";
-import ImagesLoading from "../../assets/img/LoadImages.gif";
-import AdvancedSearch from "../../components/AdvancedSearch";
-import Gallery from "../../components/Gallery/gallery";
-import { getImagesByTag, image } from "../../core";
-import "./styles.scss";
 import { FaCheck, FaThList } from "react-icons/fa";
 import { MdAutoAwesomeMosaic } from "react-icons/md";
 import { TfiLayoutGrid3Alt } from "react-icons/tfi";
+import ImagesLoading from "../../assets/img/LoadImages.gif";
+import AdvancedSearch from "../../components/AdvancedSearch";
+import Gallery from "../../components/Gallery/gallery";
 import List from "../../components/List";
 import Grid from "../../components/grids";
+import { getImagesByTag } from "../../core";
 import { GetCategorys } from "../../helper";
+import "./styles.scss";
+import { image } from "../../core/model.db";
 
 
 const Images: React.FC = () => {
 
   const [Search, setSearch] = useState("");
-  //const [LoadImages, setLoadImages] = useState(true);
   const [imageSizes, setImageSizes] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [viewType, setviewType] = useState("list");
@@ -75,6 +75,7 @@ const Images: React.FC = () => {
         ImageTaille(image.url)
       )
     );
+    console.log(sizes);
     setImageSizes(sizes);
     }
     //setLoadImages(false);
