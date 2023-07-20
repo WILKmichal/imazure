@@ -63,7 +63,7 @@ const getImageInfoById = async (id: any) => {
   }
 }
 
-interface image{
+export interface image{
   id: number,
   name: string,
   tags: tag[],
@@ -76,24 +76,19 @@ interface tag{
   name: string,
 }
 
-const getImagesByTag = async (tagIds: Number[]) => {
+const getImagesByTag = async (tagIds: number[]): Promise<image[] | null | undefined> => {
+
+  let images:image[]|null|undefined = undefined;
   try {
-    let params = tagIds.reduce((str, id) => {
-      return `${str}&tag=${id}`
-    }, "")
+    const params:string = tagIds.map((id) => `tag=${id}`).join("&");
+    const SIGNUP_ENDPOINT:string = `${SERVER_URL}/images/by-tags?${params}`;
 
-    params = "?" + params.slice(1, params.length)
-
-    const SIGNUP_ENDPOINT = `${SERVER_URL}/images/by-tags${params}`;
-
-
-    const data_JSON = await getData(SIGNUP_ENDPOINT, "GET");
-
-    return { images: data_JSON, API: true };
+     images = await getData(SIGNUP_ENDPOINT, "GET");
   } catch (error) {
-    console.log(error);
-    return { images: [], API: false };
+    console.error("Error fetching images:", error);  
+    images  = null;
   }
+  return images;
 };
 
 const handleUploadImage = async (selectedImages: any) => {

@@ -91,21 +91,9 @@ const Gallery: React.FC<Props> = (props:Props) => {
     >
       {/* <MenuRetractable numColumns={numColumns} setNumColumns={setNumColumns} /> */}
 
-      {props.images.API === false ? (
-        <div className="APIError">
-          <div className="card APIErrorContent">
-            <div className="Oops">Ooops !</div>
-            <span className="ErreurType">
-              Erreur 503 : Service non disponible
-            </span>
-            <span className="ErreurMessage">
-              Une erreur s'est produite lors de la communication avec l'API.
-            </span>
-          </div>
-        </div>
-      ) : (
+
         <div>
-          {props.images.images.map((image: any, index: number) => (
+          {props.images.map((image: any, index: number) => (
             <div
               key={image.url}
               className="image_container"
@@ -129,7 +117,7 @@ const Gallery: React.FC<Props> = (props:Props) => {
             </div>
           ))}
         </div>
-      )}
+      
     </div>
   );
 };

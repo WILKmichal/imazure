@@ -86,23 +86,10 @@ const List: React.FC<Props> = (props:Props) => {
     <div style={{ columnCount: props.images.API === false ? numColumns : 1 }}>
       {/* <MenuRetractable numColumns={numColumns} setNumColumns={setNumColumns} /> */}
 
-      {props.images.API === false ? (
-        <div className="APIError">
-          <div className="card APIErrorContent">
-            <div className="Oops">Ooops !</div>
-            <span className="ErreurType">
-              Erreur 503 : Service non disponible
-            </span>
-            <span className="ErreurMessage">
-              Une erreur s'est produite lors de la communication avec l'API.
-            </span>
-          </div>
-        </div>
-      ) : (
         <div className="list_container">
           <div className="ColumnFixe">
             <div className="list_row_top_name">image/name</div>
-            {props.images.images.map((image: any, index: number) => (
+            {props.images.map((image: any, index: number) => (
               <div key={image.name} className="list_row_name">
                 {image.name}
               </div>
@@ -110,7 +97,7 @@ const List: React.FC<Props> = (props:Props) => {
           </div>
           <div className="ColumnNoFixe">
             <div className="list_row_top_name">image/name</div>
-            {props.images.images.map((image: any, index: number) => (
+            {props.images.map((image: any, index: number) => (
               <div key={image.name} className="list_row_name">
                 {/* {image.name} */}test
               </div>
@@ -139,7 +126,6 @@ const List: React.FC<Props> = (props:Props) => {
             </div>
           ))} */}
         </div>
-      )}
     </div>
   );
 };
