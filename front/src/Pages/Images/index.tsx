@@ -75,7 +75,6 @@ const Images: React.FC = () => {
         ImageTaille(image.url)
       )
     );
-    console.log(sizes);
     setImageSizes(sizes);
     }
     //setLoadImages(false);
