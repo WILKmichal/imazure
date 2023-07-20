@@ -1,7 +1,7 @@
 import './styles.scss';
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useRef, useState } from 'react';
-import { getImageInfoById } from '../../core';
+import { getImageInfoById, deleteImageWithId } from '../../core';
 import { IImage } from '../../components/Gallery/gallery';
 
 interface tag {
@@ -69,6 +69,13 @@ const ImagesDetails: React.FC = () => {
     document.body.removeChild(link);
   };
 
+  const handleDelete = async () => {
+    await deleteImageWithId(imageId);
+    window.location.href = "/images";
+  };
+
+
+
   function handleMouseMove(event: any) {
 
     if (cardRef.current !== null) {
@@ -120,8 +127,11 @@ const ImagesDetails: React.FC = () => {
           <div className="tags">
             {imageInfo.imageInfo.tags.map((tag, index) => (<p className="tag" key={index}>{tag.name}</p>))}
           </div>
-          <div onClick={handleDownload} className="download">
-          <button>Télecharger l'image</button>
+          <div className="download">
+          <button className='big-button' onClick={handleDownload}>Télecharger l'image</button>
+          <button className='big-button delete' onClick={handleDelete}>Supprimer l'image</button>
+          </div>
+          <div className="download">
           </div>
         </div>
       </div>
