@@ -18,11 +18,12 @@ interface Props {
   imageSizes: any;
 }
 
-const List: React.FC<Props> = (props:Props) => {
-  const elementRef:React.RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+const List: React.FC<Props> = (props: Props) => {
+  const elementRef: React.RefObject<HTMLDivElement> =
+    useRef<HTMLDivElement>(null);
   const [numColumns, setNumColumns] = useState<number>(5);
   useEffect(() => {
-    function handleResize():void {
+    function handleResize(): void {
       if (elementRef.current) {
         // setTaille(elementRef.current.offsetWidth);
       }
@@ -57,7 +58,7 @@ const List: React.FC<Props> = (props:Props) => {
       return standardRatio.name;
     } else {
       // Otherwise, return the closest standard ratio with a tilde (~) prefix
-      const closestRatio:StandardRatios = standardRatios.reduce((a, b) => {
+      const closestRatio: StandardRatios = standardRatios.reduce((a, b) => {
         const aDiff = Math.abs(a.ratio - aspectRatio);
         const bDiff = Math.abs(b.ratio - aspectRatio);
         return aDiff < bDiff ? a : b;
@@ -70,24 +71,46 @@ const List: React.FC<Props> = (props:Props) => {
     <div>
       {/* <MenuRetractable numColumns={numColumns} setNumColumns={setNumColumns} /> */}
 
-        <div className="list_container">
-          <div className="ColumnFixe">
-            <div className="list_row_top_name">image/name</div>
-            {props.images.map((image: any, index: number) => (
-              <div key={image.name} className="list_row_name">
-                {image.name}
+      <div className="list_container">
+        <div className="ColumnFixe">
+          <div className="list_row_top_name">image/name</div>
+          {props.images.map((image: any, index: number) => (
+            <div key={image.name} className="list_row_name">
+              <div className="list_row_name_container_img">
+                <img src={image.url} alt="" />
               </div>
-            ))}
+              <div>{image.title}</div>
+            </div>
+          ))}
+        </div>
+        <div className="ColumnNoFixe">
+          <div className="list_row_top_name">
+            <div>name</div>
+            <div>url</div>
+            {/* <div>image.name</div>
+            <div>image.name</div>
+            <div>image.name</div>
+            <div>image.name</div>
+            <div>image.name</div> */}
           </div>
-          <div className="ColumnNoFixe">
-            <div className="list_row_top_name">image/name</div>
-            {props.images.map((image: any, index: number) => (
-              <div key={image.name} className="list_row_name">
-                {/* {image.name} */}test
-              </div>
-            ))}
-          </div>
-          {/* <div className="list_row_top">
+          {props.images.map((image: any, index: number) => (
+            <div key={image.name} className="list_row_name">
+              {/* {image.name}test */}
+              <div>{image.name}</div>
+              <div>{image.url}</div>
+
+              {/* <div>{image.name}</div>
+              <div>{image.name}</div>
+              <div>{image.name}</div>
+              <div>{image.name}</div>
+              <div>{image.name}</div>
+              <div>{image.name}</div>
+              <div>{image.name}</div> */}
+            </div>
+          ))}
+        </div>
+
+        {/* <div className="list_row_top">
             <div className="list_row_top_name">image/name</div>
             <div className="list_row_top_info">
               <div>test 1</div>
@@ -109,7 +132,7 @@ const List: React.FC<Props> = (props:Props) => {
               </div>
             </div>
           ))} */}
-        </div>
+      </div>
     </div>
   );
 };

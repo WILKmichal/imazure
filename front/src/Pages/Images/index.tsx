@@ -27,7 +27,7 @@ const Images: React.FC = () => {
   const [imageSizes, setImageSizes] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [viewType, setviewType] = useState<ViewType>(ViewType.mosaic);
-  const [Icon, setIcon] = useState(<TfiLayoutGrid3Alt />);
+  const [Icon, setIcon] = useState(<MdAutoAwesomeMosaic />);
   const [images, setImages] = useState<image[]|null|undefined>(undefined);
 
   const { categorie, toggleCategoryChoice } = GetCategorys();
