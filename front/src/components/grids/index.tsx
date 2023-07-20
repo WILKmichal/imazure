@@ -80,7 +80,7 @@ const Grid: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <div style={{ columnCount: props.images.API === false ? numColumns : 1 }}>
+    <div>
       {/* <MenuRetractable numColumns={numColumns} setNumColumns={setNumColumns} /> */}
 
         <div className="cards_container">
