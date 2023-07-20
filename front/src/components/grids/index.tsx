@@ -19,8 +19,9 @@ interface Props {
   imageSizes: any;
 }
 
-const Grid: React.FC<Props> = (props:Props) => {
-  const elementRef:React.RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+const Grid: React.FC<Props> = (props: Props) => {
+  const elementRef: React.RefObject<HTMLDivElement> =
+    useRef<HTMLDivElement>(null);
   const [numColumns, setNumColumns] = useState<number>(5);
   useEffect(() => {
     function handleResize() {
@@ -113,14 +114,12 @@ const Grid: React.FC<Props> = (props:Props) => {
               </div>
               <div className="card_label">{image.name}</div>
               <div className="card_info">
-                <div>
-                  resolution:
+                <div className="resolution_info">
                   {props.imageSizes[index].width +
                     "x" +
                     props.imageSizes[index].height}
                 </div>
-                <div>
-                  ratio:
+                <div className="ratio_info">
                   {calculateAspectRatio(
                     props.imageSizes[index].width,
                     props.imageSizes[index].height
