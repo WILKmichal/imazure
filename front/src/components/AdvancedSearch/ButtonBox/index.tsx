@@ -23,7 +23,8 @@ const ButtonBox:React.FC<ButtonBoxProps> = ({
     >
       <span style={{ color: category.choix ? "rgb(52, 72, 197)" : labelColor }}>
         {category.tag.name}
-      </span>
+      </span> 
+      <span className="tag-badge">{category.tag.image_count}</span>
     </div>
   );
 };
