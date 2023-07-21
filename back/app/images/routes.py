@@ -243,12 +243,24 @@ def delete_images():
 def imagesByTag():
     tags = request.args.getlist("tag")
 
-    query = Image_tag.query.distinct(Image_tag.image_id)
+    if (len(tags) == 0):
+        return jsonify([i.to_dict() for i in Image.query.all()])
 
-    for tag in tags:
-        print(tag)
-        query = query.filter(Image_tag.tag_id.in_(tags))
+    subquery = (
+    db.session.query(Image_tag.image_id, db.func.count(Image_tag.tag_id).label('count'))
+    .filter(Image_tag.tag_id.in_(tags))
+    .group_by(Image_tag.image_id)
+    .having(db.func.count(Image_tag.tag_id) == len(tags))
+    .subquery()
+    )
 
-    images = [i.image.to_dict() for i in query.all()]
+    # Get the images that have associations with all the tags
+    images = (
+        db.session.query(Image)
+        .join(subquery, Image.id == subquery.c.image_id)
+        .all()
+    )
+
+    images = [i.to_dict() for i in images]
 
     return jsonify(images)

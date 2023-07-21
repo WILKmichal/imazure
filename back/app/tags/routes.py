@@ -7,14 +7,14 @@ from flask import (jsonify, request,Blueprint)
 @bp.get('all')
 def tags():
     most_used = (
-    db.session.query(
-        Tag,
-        db.func.count(db.case(((Image.id.isnot(None), 1)), else_=0)).label('image_count')
-    )
-    .outerjoin(Tag.images)
-    .group_by(Tag.id)
-    .order_by(db.func.count(Image.id).desc())
-    .all()
+        db.session.query(
+            Tag,
+            db.func.count(db.func.distinct(Image.id)).label('image_count')
+        )
+        .outerjoin(Tag.images)
+        .group_by(Tag.id)
+        .order_by(db.func.count(Image.id).desc())
+        .all()
     )
     for tag, image_count in most_used:
         tag.image_count = image_count
