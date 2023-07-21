@@ -10,6 +10,22 @@
   text-align: center;
   align-items: center;
   font-size: 14px;
+  gap: 5px;
+
+  button {
+    width: 20px;
+    height: 20px;
+    border-radius: 33px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background-color: rgb(252, 70, 97);
+      color: #fff;
+    }
+  }
 }
 
 .grid-container {
@@ -56,15 +72,21 @@
   transition: 200ms;
 }
 
-.big-button.delete{
+.big-button.delete {
   --bg-color: rgb(252, 70, 97);
   --bg-color-active: rgb(211, 27, 54);
   --shadow-color: rgb(194, 63, 83);
+}
+.big-button.edit {
+  --bg-color: rgb(70, 128, 252);
+  --bg-color-active: rgb(28, 100, 254);
+  --shadow-color: rgb(28, 100, 254);
 }
 
 .title {
   padding-top: 50px;
   padding-bottom: 50px;
+  min-width: 264px;
 }
 
 .description {
@@ -74,6 +96,37 @@
 .tags {
   padding-top: 20px;
   padding-bottom: 20px;
+
+  .input_add_tags_container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 20px;
+    gap: 20px;
+    button {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      font-size: 30px;
+      border: solid 1px rgb(70, 128, 252);
+      color: rgb(70, 128, 252);
+      cursor: pointer;
+      &:hover {
+        border: solid 1px rgb(28, 100, 254);
+        color: solid 1px rgb(28, 100, 254);
+      }
+    }
+    input {
+      width: 80%;
+      padding: 10px;
+      border-radius: 20px;
+      border: none;
+      &:focus {
+        outline: none;
+        box-shadow: 0px 0px 0px 1px rgb(28, 100, 254);
+      }
+    }
+  }
 }
 
 .download {
@@ -87,6 +140,47 @@
 .information {
   padding-left: 30px;
   padding-right: 100px;
+
+  .title_container {
+    display: flex;
+    flex-direction: row;
+
+    .input_title {
+      min-width: 264px;
+      border: none;
+      background-color: transparent;
+      height: 100%;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      font-size: 2em;
+      font-weight: bold;
+      word-wrap: break-word;
+      resize: none;
+
+      &:focus {
+        outline: none;
+      }
+    }
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      svg {
+        width: 25px;
+      }
+    }
+    .iconEdit {
+      &:hover {
+        color: rgb(70, 128, 252);
+      }
+    }
+    .iconClose {
+      &:hover {
+        color: rgb(252, 70, 97);
+      }
+    }
+  }
 }
 
 .image img {
