@@ -9,20 +9,18 @@ import AdvancedSearch from "../../components/AdvancedSearch";
 import Gallery from "../../components/Gallery/gallery";
 import List from "../../components/List";
 import Grid from "../../components/grids";
-import { getImagesByTag } from "../../core";
+import { getImagesByTag, handleSearchImage } from "../../core";
 import { GetCategorys } from "../../helper";
 import "./styles.scss";
 import { image } from "../../core/model.db";
 
-
 const Images: React.FC = () => {
-
   const [Search, setSearch] = useState("");
   const [imageSizes, setImageSizes] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [viewType, setviewType] = useState("mosaic");
   const [Icon, setIcon] = useState(<TfiLayoutGrid3Alt />);
-  const [images, setImages] = useState<image[]|null|undefined>(undefined);
+  const [images, setImages] = useState<image[] | null | undefined>(undefined);
 
   const { categorie, toggleCategoryChoice } = GetCategorys();
 
@@ -59,7 +57,6 @@ const Images: React.FC = () => {
   };
 
   const ImagesWithTags = async () => {
-
     setImages(undefined);
 
     const selectedTags = categorie
@@ -71,13 +68,37 @@ const Images: React.FC = () => {
     const images = await getImagesByTag(selectedTags);
     setImages(images);
 
-    if(images !== null && images !== undefined){
-    const sizes = await Promise.all(
-      images.map((image: { url: string | undefined}) =>
-        ImageTaille(image.url)
-      )
-    );
-    setImageSizes(sizes);
+    if (images !== null && images !== undefined) {
+      const sizes = await Promise.all(
+        images.map((image: { url: string | undefined }) =>
+          ImageTaille(image.url)
+        )
+      );
+      setImageSizes(sizes);
+    }
+    //setLoadImages(false);
+  };
+
+  const ImagesWithSearch = async (Searchs : string) => {
+    // Si Search contient moins de 5 caractères, arrête la fonction
+    
+    setImages(undefined);
+
+    //setLoadImages(true);
+
+    console.log(Searchs);
+    
+
+    const images = await handleSearchImage(Searchs);
+    setImages(images);
+
+    if (images !== null && images !== undefined) {
+      const sizes = await Promise.all(
+        images.map((image: { url: string | undefined }) =>
+          ImageTaille(image.url)
+        )
+      );
+      setImageSizes(sizes);
     }
     //setLoadImages(false);
   };
@@ -95,6 +116,8 @@ const Images: React.FC = () => {
           Search={Search}
           setSearch={setSearch}
           toggleCategoryChoice={toggleCategoryChoice}
+          ImagesWithSearch={ImagesWithSearch}
+          ImagesWithTags={ImagesWithTags}
         />
         <div className="view_choic_gallery_container">
           <div className="reload_choic_gallery" onClick={ImagesWithTags}>
@@ -143,48 +166,44 @@ const Images: React.FC = () => {
           )}
         </div>
 
-
         {images && (
-                    <div className="gallary_container">
-                    {viewType === "mosaic" && (
-                      <Gallery imageSizes={imageSizes} images={images} />
-                    )}
-                    {viewType === "cards" && (
-                      <Grid imageSizes={imageSizes} images={images} />
-                    )}
-                    {viewType === "list" && (
-                      <List imageSizes={imageSizes} images={images} />
-                    )}
-                  </div>
-        )
-        }
-        
+          <div className="gallary_container">
+            {viewType === "mosaic" && (
+              <Gallery imageSizes={imageSizes} images={images} />
+            )}
+            {viewType === "cards" && (
+              <Grid imageSizes={imageSizes} images={images} />
+            )}
+            {viewType === "list" && (
+              <List imageSizes={imageSizes} images={images} />
+            )}
+          </div>
+        )}
+
         {images === undefined && (
-                    <div className="LoadImages">
-                    <img src={ImagesLoading} alt="" />
-                    <p className="LoadingImages">
-                      Loading <span></span>
-                      <span></span>
-                      <span></span>
-                    </p>
-                  </div>
-        )
-        }
+          <div className="LoadImages">
+            <img src={ImagesLoading} alt="" />
+            <p className="LoadingImages">
+              Loading <span></span>
+              <span></span>
+              <span></span>
+            </p>
+          </div>
+        )}
 
         {images === null && (
-                  <div className="APIError">
-                  <div className="card APIErrorContent">
-                    <div className="Oops">Ooops !</div>
-                    <span className="ErreurType">
-                      Erreur 503 : Service non disponible
-                    </span>
-                    <span className="ErreurMessage">
-                      Une erreur s'est produite lors de la communication avec l'API.
-                    </span>
-                  </div>
-                </div>
-        )
-        }
+          <div className="APIError">
+            <div className="card APIErrorContent">
+              <div className="Oops">Ooops !</div>
+              <span className="ErreurType">
+                Erreur 503 : Service non disponible
+              </span>
+              <span className="ErreurMessage">
+                Une erreur s'est produite lors de la communication avec l'API.
+              </span>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -9,6 +9,8 @@ interface Props {
   Search: string;
   toggleCategoryChoice: Function;
   categorie: any;
+  ImagesWithSearch: Function;
+  ImagesWithTags: Function;
 }
 
 const AdvancedSearch: React.FC<Props> = (props: Props) => {
@@ -17,8 +19,19 @@ const AdvancedSearch: React.FC<Props> = (props: Props) => {
   const isFirefox: boolean =
     navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
 
-  const handleChangeSearch = (event: any) => {
-    props.setSearch(event.target.value);
+  const handleChangeSearch = async (event: any) => {
+    const tester = event.target.value.toString();
+    if (tester.length === 0) {
+      props.ImagesWithTags();
+      return;
+    }
+    if (tester.length < 4) {
+      return;
+    }
+    console.log(tester);
+
+    props.setSearch(tester);
+    props.ImagesWithSearch(tester);
   };
 
   return (
@@ -48,6 +61,7 @@ const AdvancedSearch: React.FC<Props> = (props: Props) => {
               <SpeackInput
                 setSearch={props.setSearch}
                 setIsFocused={setIsFocused}
+                ImagesWithSearch={props.ImagesWithSearch}
               />
             )}
           </div>

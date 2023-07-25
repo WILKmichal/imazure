@@ -4,6 +4,7 @@ import { MdMic, MdMicOff } from "react-icons/md";
 interface Speak {
   setSearch: Function;
   setIsFocused: Function;
+  ImagesWithSearch : Function;
 }
 
 const SpeackInput: React.FC<Speak> = (Props:Speak) => {
@@ -29,6 +30,7 @@ const SpeackInput: React.FC<Speak> = (Props:Speak) => {
       const last:number = event.results.length - 1;
       const transcript = event.results[last][0].transcript;
       Props.setSearch(transcript);
+      Props.ImagesWithSearch(transcript)
     };
 
     recognitionInstance.onsoundend = () => {

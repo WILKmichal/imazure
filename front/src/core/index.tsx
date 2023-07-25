@@ -122,6 +122,19 @@ const handleUploadImage = async (selectedImages: any) => {
   }
 };
 
+const handleSearchImage = async (search: string) => {
+  let images: image[] | null | undefined = undefined;
+  try {
+    const SIGNUP_ENDPOINT: string = `${SERVER_URL}/images/search?q=${search}`;
+
+    images = await getData(SIGNUP_ENDPOINT, "GET");
+  } catch (error) {
+    console.error(ErrorType.fetchingImageError, error);
+    images = null;
+  }
+  return images;
+};
+
 export {
   getImageInfoById,
   getImagesByTag,
@@ -129,4 +142,5 @@ export {
   handleUploadImage,
   deleteImageWithId,
   EditImages,
+  handleSearchImage
 };
