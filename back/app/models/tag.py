@@ -10,5 +10,7 @@ class Tag(db.Model, SerializerMixin):
 
     images = db.relationship("Image",secondary="image_tag", back_populates="tags")
     image_count = 0
+    matched = False
+    confidence = 0.0
     def __repr__(self):
         return f'<Tag "{self.name}">' 

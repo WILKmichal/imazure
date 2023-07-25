@@ -264,3 +264,42 @@ def imagesByTag():
     images = [i.to_dict() for i in images]
 
     return jsonify(images)
+
+@bp.get('search')
+def image_search():
+    query = request.args.get("q")
+
+    if not query:
+        return jsonify([image.to_dict() for image in Image.query.all()])
+    
+    query_words = query.split()
+    like_queries = [f"%{word}%" for word in query_words]
+
+    if (len(request.args.get("q")) == 0):
+        return jsonify([i.to_dict() for i in Image.query.all()])
+
+    subquery = (
+    db.session.query(Image_tag.image_id, Image_tag.confidence)
+    .join(Tag)
+    .filter(db.or_(*[Tag.name.ilike(like_query) for like_query in like_queries]))
+    .group_by(Image_tag.image_id, Image_tag.confidence)
+    .subquery()
+    )
+
+    # Get the images that have associations with all the tags
+    images = (
+        db.session.query(Image, subquery.c.confidence)
+        .join(subquery, Image.id == subquery.c.image_id)
+        .all()
+    )
+
+    for image, confidence in images:
+        for tag in image.tags:
+            for word in query_words:
+                tag.matched = (word.lower() in tag.name.lower()) or tag.matched
+            tag.confidence = confidence
+        image.tags.sort(key=lambda tag: ( not tag.matched ))
+
+    images = [i.to_dict(rules=('tags.matched', 'tags.confidence')) for i, confidence in images]
+
+    return jsonify(images)
