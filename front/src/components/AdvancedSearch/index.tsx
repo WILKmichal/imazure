@@ -21,6 +21,7 @@ const AdvancedSearch: React.FC<Props> = (props: Props) => {
 
   const handleChangeSearch = async (event: any) => {
     const tester = event.target.value.toString();
+    props.setSearch(tester);
     if (tester.length === 0) {
       props.ImagesWithTags();
       return;
@@ -30,7 +31,6 @@ const AdvancedSearch: React.FC<Props> = (props: Props) => {
     }
     console.log(tester);
 
-    props.setSearch(tester);
     props.ImagesWithSearch(tester);
   };
 
