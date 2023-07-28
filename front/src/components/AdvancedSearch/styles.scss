@@ -8,6 +8,47 @@
 
   .AdvancedSearch {
     padding: 0px 0px 10px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .buttonUpload_container {
+      display: block;
+
+      .buttonUpload {
+        --ds-foundations--background-color: #3448c5;
+        --ds-foundations--foreground-color: #ffffff;
+        --ds-foundations--typography--color: #ffffff;
+        --ds-foundations--typography--font-weight: 600;
+        background-color: var(--ds-foundations--background-color);
+        border-radius: 4px;
+        padding: 0px 0.5rem;
+        height: 1.75rem;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        white-space: nowrap;
+        cursor: pointer;
+        outline: none;
+        transition: box-shadow 250ms ease 0s, background 250ms ease 0s,
+          border-color 150ms ease 0s;
+        box-shadow: transparent 0px 0px 0px 0px,
+          transparent 0px 0px 0px 0px inset;
+        border: 1px solid transparent;
+
+        .word {
+          font-size: 0.75rem;
+          line-height: 1rem;
+          color: var(--ds-foundations--typography--color);
+          font-weight: var(--ds-foundations--typography--font-weight);
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    .AdvancedSearch .buttonUpload_container {
+      display: none;
+    }
   }
   .Search_container {
     display: flex;
@@ -27,7 +68,7 @@
 
       transition: width 0.3s ease-in-out;
 
-      .AdvancedSearch_input_container_input{
+      .AdvancedSearch_input_container_input {
         display: flex;
         align-items: center;
       }
@@ -98,7 +139,7 @@
 
   .tag-badge {
     display: inline-block;
-    background-color: rgb(0,0,0,0.1);
+    background-color: rgb(0, 0, 0, 0.1);
     color: #000;
     opacity: 0.5;
     border-radius: 4px;

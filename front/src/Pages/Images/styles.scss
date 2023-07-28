@@ -29,6 +29,19 @@ body {
     background: #26262630;
   }
 }
+
+.reload_choic_category {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  width: 70%;
+  overflow-x: scroll;
+  &.scrollOk{
+    display: flex;
+  }
+}
+
 .view_choic_gallery_container {
   border-bottom: #c2cdd8 solid 1px;
   height: 53px;
@@ -37,6 +50,14 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  &.sticky {
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%; // Ajoutez ceci pour que le conteneur remplisse la largeur de l'écran
+  }
+
   .view_choic_gallery {
     cursor: pointer;
     width: 80px;
@@ -113,6 +134,35 @@ body {
     &:nth-child(2) {
       animation-delay: -0.16s;
     }
+  }
+}
+
+.ButtonUploadMobile {
+  display: none;
+  position: fixed; /* Fixe la position de la div */
+  right: 0; /* La positionne à droite */
+  bottom: 0; /* La positionne en bas */
+  /* Vous pouvez également ajouter un peu de marge si vous le souhaitez */
+  margin-right: 10px;
+  margin-bottom: 10px;
+  button {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 30px;
+    border: solid 1px rgb(70, 128, 252);
+    color: rgb(70, 128, 252);
+    cursor: pointer;
+    &:hover {
+      border: solid 1px rgb(28, 100, 254);
+      color: solid 1px rgb(28, 100, 254);
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .ButtonUploadMobile {
+    display: block;
   }
 }
 

@@ -36,7 +36,17 @@ const AdvancedSearch: React.FC<Props> = (props: Props) => {
 
   return (
     <div className="AdvancedSearch_container">
-      <div className="AdvancedSearch">Advanced Search</div>
+      <div className="AdvancedSearch">
+        <div>Advanced Search</div>
+        <div className="buttonUpload_container">
+          <div
+            onClick={() => (window.location.href = "/upload")}
+            className="buttonUpload"
+          >
+            <div className="word">Add Images</div>
+          </div>
+        </div>
+      </div>
       <div className={`Search_container`}>
         <div
           className={`AdvancedSearch_input_container ${
@@ -66,17 +76,18 @@ const AdvancedSearch: React.FC<Props> = (props: Props) => {
             )}
           </div>
         </div>
-        {props.categorie
-          .slice(0, numToShow)
-          .map((category: any, index: number) => (
-            <div key={index}>
-              <ButtonBox
-                labelColor={"#000000"}
-                category={category}
-                toggleCategoryChoice={props.toggleCategoryChoice}
-              />
-            </div>
-          ))}
+        {props.categorie.slice(0, numToShow).map(
+          (category: any, index: number) =>
+            category.tag.image_count !== 0 && (
+              <div key={index}>
+                <ButtonBox
+                  labelColor={"#000000"}
+                  category={category}
+                  toggleCategoryChoice={props.toggleCategoryChoice}
+                />
+              </div>
+            )
+        )}
         {numToShow < props.categorie.length ? ( // Si il y a plus d'éléments à afficher, montrer le bouton "Show More"
           <div
             className="tag"

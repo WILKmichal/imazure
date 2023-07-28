@@ -4,17 +4,18 @@ import { MdMic, MdMicOff } from "react-icons/md";
 interface Speak {
   setSearch: Function;
   setIsFocused: Function;
-  ImagesWithSearch : Function;
+  ImagesWithSearch: Function;
 }
 
-const SpeackInput: React.FC<Speak> = (Props:Speak) => {
+const SpeakInput: React.FC<Speak> = (Props: Speak) => {
   const [recognition, setRecognition] = useState<any | null>(null);
   const [listening, setListening] = useState<boolean>(false);
-  const isFirefox:boolean = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+  const isFirefox: boolean =
+    navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
 
   useEffect(() => {
     if (isFirefox) {
-      return; // exit the effect if the browser is Firefox
+      return;
     }
 
     const SpeechRecognition =
@@ -27,10 +28,10 @@ const SpeackInput: React.FC<Speak> = (Props:Speak) => {
     recognitionInstance.maxAlternatives = 1;
 
     recognitionInstance.onresult = (event: any) => {
-      const last:number = event.results.length - 1;
+      const last: number = event.results.length - 1;
       const transcript = event.results[last][0].transcript;
       Props.setSearch(transcript);
-      Props.ImagesWithSearch(transcript)
+      Props.ImagesWithSearch(transcript);
     };
 
     recognitionInstance.onsoundend = () => {
@@ -40,17 +41,26 @@ const SpeackInput: React.FC<Speak> = (Props:Speak) => {
     };
 
     setRecognition(recognitionInstance);
-  }, [Props, isFirefox]); // adding dependencies here
+  }, [Props, isFirefox]);
 
   const startListening = () => {
     if (isFirefox) {
-      return; // prevent listening if the browser is Firefox
+      return;
     }
     Props.setIsFocused(true);
 
     if (recognition) {
       setListening(true);
       recognition.start();
+
+      // Stop recognition after 10 seconds
+      setTimeout(() => {
+        if (recognition) {
+          setListening(false);
+          Props.setIsFocused(false);
+          recognition.stop();
+        }
+      }, 10000);
     }
   };
 
@@ -84,4 +94,4 @@ const SpeackInput: React.FC<Speak> = (Props:Speak) => {
   );
 };
 
-export default SpeackInput;
+export default SpeakInput;

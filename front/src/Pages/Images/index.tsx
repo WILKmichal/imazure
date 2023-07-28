@@ -13,20 +13,42 @@ import { getImagesByTag, handleSearchImage } from "../../core";
 import { GetCategorys } from "../../helper";
 import "./styles.scss";
 import { image } from "../../core/model.db";
+import ButtonBox from "../../components/AdvancedSearch/ButtonBox";
 
 const Images: React.FC = () => {
   const [Search, setSearch] = useState("");
   const [imageSizes, setImageSizes] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [viewType, setviewType] = useState("mosaic");
-  const [Icon, setIcon] = useState(<TfiLayoutGrid3Alt />);
+  const [Icon, setIcon] = useState(<MdAutoAwesomeMosaic />);
   const [images, setImages] = useState<image[] | null | undefined>(undefined);
 
   const { categorie, toggleCategoryChoice } = GetCategorys();
+  const advancedSearchRef = React.useRef<HTMLDivElement>(null); // Create a reference to AdvancedSearch
 
   useEffect(() => {
     ImagesWithTags(); // Call ImagesWithTags when category changes
   }, [categorie]);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      let gallery: any = document.querySelector(".gallary_container");
+      let header: any = document.querySelector(".view_choic_gallery_container");
+      let scroll_category : any  = document.querySelector(".reload_choic_category");
+      if (gallery) {
+        let rect = gallery.getBoundingClientRect();
+        header.classList.toggle("sticky", rect.top <= 0);
+        scroll_category.classList.toggle("scrollOk", rect.top <= 0);
+      }
+    };
+
+    window.addEventListener("scroll", checkScroll);
+
+    // Clean up on unmount
+    return () => {
+      window.removeEventListener("scroll", checkScroll);
+    };
+  }, []);
 
   const ImageTaille = (image?: string) => {
     return new Promise<any>((resolve) => {
@@ -79,15 +101,14 @@ const Images: React.FC = () => {
     //setLoadImages(false);
   };
 
-  const ImagesWithSearch = async (Searchs : string) => {
+  const ImagesWithSearch = async (Searchs: string) => {
     // Si Search contient moins de 5 caractères, arrête la fonction
-    
+
     setImages(undefined);
 
     //setLoadImages(true);
 
     console.log(Searchs);
-    
 
     const images = await handleSearchImage(Searchs);
     setImages(images);
@@ -111,17 +132,33 @@ const Images: React.FC = () => {
       }}
     >
       <div className="Search_container">
-        <AdvancedSearch
-          categorie={categorie}
-          Search={Search}
-          setSearch={setSearch}
-          toggleCategoryChoice={toggleCategoryChoice}
-          ImagesWithSearch={ImagesWithSearch}
-          ImagesWithTags={ImagesWithTags}
-        />
+        <div>
+          <AdvancedSearch
+            categorie={categorie}
+            Search={Search}
+            setSearch={setSearch}
+            toggleCategoryChoice={toggleCategoryChoice}
+            ImagesWithSearch={ImagesWithSearch}
+            ImagesWithTags={ImagesWithTags}
+          />
+        </div>
         <div className="view_choic_gallery_container">
           <div className="reload_choic_gallery" onClick={ImagesWithTags}>
             <AiOutlineReload />
+          </div>
+          <div className="reload_choic_category" onClick={ImagesWithTags}>
+            {categorie.map(
+              (category: any, index: number) =>
+                category.choix && (
+                  <div key={index}>
+                    <ButtonBox
+                      labelColor={"#000000"}
+                      category={category}
+                      toggleCategoryChoice={toggleCategoryChoice}
+                    />
+                  </div>
+                )
+            )}
           </div>
           <div onClick={ViewTypeViewImages} className="view_choic_gallery">
             <p>view</p>
@@ -204,6 +241,9 @@ const Images: React.FC = () => {
             </div>
           </div>
         )}
+      </div>
+      <div className="ButtonUploadMobile">
+        <button onClick={() => (window.location.href = "/upload")}>+</button>
       </div>
     </div>
   );
