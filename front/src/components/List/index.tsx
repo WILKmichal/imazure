@@ -17,6 +17,9 @@ export interface IImage {
 interface Props {
   images: any;
   imageSizes: any;
+  handleCheckboxClick: any;
+  imagesSelected: any;
+  setImagesSelected: any;
 }
 
 const List: React.FC<Props> = (props: Props) => {
@@ -46,27 +49,6 @@ const List: React.FC<Props> = (props: Props) => {
     };
   }, [elementRef]);
 
-  function calculateAspectRatio(width: number, height: number): string {
-    // Calculate the aspect ratio
-    const aspectRatio = width / height;
-
-    const standardRatio: StandardRatios | undefined = standardRatios.find(
-      (r) => Math.abs(r.ratio - aspectRatio) < 0.05
-    );
-
-    if (standardRatio) {
-      // Return the name of the standard ratio if the aspect ratio is close enough
-      return standardRatio.name;
-    } else {
-      // Otherwise, return the closest standard ratio with a tilde (~) prefix
-      const closestRatio: StandardRatios = standardRatios.reduce((a, b) => {
-        const aDiff = Math.abs(a.ratio - aspectRatio);
-        const bDiff = Math.abs(b.ratio - aspectRatio);
-        return aDiff < bDiff ? a : b;
-      });
-      return `~${closestRatio.name}`;
-    }
-  }
   const getExtension = (filename: string) => {
     const split = filename.split(".");
     return split.length > 1 ? split.pop() : "";
@@ -82,7 +64,10 @@ const List: React.FC<Props> = (props: Props) => {
           {props.images.map((image: any, index: number) => (
             <div key={image.name} className="list_row_name">
               <div>
-                <Checkbox isChecked={false} />
+                <Checkbox
+                  isChecked={props.imagesSelected.includes(image.id)}
+                  onCheckedChange={() => props.handleCheckboxClick(image.id)}
+                />
               </div>
               <div className="list_row_name_container_img">
                 <img src={image.url} alt="" />

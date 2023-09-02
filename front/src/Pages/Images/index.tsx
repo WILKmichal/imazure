@@ -9,11 +9,16 @@ import AdvancedSearch from "../../components/AdvancedSearch";
 import Gallery from "../../components/Gallery/gallery";
 import List from "../../components/List";
 import Grid from "../../components/grids";
-import { getImagesByTag, handleSearchImage } from "../../core";
+import {
+  deleteImageMultiple,
+  getImagesByTag,
+  handleSearchImage,
+} from "../../core";
 import { GetCategorys } from "../../helper";
 import "./styles.scss";
 import { image } from "../../core/model.db";
 import ButtonBox from "../../components/AdvancedSearch/ButtonBox";
+import { ImBin } from "react-icons/im";
 
 const Images: React.FC = () => {
   const [Search, setSearch] = useState("");
@@ -22,6 +27,8 @@ const Images: React.FC = () => {
   const [viewType, setviewType] = useState("mosaic");
   const [Icon, setIcon] = useState(<MdAutoAwesomeMosaic />);
   const [images, setImages] = useState<image[] | null | undefined>(undefined);
+  const [imagesSelected, setImagesSelected] = useState<number[]>([]);
+  const [ModalOpen, setModalOpen] = useState(false);
 
   const { categorie, toggleCategoryChoice } = GetCategorys();
   const advancedSearchRef = React.useRef<HTMLDivElement>(null); // Create a reference to AdvancedSearch
@@ -34,7 +41,9 @@ const Images: React.FC = () => {
     const checkScroll = () => {
       let gallery: any = document.querySelector(".gallary_container");
       let header: any = document.querySelector(".view_choic_gallery_container");
-      let scroll_category : any  = document.querySelector(".reload_choic_category");
+      let scroll_category: any = document.querySelector(
+        ".reload_choic_category"
+      );
       if (gallery) {
         let rect = gallery.getBoundingClientRect();
         header.classList.toggle("sticky", rect.top <= 0);
@@ -68,6 +77,15 @@ const Images: React.FC = () => {
     });
   };
 
+  const deleteImageMultiples = async () => {
+    const imagesSuppr = await deleteImageMultiple(imagesSelected);
+
+    if (imagesSuppr === true) {
+      setModalOpen(false)
+      setImagesSelected([]);
+      ImagesWithTags();
+    }
+  };
   const ViewTypeViewImages = () => {
     setIsModalOpen(true);
   };
@@ -124,6 +142,21 @@ const Images: React.FC = () => {
     //setLoadImages(false);
   };
 
+  const handleCheckboxClick = (imageId: number) => {
+    // Vérifiez si l'ID de l'image est déjà dans imagesSelected
+    const isSelected = imagesSelected.includes(imageId);
+
+    if (isSelected) {
+      // Si l'ID de l'image est déjà sélectionné, supprimez-le de imagesSelected
+      setImagesSelected((prevImages: any[]) =>
+        prevImages.filter((id) => id !== imageId)
+      );
+    } else {
+      // Sinon, ajoutez l'ID de l'image à imagesSelected
+      setImagesSelected((prevImages: any) => [...prevImages, imageId]);
+    }
+  };
+
   return (
     <div
       style={{
@@ -143,9 +176,39 @@ const Images: React.FC = () => {
           />
         </div>
         <div className="view_choic_gallery_container">
-          <div className="reload_choic_gallery" onClick={ImagesWithTags}>
-            <AiOutlineReload />
+          <div className="flex_reload_clear">
+            <div onClick={ImagesWithTags} className="reload_choic_gallery">
+              <AiOutlineReload className="icon-thicker" />
+            </div>
+            <div
+              className="reload_clear"
+              onClick={() => {
+                setImagesSelected([]);
+              }}
+            >
+              clear
+            </div>
           </div>
+
+          {ModalOpen && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <h2>Confirmation</h2>
+                <p>Êtes-vous sûr de vouloir supprimer cette image ?</p>
+                <div className="modal-actions">
+                  <button className="confirm" onClick={deleteImageMultiples}>
+                    Confirmer
+                  </button>
+                  <button
+                    className="cancel"
+                    onClick={() => setModalOpen(false)}
+                  >
+                    Annuler
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="reload_choic_category" onClick={ImagesWithTags}>
             {categorie.map(
               (category: any, index: number) =>
@@ -160,9 +223,16 @@ const Images: React.FC = () => {
                 )
             )}
           </div>
-          <div onClick={ViewTypeViewImages} className="view_choic_gallery">
-            <p>view</p>
-            {Icon}
+          <div className="flex_view_choic_gallery">
+            {imagesSelected.length !== 0 && (
+              <div className="bin">
+                <ImBin onClick={() => setModalOpen(true)} />
+              </div>
+            )}
+            <div onClick={ViewTypeViewImages} className="view_choic_gallery">
+              <p>view</p>
+              {Icon}
+            </div>
           </div>
           {isModalOpen && (
             <div className="modal">
@@ -206,13 +276,31 @@ const Images: React.FC = () => {
         {images && (
           <div className="gallary_container">
             {viewType === "mosaic" && (
-              <Gallery imageSizes={imageSizes} images={images} />
+              <Gallery
+                handleCheckboxClick={handleCheckboxClick}
+                imagesSelected={imagesSelected}
+                setImagesSelected={setImagesSelected}
+                imageSizes={imageSizes}
+                images={images}
+              />
             )}
             {viewType === "cards" && (
-              <Grid imageSizes={imageSizes} images={images} />
+              <Grid
+                handleCheckboxClick={handleCheckboxClick}
+                imagesSelected={imagesSelected}
+                setImagesSelected={setImagesSelected}
+                imageSizes={imageSizes}
+                images={images}
+              />
             )}
             {viewType === "list" && (
-              <List imageSizes={imageSizes} images={images} />
+              <List
+                handleCheckboxClick={handleCheckboxClick}
+                imagesSelected={imagesSelected}
+                setImagesSelected={setImagesSelected}
+                imageSizes={imageSizes}
+                images={images}
+              />
             )}
           </div>
         )}
