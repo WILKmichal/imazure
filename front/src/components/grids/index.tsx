@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./grids.scss";
 import { standardRatios } from "../../helper/staticValues";
+import Checkbox from "../CheckBox";
 
 export interface IImage {
   images: [
@@ -16,6 +17,9 @@ export interface IImage {
 interface Props {
   images: any;
   imageSizes: any;
+  imagesSelected: any;
+  setImagesSelected: any;
+  handleCheckboxClick: any;
 }
 
 const Grid: React.FC<Props> = (props: Props) => {
@@ -71,37 +75,43 @@ const Grid: React.FC<Props> = (props: Props) => {
     <div>
       {/* <MenuRetractable numColumns={numColumns} setNumColumns={setNumColumns} /> */}
 
-        <div className="cards_container">
-          {props.images.map((image: any, index: number) => (
-            <div key={image.url} className="cards">
-              <div className="card_imge_container">
-                <img src={image.url} alt={image.name} loading="lazy" />
-                <div
-                  onClick={() => {
-                    window.location.href = `/images/details/${image.id}`;
-                  }}
-                  className="viewButton"
-                >
-                  Voir plus
-                </div>
-              </div>
-              <div className="card_label">{image.name}</div>
-              <div className="card_info">
-                <div className="resolution_info">
-                  {props.imageSizes[index].width +
-                    "x" +
-                    props.imageSizes[index].height}
-                </div>
-                <div className="ratio_info">
-                  {calculateAspectRatio(
-                    props.imageSizes[index].width,
-                    props.imageSizes[index].height
-                  )}
-                </div>
+      <div className="cards_container">
+        {props.images.map((image: any, index: number) => (
+          <div key={image.url} className="cards">
+            <div className="Checkbox">
+              <Checkbox
+                isChecked={props.imagesSelected.includes(image.id)}
+                onCheckedChange={() => props.handleCheckboxClick(image.id)}
+              />
+            </div>
+            <div className="card_imge_container">
+              <img src={image.url} alt={image.name} loading="lazy" />
+              <div
+                onClick={() => {
+                  window.location.href = `/images/details/${image.id}`;
+                }}
+                className="viewButton"
+              >
+                Voir plus
               </div>
             </div>
-          ))}
-        </div>
+            <div className="card_label">{image.name}</div>
+            <div className="card_info">
+              <div className="resolution_info">
+                {props.imageSizes[index].width +
+                  "x" +
+                  props.imageSizes[index].height}
+              </div>
+              <div className="ratio_info">
+                {calculateAspectRatio(
+                  props.imageSizes[index].width,
+                  props.imageSizes[index].height
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

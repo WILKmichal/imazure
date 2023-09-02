@@ -1,16 +1,19 @@
 import * as React from "react";
 import ImageUpload from "../../components/ImageUpload";
 import DragAndDrop from "../../components/DragAndDrop";
+import { RiUploadCloud2Line } from "react-icons/ri";
 
 import "./Upload.scss";
 import { handleUploadImage } from "../../core";
+import ImageComponent from "./component/ImageComponent";
 
 const Upload: React.FC = () => {
-  const [droppedImages, setDroppedImages] = React.useState<File[]>([]);
+  const [droppedImages, setDroppedImages] = React.useState<any>([]);
   const [isOpenModalError, setIsOpenModalError] = React.useState(false);
 
   const elementRef = React.useRef<HTMLDivElement>(null);
   const [numColumns, setNumColumns] = React.useState<number>(5);
+  const [newTag, setNewTag] = React.useState("");
 
   React.useEffect(() => {
     function handleResize() {
@@ -35,6 +38,46 @@ const Upload: React.FC = () => {
     };
   }, [elementRef]);
 
+  const [filesSelected, setFilesSelected] = React.useState<boolean>(false);
+
+  const handleDragOver = React.useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setFilesSelected(true);
+    },
+    []
+  );
+
+  const handleDragLeave = React.useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setFilesSelected(false);
+    },
+    []
+  );
+  const handleDrop = React.useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const files = Array.from(e.dataTransfer.files).filter((file) =>
+      file.type.startsWith("image/")
+    );
+
+    const imagesWithAdditionalInfo = files.map((file) => ({
+      file,
+      name: file.name,
+      description: "",
+      tag: ["test"],
+    }));
+
+    setDroppedImages((prevImages: any[]) =>
+      prevImages.concat(imagesWithAdditionalInfo)
+    );
+    setFilesSelected(false);
+  }, []);
+
   const handleUpload = (files: FileList) => {
     console.log("Fichiers à uploader:", files);
   };
@@ -51,6 +94,44 @@ const Upload: React.FC = () => {
     if (uploadI.API === false) {
       setIsOpenModalError(true);
     }
+  };
+
+  const handleChangeDescription = (index: number) => (event: any) => {
+    setDroppedImages((prevImages: any[]) =>
+      prevImages.map((image, i) =>
+        i === index ? { ...image, description: event.target.value } : image
+      )
+    );
+  };
+
+  const handleChangeName = (index: number) => (event: any) => {
+    setDroppedImages((prevImages: any[]) =>
+      prevImages.map((image, i) =>
+        i === index ? { ...image, name: event.target.value } : image
+      )
+    );
+  };
+
+  const addTag = (index: number) => {
+    setDroppedImages((prevImages: any[]) =>
+      prevImages.map((image, i) =>
+        i === index ? { ...image, tag: [...image.tag, newTag] } : image
+      )
+    );
+    setNewTag("");
+  };
+
+  const deleteTag = (imageIndex: number, tagIndex: number) => {
+    setDroppedImages((prevImages: any[]) =>
+      prevImages.map((image, i) =>
+        i === imageIndex
+          ? {
+              ...image,
+              tag: image.tag.filter((_: any, j: number) => j !== tagIndex),
+            }
+          : image
+      )
+    );
   };
 
   return (
@@ -97,17 +178,28 @@ const Upload: React.FC = () => {
         </div>
       )}
 
-      <div>
-        <div className="containerUpload">
-          <div className="card">
-            <ImageUpload
-              setDroppedImages={setDroppedImages}
-              onUpload={handleUpload}
-            />
-            <hr className="hrdrag" />
-            <DragAndDrop setDroppedImages={setDroppedImages} />
-            <hr className="hrUpload" />
-
+      <div
+        className="containerPageUpload"
+        style={{
+          minHeight: "100vh",
+        }}
+      >
+        <div
+          className="containerUpload"
+          onDragLeave={handleDragLeave}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          <div>
+            <h1>Upload Image & preview</h1>
+            <div className="card_upload">
+              <RiUploadCloud2Line size={40} color="#3448c5" />
+              <p>Select files or drag and drop</p>
+              <ImageUpload
+                setDroppedImages={setDroppedImages}
+                onUpload={handleUpload}
+              />
+            </div>
             <button
               disabled={droppedImages.length === 0 ? true : false}
               className={`buttonUploadImage${
@@ -122,34 +214,94 @@ const Upload: React.FC = () => {
           </div>
         </div>
 
-        <div className="galleryUpload" style={{ columnCount: numColumns }}>
-          {droppedImages.map((image, index) => (
-            <div key={index} className="image_container">
-              <img
-                src={URL.createObjectURL(image)}
-                alt={image.name}
-                loading="lazy"
-              />
-              <button
-                onClick={() => removeImage(index)}
+        <div className="container_edit_image">
+          {/* {droppedImages.map((image: any, index: number) => (
+            <div key={index} className="image_container_upload">
+              <div
                 style={{
-                  position: "absolute",
-                  top: 0,
-                  right: 0,
-                  backgroundColor: "red",
-                  color: "white",
-                  borderRadius: "50%",
-                  border: "none",
-                  cursor: "pointer",
-                  width: "25px",
-                  height: "25px",
-                  fontSize: "0.8rem",
-                  fontWeight: "bold",
+                  position: "relative",
+                  height: "310px",
+                  width: "260px",
                 }}
               >
-                X
-              </button>
+                <img
+                  className="image_uploads"
+                  src={URL.createObjectURL(image.file)}
+                  alt={image.name}
+                  loading="lazy"
+                />
+                <button
+                  onClick={() => removeImage(index)}
+                  style={{
+                    position: "absolute",
+                    top: 5,
+                    right: 5,
+                    backgroundColor: "red",
+                    color: "white",
+                    borderRadius: "50%",
+                    border: "none",
+                    cursor: "pointer",
+                    width: "25px",
+                    height: "25px",
+                    fontSize: "0.8rem",
+                    fontWeight: "bold",
+                  }}
+                >
+                  X
+                </button>
+              </div>
+
+              <div className="Info_Images">
+                <div>
+                  <h6>Name : </h6>
+                  <textarea
+                    onChange={handleChangeName(index)}
+                    className="Images_Name"
+                    defaultValue={image.name}
+                  />
+                </div>
+                <div>
+                  <h6>Descrition : </h6>
+                  <textarea
+                    defaultValue={image.description}
+                    onChange={handleChangeDescription(index)}
+                    className="Images_Description"
+                  />
+                </div>
+                <div>
+                  {image.tag.map((tag: any, tagIndex: number) => (
+                    <div className="tag" key={tagIndex}>
+                      {tag}
+                      <button onClick={() => deleteTag(index, tagIndex)}>
+                        &times;
+                      </button>
+                    </div>
+                  ))}
+                  <div className="input_add_tags_container">
+                    <input
+                      type="text"
+                      onChange={(e) => setNewTag(e.target.value)}
+                      placeholder="ajouter un tag"
+                    />
+                    <button onClick={() => addTag(index)}>+</button>
+                  </div>
+                </div>
+              </div>
             </div>
+          ))} */}
+
+          {droppedImages.map((image: any, index: number) => (
+            <ImageComponent
+              key={index}
+              image={image}
+              index={index}
+              deleteTag={deleteTag}
+              handleChangeName={handleChangeName}
+              handleChangeDescription={handleChangeDescription}
+              addTag={addTag}
+              setNewTag={setNewTag}
+              removeImage={removeImage}
+            />
           ))}
         </div>
       </div>

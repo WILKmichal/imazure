@@ -4,13 +4,13 @@ type CheckboxProps = {
   // label: string;
   isChecked: boolean;
   // labelColor: string;
-  // onCheckedChange: (label: string) => void;
+  onCheckedChange: any;
 };
 
 const Checkbox = ({
   // label,
   isChecked,
-  // onCheckedChange,
+  onCheckedChange,
   // labelColor,
 }: CheckboxProps) => {
   const [checked, setChecked] = useState(isChecked);
@@ -24,7 +24,7 @@ const Checkbox = ({
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <div
-        onClick={handleCheckedChange}
+        onClick={onCheckedChange}
         style={{
           display: "flex",
           alignItems: "center",
@@ -40,7 +40,7 @@ const Checkbox = ({
           style={{
             width: "7px",
             height: "7px",
-            backgroundColor: checked ? "#32a1ce" : "white",
+            backgroundColor: isChecked ? "#32a1ce" : "white",
           }}
         ></div>
       </div>

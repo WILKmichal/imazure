@@ -19,16 +19,76 @@ body {
   gap: 1rem;
 }
 
+.flex_reload_clear {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .reload_choic_gallery {
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+  height: 100%;
   width: 30px;
+  cursor: pointer;
+
   &:hover {
     background: #26262630;
   }
 }
+
+.icon-thicker {
+  stroke: black;
+  stroke-width: 50px;
+}
+
+.bin {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover svg {
+    fill: red;
+  }
+}
+.flex_view_choic_gallery {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.reload_clear {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  height: 100%;
+  width: 50px;
+  margin: 0;
+  font-weight: 900;
+  font-size: 15px;
+  cursor: pointer;
+  &:hover {
+    background: #26262630;
+  }
+}
+
+.reload_choic_category {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  width: 70%;
+  overflow-x: scroll;
+  &.scrollOk {
+    display: flex;
+  }
+}
+
 .view_choic_gallery_container {
   border-bottom: #c2cdd8 solid 1px;
   height: 53px;
@@ -37,8 +97,17 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  &.sticky {
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%; // Ajoutez ceci pour que le conteneur remplisse la largeur de l'écran
+  }
+
   .view_choic_gallery {
     cursor: pointer;
+    height: 100%;
     width: 80px;
     padding: 0px 5px;
     display: flex;
@@ -116,6 +185,35 @@ body {
   }
 }
 
+.ButtonUploadMobile {
+  display: none;
+  position: fixed; /* Fixe la position de la div */
+  right: 0; /* La positionne à droite */
+  bottom: 0; /* La positionne en bas */
+  /* Vous pouvez également ajouter un peu de marge si vous le souhaitez */
+  margin-right: 10px;
+  margin-bottom: 10px;
+  button {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 30px;
+    border: solid 1px rgb(70, 128, 252);
+    color: rgb(70, 128, 252);
+    cursor: pointer;
+    &:hover {
+      border: solid 1px rgb(28, 100, 254);
+      color: solid 1px rgb(28, 100, 254);
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .ButtonUploadMobile {
+    display: block;
+  }
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -147,5 +245,48 @@ body {
         background-color: rgba(68, 140, 255, 0.179);
       }
     }
+  }
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  .confirm {
+    border: none;
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .cancel {
+    border: none;
+    background-color: #3448c5;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+
   }
 }

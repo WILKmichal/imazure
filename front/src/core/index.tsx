@@ -38,6 +38,32 @@ const getImageInfoById = async (id: any) => {
   }
 };
 
+const deleteImageMultiple = async (id: any) => {
+  let images: any | null | undefined = undefined;
+  try {
+    const SIGNUP_ENDPOINT = `${SERVER_URL}/images/multiple`;
+
+    const response = await fetch(SIGNUP_ENDPOINT, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json'
+      },    
+      body: JSON.stringify(id),
+    });
+    if (response.ok && response.headers.get('content-type')?.includes('application/json')) {
+      images = await response.json();
+      return true
+   } else {
+      // console.error('Error or not a JSON response:', await response.text());
+      return true
+   }
+  } catch (error) {
+    console.error(ErrorType.fetchingImageError, error);
+    images = null;
+  }
+  // console.log(images);
+};
+
 const deleteImageWithId = async (id: any) => {
   try {
     const DETAILS_ENDPOINT = `${SERVER_URL}/images/${id}`;
@@ -142,5 +168,6 @@ export {
   handleUploadImage,
   deleteImageWithId,
   EditImages,
-  handleSearchImage
+  handleSearchImage,
+  deleteImageMultiple,
 };
