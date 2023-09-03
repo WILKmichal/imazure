@@ -1,0 +1,127 @@
+.grid-container-accueil {
+  height: 95vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 100px;
+
+  .grid-item-left,
+  .grid-item-right {
+    width: 49%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .center-verticaly {
+      grid-column-start: 1;
+      justify-self: start;
+      font-family: "Inter";
+      font-style: normal;
+
+      .application-name {
+        font-weight: 350;
+        font-size: 13.5px;
+        line-height: 16.5px;
+      }
+
+      .catch-phrase {
+        font-weight: 400;
+        font-size: 59.5px;
+        line-height: 72px;
+
+        .imphasis {
+          display: inline;
+        }
+      }
+
+      .by {
+        margin-top: 15px;
+        font-weight: 400;
+        font-size: 10.5px;
+        line-height: 12.5px;
+        color: #766d6d;
+
+        .last-name {
+          display: inline;
+          font-weight: 400;
+          font-size: 10.5px;
+          line-height: 12.5px;
+          font-weight: bold;
+        }
+      }
+
+      .start {
+        margin-top: 15px;
+        font-weight: 400;
+        font-size: 13.5px;
+        line-height: 16.5px;
+        color: #f5f5f5;
+        background-color: black;
+        width: fit-content;
+        height: fit-content;
+        border: 0px solid rgba(0, 0, 0, 1);
+        border-radius: 14px;
+        padding: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .start:hover {
+        background-color: #333;
+        color: #fff;
+        transform: scale(1.05);
+      }
+
+      .start:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+}
+
+.svg {
+  width: 100%;
+}
+
+@media only screen and (max-width: 1280px) {
+  .grid-container-accueil {
+    gap: 10px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center; // ajoutez cette ligne
+
+    .grid-item-left,
+    .grid-item-right {
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+}
+
+@media only screen and (max-width: 780px) {
+  .grid-container-accueil {
+    gap: 10px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center; // ajoutez cette ligne
+
+    .grid-item-left,
+    .grid-item-right {
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .grid-item-right {
+      display: none;
+    }
+  }
+}

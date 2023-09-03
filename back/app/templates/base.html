@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %} - FlaskApp</title>
+    <style>
+        :root {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+        }
+        h1,h2,h3,h4,h5,h6 { text-align: center; }
+
+        .content {
+            max-width: 56rem;
+            padding: 1rem;
+            margin: auto;
+        }
+
+        nav a {
+            display: inline-block;
+            background-color: #4658ff;
+            color: #fff;
+            border-radius: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            margin-top: 0.25rem;
+        }
+        .images-container {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+        }
+        .image {
+            border: 1px solid #999;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .image img {
+            width: 100%;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: #bbc;
+            border-radius: 1rem;
+            padding: 0.125rem 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('main.index') }}">Imazure</a>
+        <a href="{{ url_for('images.index') }}">Images</a>
+        <a href="{{ url_for('images.upload_form') }}">Upload</a>
+    </nav>
+    <hr>
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+</body>
+</html>

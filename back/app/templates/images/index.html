@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Images {% endblock %}</h1>
+    <h2>This is the images Flask blueprint</h2>
+    <div class="images-container">
+        {% for image in images %}
+        <div class="image">
+            <p><b>#{{ image.id }}</b></p>
+            <img src="{{image.url}}"/>
+            <p>Original file name: {{image.title}}</p>
+            <p>Name on blob: {{ image.name }}</p>
+            <div>Tags:
+                {% for tag in image.tags %}
+                 <div class="tag">{{tag.name}}</div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

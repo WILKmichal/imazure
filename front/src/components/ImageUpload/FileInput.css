@@ -1,0 +1,7 @@
+.file-input-text {
+    display: none;
+  }
+  
+  .file-input-wrapper input[type="file"]:not(:focus) + button + span {
+    display: inline-block;
+  }
