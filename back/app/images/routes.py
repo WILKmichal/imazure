@@ -280,10 +280,11 @@ def image_search():
     if (len(request.args.get("q")) == 0):
         return jsonify([i.to_dict() for i in Image.query.all()])
 
-    subquery = (
+    subquery  = (
     db.session.query(Image_tag.image_id, Image_tag.confidence)
     .join(Tag)
-    .filter(db.or_(*[Tag.name.ilike(like_query) for like_query in like_queries]))
+    .join(Image)
+    .filter(db.or_(*[Tag.name.ilike(like_query) for like_query in like_queries], *[Image.description.ilike(like_query) for like_query in like_queries]))
     .group_by(Image_tag.image_id, Image_tag.confidence)
     .distinct(Image_tag.image_id)
     .subquery()
