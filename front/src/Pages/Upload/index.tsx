@@ -2,18 +2,21 @@ import * as React from "react";
 import ImageUpload from "../../components/ImageUpload";
 import DragAndDrop from "../../components/DragAndDrop";
 import { RiUploadCloud2Line } from "react-icons/ri";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 import "./Upload.scss";
-import { handleUploadImage } from "../../core";
+import { handleUploadImage, handleUpdateImages } from "../../core";
 import ImageComponent from "./component/ImageComponent";
+import UploadedImage from "./component/UploadedImage";
 
 const Upload: React.FC = () => {
   const [droppedImages, setDroppedImages] = React.useState<any>([]);
   const [isOpenModalError, setIsOpenModalError] = React.useState(false);
+  const [uploadStep, setUploadStep] = React.useState("upload");
 
   const elementRef = React.useRef<HTMLDivElement>(null);
   const [numColumns, setNumColumns] = React.useState<number>(5);
-  const [newTag, setNewTag] = React.useState("");
+  const [newTag, setNewTag] = React.useState<any>({name: ""});
 
   React.useEffect(() => {
     function handleResize() {
@@ -64,17 +67,10 @@ const Upload: React.FC = () => {
     const files = Array.from(e.dataTransfer.files).filter((file) =>
       file.type.startsWith("image/")
     );
-
-    const imagesWithAdditionalInfo = files.map((file) => ({
-      file,
-      name: file.name,
-      description: "",
-      tag: ["test"],
-    }));
-
     setDroppedImages((prevImages: any[]) =>
-      prevImages.concat(imagesWithAdditionalInfo)
+      prevImages.concat(files)
     );
+
     setFilesSelected(false);
   }, []);
 
@@ -88,12 +84,20 @@ const Upload: React.FC = () => {
     );
   };
 
+  const update = async () => {
+    const uploadI = await handleUpdateImages(droppedImages);
+    window.location.href = "/images";
+  };
+
   const upload = async () => {
     const uploadI = await handleUploadImage(droppedImages);
 
     if (uploadI.API === false) {
       setIsOpenModalError(true);
+      return;
     }
+    setUploadStep("update");
+    setDroppedImages(uploadI.response)
   };
 
   const handleChangeDescription = (index: number) => (event: any) => {
@@ -104,10 +108,10 @@ const Upload: React.FC = () => {
     );
   };
 
-  const handleChangeName = (index: number) => (event: any) => {
+  const handleChangeTitle = (index: number) => (event: any) => {
     setDroppedImages((prevImages: any[]) =>
       prevImages.map((image, i) =>
-        i === index ? { ...image, name: event.target.value } : image
+        i === index ? { ...image, title: event.target.value } : image
       )
     );
   };
@@ -115,10 +119,10 @@ const Upload: React.FC = () => {
   const addTag = (index: number) => {
     setDroppedImages((prevImages: any[]) =>
       prevImages.map((image, i) =>
-        i === index ? { ...image, tag: [...image.tag, newTag] } : image
+        i === index ? { ...image, tags: [...image.tags, newTag] } : image
       )
     );
-    setNewTag("");
+    setNewTag({name: ""});
   };
 
   const deleteTag = (imageIndex: number, tagIndex: number) => {
@@ -127,7 +131,7 @@ const Upload: React.FC = () => {
         i === imageIndex
           ? {
               ...image,
-              tag: image.tag.filter((_: any, j: number) => j !== tagIndex),
+              tags: image.tags.filter((_: any, j: number) => j !== tagIndex),
             }
           : image
       )
@@ -136,6 +140,12 @@ const Upload: React.FC = () => {
 
   return (
     <>
+    <div className="back-arrow" style={{ cursor: "pointer" }} onClick={() => (window.location.href = "/images")}>
+    <span className="icon">
+    <MdKeyboardBackspace/>
+    </span>
+    Back to images
+    </div>
       {isOpenModalError && (
         <div
           style={{
@@ -164,7 +174,7 @@ const Upload: React.FC = () => {
                   cursor: "pointer",
                 }}
               >
-                X
+                &times;
               </button>
               <div className="Oops">Ooops !</div>
               <span className="ErreurType">
@@ -180,18 +190,15 @@ const Upload: React.FC = () => {
 
       <div
         className="containerPageUpload"
-        style={{
-          minHeight: "100vh",
-        }}
       >
-        <div
+        {uploadStep === "upload" && (<div
           className="containerUpload"
           onDragLeave={handleDragLeave}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
         >
           <div>
-            <h1>Upload Image & preview</h1>
+            <h1>Upload Image</h1>
             <div className="card_upload">
               <RiUploadCloud2Line size={40} color="#3448c5" />
               <p>Select files or drag and drop</p>
@@ -212,7 +219,16 @@ const Upload: React.FC = () => {
                 : "Upload images"}
             </button>
           </div>
-        </div>
+        </div>)}
+
+        {uploadStep === "update" && (
+          <div>
+            <h1>Preview</h1>
+          <button className="buttonUploadImage" onClick={update}>
+            Save changes
+          </button>
+          </div>
+        )}
 
         <div className="container_edit_image">
           {/* {droppedImages.map((image: any, index: number) => (
@@ -261,7 +277,7 @@ const Upload: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <h6>Descrition : </h6>
+                  <h6>Description : </h6>
                   <textarea
                     defaultValue={image.description}
                     onChange={handleChangeDescription(index)}
@@ -290,16 +306,23 @@ const Upload: React.FC = () => {
             </div>
           ))} */}
 
-          {droppedImages.map((image: any, index: number) => (
+          {uploadStep === "update" && droppedImages.map((image: any, index: number) => (
             <ImageComponent
               key={index}
               image={image}
               index={index}
               deleteTag={deleteTag}
-              handleChangeName={handleChangeName}
+              handleChangeTitle={handleChangeTitle}
               handleChangeDescription={handleChangeDescription}
               addTag={addTag}
               setNewTag={setNewTag}
+            />
+          ))}
+          {uploadStep === "upload" && droppedImages.map((image: any, index: number) => (
+            <UploadedImage
+              key={index}
+              image={image}
+              index={index}
               removeImage={removeImage}
             />
           ))}

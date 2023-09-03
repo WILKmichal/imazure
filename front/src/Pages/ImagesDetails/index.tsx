@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { getImageInfoById, deleteImageWithId, EditImages } from "../../core";
 import { IImage } from "../../components/Gallery/gallery";
 import { FaPen, FaRegWindowClose } from "react-icons/fa";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 interface tag {
   name: string;
@@ -18,6 +19,7 @@ export interface singleInfo {
     tags: tag[];
     title: string;
     url: string;
+    description: string;
   };
   API: boolean;
 }
@@ -30,6 +32,7 @@ const ImagesDetails: React.FC = () => {
       tags: [],
       title: "",
       url: "",
+      description: "",
     },
     API: false,
   });
@@ -50,10 +53,12 @@ const ImagesDetails: React.FC = () => {
       tags: [],
       title: "",
       url: "",
+      description: "",
     },
     API: false,
   });
   const [NewTile, setNewTile] = useState("");
+  const [newDescription, setNewDescription] = useState("");
   const recupImageInfo = async () => {
     const imageInfo: singleInfo = (await getImageInfoById(
       imageId
@@ -61,6 +66,7 @@ const ImagesDetails: React.FC = () => {
     setImageInfo(imageInfo);
     setEditImageInfo(imageInfo);
     setNewTile(imageInfo.imageInfo.title);
+    setNewDescription(imageInfo.imageInfo.description);
   };
   useEffect(() => {
     recupImageInfo();
@@ -115,11 +121,16 @@ const ImagesDetails: React.FC = () => {
   const handleChangeSearch = (event: any) => {
     setNewTile(event.target.value);
   };
+  
+  const handleChangeDescription = (event: any) => {
+    setNewDescription(event.target.value);
+  };
 
   const openEditor = () => {
     setOpenEdit(!openEdit);
     setEditImageInfo(imageInfo);
     setNewTile(imageInfo.imageInfo.title);
+    setNewDescription(imageInfo.imageInfo.description);
   };
 
   const addTag = () => {
@@ -151,6 +162,7 @@ const ImagesDetails: React.FC = () => {
     const edit = {
       title: NewTile,
       tags: editImageInfo.imageInfo.tags.map((categorie) => categorie.name),
+      description: newDescription,
     };
 
     const imagesEdit: any = await EditImages(edit, imageInfo.imageInfo.id);
@@ -186,6 +198,12 @@ const ImagesDetails: React.FC = () => {
 
   return (
     <div className="main">
+      <div className="back-arrow" style={{ cursor: "pointer" }} onClick={() => (window.location.href = "/images")}>
+        <span className="icon">
+        <MdKeyboardBackspace/>
+        </span>
+        Back to images
+      </div>
       <div className="background">
         <div className="grid-container">
           <div
@@ -208,6 +226,7 @@ const ImagesDetails: React.FC = () => {
                   onChange={handleChangeSearch}
                   className="input_title titles"
                   value={NewTile}
+                  placeholder="Title"
                 />
               ) : (
                 <h1 className="title">{imageInfo.imageInfo.title}</h1>
@@ -220,7 +239,20 @@ const ImagesDetails: React.FC = () => {
                 {openEdit ? <FaRegWindowClose /> : <FaPen />}
               </div>
             </div>
-            {/*<p className="description">{imageInfo.imageInfo.}</p>*/}
+
+            <div className="title_container">
+
+            {openEdit ? 
+            (<textarea
+              onChange={handleChangeDescription}
+              className="input_description titles"
+              value={newDescription}
+              placeholder="Description"
+            />):
+            (<p className="description">{imageInfo.imageInfo.description}</p>)
+            }
+              </div>
+            
             <div className="tags">
               {openEdit ? (
                 <div>
@@ -256,7 +288,7 @@ const ImagesDetails: React.FC = () => {
               ) : (
                 <>
                   <button className="big-button" onClick={handleDownload}>
-                    Télecharger l'image
+                    Télécharger l'image
                   </button>
                   <button className="big-button delete" onClick={handleDelete}>
                     Supprimer l'image

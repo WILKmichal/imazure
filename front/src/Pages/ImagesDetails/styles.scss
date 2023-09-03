@@ -1,3 +1,19 @@
+.back-arrow{
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  text-decoration: underline;
+}
+
+.back-arrow .icon {
+  font-size: 3rem;
+  transition: transform 250ms ease-in-out;
+}
+
+.back-arrow:hover .icon{
+  transform: scale(1.1) translate(-0.5rem, 0);
+}
+
 .tag {
   cursor: pointer;
   display: inline-flex;
@@ -44,6 +60,13 @@
     overflow: hidden;
   }
 }
+
+@media only screen and (max-width: 700px) {
+  .grid-container{
+    grid-template-columns: 1fr;
+  }
+}
+
 
 .big-button {
   --bg-color: rgb(109, 56, 255);
@@ -145,7 +168,7 @@
     display: flex;
     flex-direction: row;
 
-    .input_title {
+    .input_title, .input_description {
       min-width: 264px;
       border: none;
       background-color: transparent;
@@ -160,6 +183,10 @@
       &:focus {
         outline: none;
       }
+    }
+
+    .input_description{
+      font-size: 1em;
     }
     .icon {
       display: flex;

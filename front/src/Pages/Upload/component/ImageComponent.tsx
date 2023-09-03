@@ -4,62 +4,39 @@ interface ImageProps {
     image: any;
     index: number;
     deleteTag: (imageIndex: number, tagIndex: number) => void;
-    handleChangeName: (index: number) => (event: any) => void;
+    handleChangeTitle: (index: number) => (event: any) => void;
     handleChangeDescription: (index: number) => (event: any) => void;
     addTag: (index: number) => void;
     setNewTag : Function;
-    removeImage :(index: number) => void;
   }
   
   const ImageComponent: React.FC<ImageProps> = React.memo(
-    ({ image, index, deleteTag, handleChangeName, handleChangeDescription, addTag, setNewTag, removeImage }) => {
+    ({ image, index, deleteTag, handleChangeTitle, handleChangeDescription, addTag, setNewTag }) => {
       return (
         <div key={index} className="image_container_upload">
-          <div
-            style={{
-              position: "relative",
-              height: "310px",
-              width: "260px",
-            }}
-          >
+          <div>
             <img
               className="image_uploads"
-              src={URL.createObjectURL(image.file)}
-              alt={image.name}
+              src={image.url}
+              alt={image.title}
               loading="lazy"
-            />
-            <button
-              onClick={() => removeImage(index)}
               style={{
-                position: "absolute",
-                top: 5,
-                right: 5,
-                backgroundColor: "red",
-                color: "white",
-                borderRadius: "50%",
-                border: "none",
-                cursor: "pointer",
-                width: "25px",
-                height: "25px",
-                fontSize: "0.8rem",
-                fontWeight: "bold",
-              }}
-            >
-              X
-            </button>
+              minWidth: "240px",
+            }}
+            />
           </div>
   
           <div className="Info_Images">
             <div>
-              <h6>Name : </h6>
+              <h6>Title : </h6>
               <textarea
-                onChange={handleChangeName(index)}
+                onChange={handleChangeTitle(index)}
                 className="Images_Name"
-                defaultValue={image.name}
+                defaultValue={image.title}
               />
             </div>
             <div>
-              <h6>Descrition : </h6>
+              <h6>Description : </h6>
               <textarea
                 defaultValue={image.description}
                 onChange={handleChangeDescription(index)}
@@ -67,17 +44,17 @@ interface ImageProps {
               />
             </div>
             <div>
-              {image.tag.map((tag: any, tagIndex: number) => (
+              {image.tags.map((tag: any, tagIndex: number) => (
                 <div className="tag" key={tagIndex}>
-                  {tag}
+                  {tag.name}
                   <button onClick={() => deleteTag(index, tagIndex)}>&times;</button>
                 </div>
               ))}
               <div className="input_add_tags_container">
                 <input
                   type="text"
-                  onChange={(e) => setNewTag(e.target.value)}
-                  placeholder="ajouter un tag"
+                  onChange={(e) => setNewTag({ name: e.target.value })}
+                  placeholder="Add a tag"
                 />
                 <button onClick={() => addTag(index)}>+</button>
               </div>

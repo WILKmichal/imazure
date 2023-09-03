@@ -200,6 +200,8 @@ def add_image_tags(id):
     db.session.commit()
 
     image.title = img_from_json['title']
+    image.description = img_from_json['description']
+    print(image.description)
     db.session.commit()
 
     return jsonify(image.to_dict())

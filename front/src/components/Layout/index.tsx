@@ -25,9 +25,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       {/* </div> */}
       <main
         style={{
-          minHeight: "80vh",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column"
         }}
-        className="d-flex flex-column flex-grow-1 layout"
+        className="layout"
       >
         {children}
       </main>

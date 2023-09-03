@@ -85,7 +85,7 @@ const Grid: React.FC<Props> = (props: Props) => {
               />
             </div>
             <div className="card_imge_container">
-              <img src={image.url} alt={image.name} loading="lazy" />
+              <img src={image.url} alt={image.title} loading="lazy" />
               <div
                 onClick={() => {
                   window.location.href = `/images/details/${image.id}`;
@@ -95,7 +95,7 @@ const Grid: React.FC<Props> = (props: Props) => {
                 Voir plus
               </div>
             </div>
-            <div className="card_label">{image.name}</div>
+            <div className="card_label">{image.title}</div>
             <div className="card_info">
               <div className="resolution_info">
                 {props.imageSizes[index].width +
