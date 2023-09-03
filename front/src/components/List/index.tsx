@@ -93,7 +93,7 @@ const List: React.FC<Props> = (props: Props) => {
           {props.images.map((image: any, index: number) => (
             <div key={index} className="list_row_name">
               {/* {image.name}test */}
-              <div className="test">{image.name}</div>
+              <div className="test">{image.title}</div>
               <div className="test">
                 <a target="blank" href={image.url}>
                   Image de l'url

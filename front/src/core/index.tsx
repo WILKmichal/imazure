@@ -97,6 +97,7 @@ const EditImages = async (
   object: {
     tags: string[];
     title: string;
+    description: string;
   },
   id: number
 ): Promise<image[] | null | undefined> => {
@@ -132,9 +133,9 @@ const handleUploadImage = async (selectedImages: any) => {
     });
 
     if (response.ok) {
-      window.location.href = "/images";
+      // window.location.href = "/images";
 
-      return { message: response.ok, API: true };
+      return { message: response.ok, API: true, response: await response.json() };
     } else {
       console.error(
         "Error uploading images",
@@ -146,6 +147,17 @@ const handleUploadImage = async (selectedImages: any) => {
   } catch (error) {
     return { message: "impossible de joindre l'api", API: false };
   }
+};
+
+const handleUpdateImages = async (selectedImages: any) => {
+  selectedImages.forEach((image: any)=> {
+    const img = {
+      title: image.title,
+      description: image.description,
+      tags: image.tags.map((t: any) => t.name)
+    }
+    EditImages(img, image.id);
+  });
 };
 
 const handleSearchImage = async (search: string) => {
@@ -166,6 +178,7 @@ export {
   getImagesByTag,
   getTags,
   handleUploadImage,
+  handleUpdateImages,
   deleteImageWithId,
   EditImages,
   handleSearchImage,

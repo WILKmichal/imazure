@@ -5,7 +5,8 @@ $debug: false;
 
 
 .buttonUploadImage {
-	display: inline-block;
+	margin: 1rem auto;
+	display: block;
 	position: relative;
 	z-index: 1;
 	overflow: if($debug, unset, hidden);

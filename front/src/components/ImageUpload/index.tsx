@@ -13,15 +13,8 @@ const ImageUpload: React.FC<ImageUploadProps> = (Props:ImageUploadProps) => {
       if (e.target.files.length > 0) {
         const files = Array.from(e.target.files);
   
-        const imagesWithAdditionalInfo = files.map((file) => ({
-          file,
-          name: file.name,
-          description: "",
-          tag: [],
-        }));
-  
         Props.setDroppedImages((prevImages: any[]) =>
-          prevImages.concat(imagesWithAdditionalInfo)
+          prevImages.concat(files)
         );
   
         Props.onUpload(e.target.files);

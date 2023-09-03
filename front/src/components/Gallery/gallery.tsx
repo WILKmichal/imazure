@@ -91,7 +91,7 @@ const Gallery: React.FC<Props> = (props: Props) => {
                 window.location.href = `/images/details/${image.id}`;
               }}
               src={image.url}
-              alt={image.name}
+              alt={image.title}
               loading="lazy"
             />
             {props.imageSizes[index] && (
@@ -105,7 +105,7 @@ const Gallery: React.FC<Props> = (props: Props) => {
                 )}
               </div>
             )}
-            <div className="image_name">{image.name}</div>
+            <div className="image_name">{image.title}</div>
           </div>
         ))}
       </div>
