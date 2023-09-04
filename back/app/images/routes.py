@@ -284,7 +284,11 @@ def image_search():
     db.session.query(Image_tag.image_id, Image_tag.confidence)
     .join(Tag)
     .join(Image)
-    .filter(db.or_(*[Tag.name.ilike(like_query) for like_query in like_queries], *[Image.description.ilike(like_query) for like_query in like_queries]))
+    .filter(db.or_(
+        *[Tag.name.ilike(like_query) for like_query in like_queries],
+        *[Image.description.ilike(like_query) for like_query in like_queries],
+        *[Image.title.ilike(like_query) for like_query in like_queries],
+     ))
     .group_by(Image_tag.image_id, Image_tag.confidence)
     .distinct(Image_tag.image_id)
     .subquery()
